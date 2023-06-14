@@ -11,7 +11,7 @@ class MovieDetailViewModel(
 
     fun getMovieDetail() = with(viewModelScope) {
         launch {
-            val response = getMovieDetailUseCase(552688)
+            val response = getMovieDetailUseCase.invoke(552688)
             println("movie response = $response")
         }
     }

@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 object RepositoryModule {
     val module = module {
-        single<MoviesRepository> { MoviesRepositoryImpl(get(), get()) }
+        single<MoviesRepository> { MoviesRepositoryImpl(get(), get(), get()) }
     }
 }

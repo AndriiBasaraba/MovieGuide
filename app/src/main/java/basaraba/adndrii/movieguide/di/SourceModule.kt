@@ -9,6 +9,6 @@ import org.koin.dsl.module
 object SourceModule {
     val module = module {
         single<MoviesRemoteSource> { MoviesRemoteSourceImpl(get()) }
-        single<MoviesLocalSource> { MoviesLocalSourceImpl() }
+        single<MoviesLocalSource> { MoviesLocalSourceImpl(get(), get()) }
     }
 }
