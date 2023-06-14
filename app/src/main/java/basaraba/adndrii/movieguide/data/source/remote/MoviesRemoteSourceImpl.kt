@@ -7,9 +7,9 @@ import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
 class MoviesRemoteSourceImpl(
     private val api: MovieApi
 ) : MoviesRemoteSource {
-    override suspend fun nowPlayingMovies(): MoviesResponse = api.nowPlayingMovies()
+    override suspend fun getNowPlayingMovies(): MoviesResponse = api.getNowPlayingMovies()
 
-    override suspend fun upcomingMovies(): MoviesResponse = api.upcomingMovies()
+    override suspend fun getUpcomingMovies(): MoviesResponse = api.getUpcomingMovies()
 
-    override suspend fun movieDetails(movieId: Int): MovieDetailResponse = api.movieDetails(movieId)
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailResponse = api.getMovieDetails(movieId)
 }

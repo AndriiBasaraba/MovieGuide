@@ -2,16 +2,16 @@ package basaraba.adndrii.movieguide.features
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import basaraba.adndrii.movieguide.use_case.MovieDetailUseCase
+import basaraba.adndrii.movieguide.use_case.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel(
-    private val useCase: MovieDetailUseCase
+    private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
 
     fun getMovieDetail() = with(viewModelScope) {
         launch {
-            val response = useCase.getMovieDetail(552688)
+            val response = getMovieDetailUseCase(552688)
             println("movie response = $response")
         }
     }

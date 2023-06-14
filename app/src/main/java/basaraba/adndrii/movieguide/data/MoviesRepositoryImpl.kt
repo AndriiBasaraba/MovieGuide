@@ -9,10 +9,11 @@ class MoviesRepositoryImpl(
     private val remoteDataSource: MoviesRemoteSource,
     private val localDataSource: MoviesLocalSource
 ) : MoviesRepository {
-    override suspend fun nowPlayingMovies(): MoviesResponse = remoteDataSource.nowPlayingMovies()
+    override suspend fun getNowPlayingMovies(): MoviesResponse =
+        remoteDataSource.getNowPlayingMovies()
 
-    override suspend fun upcomingMovies(): MoviesResponse = remoteDataSource.upcomingMovies()
+    override suspend fun getUpcomingMovies(): MoviesResponse = remoteDataSource.getUpcomingMovies()
 
-    override suspend fun movieDetails(movieId: Int): MovieDetailResponse =
-        remoteDataSource.movieDetails(movieId)
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailResponse =
+        remoteDataSource.getMovieDetails(movieId)
 }

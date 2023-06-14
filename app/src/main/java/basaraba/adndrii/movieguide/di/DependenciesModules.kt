@@ -3,17 +3,16 @@ package basaraba.adndrii.movieguide.di
 import basaraba.adndrii.movieguide.data.MoviesRepository
 import basaraba.adndrii.movieguide.data.MoviesRepositoryImpl
 import basaraba.adndrii.movieguide.data.api.RetrofitClient
+import basaraba.adndrii.movieguide.data.source.local.MoviesLocalSource
+import basaraba.adndrii.movieguide.data.source.local.MoviesLocalSourceImpl
 import basaraba.adndrii.movieguide.data.source.remote.MoviesRemoteSource
 import basaraba.adndrii.movieguide.data.source.remote.MoviesRemoteSourceImpl
 import basaraba.adndrii.movieguide.features.MovieDetailViewModel
 import basaraba.adndrii.movieguide.features.NowPlayingMoviesViewModel
 import basaraba.adndrii.movieguide.features.UpcomingMoviesViewModel
-import basaraba.adndrii.movieguide.use_case.MovieDetailUseCase
-import basaraba.adndrii.movieguide.use_case.MovieDetailUseCaseImpl
-import basaraba.adndrii.movieguide.use_case.NowPlayingMoviesUseCase
-import basaraba.adndrii.movieguide.use_case.NowPlayingMoviesUseCaseImpl
-import basaraba.adndrii.movieguide.use_case.UpcomingMoviesUseCase
-import basaraba.adndrii.movieguide.use_case.UpcomingMoviesUseCaseImpl
+import basaraba.adndrii.movieguide.use_case.GetMovieDetailUseCase
+import basaraba.adndrii.movieguide.use_case.GetNowPlayingMoviesUseCase
+import basaraba.adndrii.movieguide.use_case.GetUpcomingMoviesUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -27,6 +26,7 @@ object DependenciesModules {
 
     val sourceModule = module {
         single<MoviesRemoteSource> { MoviesRemoteSourceImpl(get()) }
+        single<MoviesLocalSource> { MoviesLocalSourceImpl() }
     }
 
     val repositoriesModule = module {
@@ -34,9 +34,9 @@ object DependenciesModules {
     }
 
     val useCasesModule = module {
-        single<NowPlayingMoviesUseCase> { NowPlayingMoviesUseCaseImpl(get()) }
-        single<UpcomingMoviesUseCase> { UpcomingMoviesUseCaseImpl(get()) }
-        single<MovieDetailUseCase> { MovieDetailUseCaseImpl(get()) }
+        single { GetNowPlayingMoviesUseCase(get()) }
+        single { GetUpcomingMoviesUseCase(get()) }
+        single { GetMovieDetailUseCase(get()) }
     }
 
     val viewModelModule = module {
