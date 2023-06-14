@@ -8,4 +8,5 @@ interface MoviesLocalSource {
     suspend fun getAllByType(type: MovieEntity.Type): List<MovieShortData>
     suspend fun insertAll(movies: List<MovieShortData>)
     suspend fun delete()
+    suspend fun deleteByType(type: MovieEntity.Type)
 }

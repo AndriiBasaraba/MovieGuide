@@ -7,7 +7,6 @@ import org.koin.dsl.module
 object RoomModule {
     val module = module {
         single { MoviesDb.getInstance(androidApplication()) }
-        single { MoviesDb.getInMemoryDb(androidApplication()) }
         single { get<MoviesDb>().movieDao() }
     }
 }

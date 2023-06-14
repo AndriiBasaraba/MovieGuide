@@ -9,10 +9,10 @@ class GetUpcomingMoviesUseCase(
     private val repository: MoviesRepository
 ) {
 
-    suspend operator fun invoke(): Result<List<MovieShortData>> {
+    suspend operator fun invoke(forceReload: Boolean = false): Result<List<MovieShortData>> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = repository.getUpcomingMovies()
+                val response = repository.getUpcomingMovies(forceReload)
                 Result.success(response)
             } catch (e: Throwable) {
                 Result.failure(e)

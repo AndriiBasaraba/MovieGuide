@@ -22,4 +22,8 @@ class MoviesLocalSourceImpl(
     override suspend fun delete() {
         movieDao.delete()
     }
+
+    override suspend fun deleteByType(type: MovieEntity.Type) {
+        movieDao.deleteByType(type)
+    }
 }

@@ -11,7 +11,11 @@ class MoviesRepositoryImpl(
     private val localDataSource: MoviesLocalSource,
     private val moviesResponseMapper: MoviesResponseMapper
 ) : MoviesRepository {
-    override suspend fun getNowPlayingMovies(): List<MovieShortData> {
+    override suspend fun getNowPlayingMovies(forceReload: Boolean): List<MovieShortData> {
+        if (forceReload) {
+            localDataSource.deleteByType(MovieEntity.Type.Ongoing)
+        }
+
         val moviesFromDb = localDataSource.getAllByType(MovieEntity.Type.Ongoing)
 
         if (moviesFromDb.isEmpty()) {
@@ -26,7 +30,11 @@ class MoviesRepositoryImpl(
         return moviesFromDb
     }
 
-    override suspend fun getUpcomingMovies(): List<MovieShortData> {
+    override suspend fun getUpcomingMovies(forceReload: Boolean): List<MovieShortData> {
+        if (forceReload) {
+            localDataSource.deleteByType(MovieEntity.Type.Upcoming)
+        }
+
         val moviesFromDb = localDataSource.getAllByType(MovieEntity.Type.Upcoming)
 
         if (moviesFromDb.isEmpty()) {

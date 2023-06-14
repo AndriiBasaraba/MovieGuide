@@ -13,9 +13,12 @@ interface MovieDao {
     @Query("SELECT * FROM movie")
     suspend fun getAll(): List<MovieEntity>
 
-    @Query("SELECT * FROM movie WHERE movie.type IN (:type)")
+    @Query("SELECT * FROM movie WHERE movie.type is :type")
     suspend fun getAllByType(type: MovieEntity.Type): List<MovieEntity>
 
     @Query("DELETE FROM movie")
     suspend fun delete(): Int
+
+    @Query("DELETE FROM movie WHERE movie.type is :type")
+    suspend fun deleteByType(type: MovieEntity.Type): Int
 }
