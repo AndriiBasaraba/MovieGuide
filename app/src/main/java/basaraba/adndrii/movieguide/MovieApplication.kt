@@ -1,7 +1,11 @@
 package basaraba.adndrii.movieguide
 
 import android.app.Application
-import basaraba.adndrii.movieguide.di.DependenciesModules
+import basaraba.adndrii.movieguide.di.ApiModule
+import basaraba.adndrii.movieguide.di.RepositoryModule
+import basaraba.adndrii.movieguide.di.SourceModule
+import basaraba.adndrii.movieguide.di.UseCaseModule
+import basaraba.adndrii.movieguide.di.ViewModelModule
 import org.koin.core.context.startKoin
 
 class MovieApplication : Application() {
@@ -12,11 +16,11 @@ class MovieApplication : Application() {
         startKoin {
             modules(
                 listOf(
-                    DependenciesModules.apiModule,
-                    DependenciesModules.sourceModule,
-                    DependenciesModules.repositoriesModule,
-                    DependenciesModules.useCasesModule,
-                    DependenciesModules.viewModelModule
+                    ApiModule.module,
+                    SourceModule.module,
+                    RepositoryModule.module,
+                    UseCaseModule.module,
+                    ViewModelModule.module
                 )
             )
         }
