@@ -2,9 +2,11 @@ package basaraba.adndrii.movieguide.data
 
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
 import basaraba.adndrii.movieguide.data.db.MovieEntity
-import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapper
+import basaraba.adndrii.movieguide.use_case.mapper.MoviesResponseMapper
 import basaraba.adndrii.movieguide.data.source.local.MoviesLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.MoviesRemoteSource
+import basaraba.adndrii.movieguide.use_case.MoviesRepository
+import basaraba.adndrii.movieguide.use_case.model.MovieShortData
 
 class MoviesRepositoryImpl(
     private val remoteDataSource: MoviesRemoteSource,

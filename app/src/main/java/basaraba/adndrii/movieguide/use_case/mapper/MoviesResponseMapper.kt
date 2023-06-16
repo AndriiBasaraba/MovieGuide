@@ -1,6 +1,6 @@
-package basaraba.adndrii.movieguide.data.mapper
+package basaraba.adndrii.movieguide.use_case.mapper
 
-import basaraba.adndrii.movieguide.data.MovieShortData
+import basaraba.adndrii.movieguide.use_case.model.MovieShortData
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
 
 interface MoviesResponseMapper {
