@@ -32,6 +32,12 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
+    }
+
+    defaultConfig {
+        buildConfigField 'String', 'BASE_URL', BASE_URL
+        buildConfigField 'String', 'AUTH_TOKEN', AUTH_TOKEN
     }
 }
 
