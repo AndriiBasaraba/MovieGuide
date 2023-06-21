@@ -6,7 +6,8 @@ import org.koin.dsl.module
 object ApiModule {
     val module = module {
         single { RetrofitClient.getRetrofitService(get()) }
-        single { RetrofitClient.getService(get()) }
+        single { RetrofitClient.getMovieApi(get()) }
+        single { RetrofitClient.getPersonApi(get()) }
         single { RetrofitClient.getOkHttpClient() }
     }
 }

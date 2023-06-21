@@ -13,8 +13,9 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    fun getService(retrofit: Retrofit): MovieApi =
-        retrofit.create(MovieApi::class.java)
+    fun getMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
+
+    fun getPersonApi(retrofit: Retrofit): PersonApi = retrofit.create(PersonApi::class.java)
 
     fun getOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
