@@ -1,27 +1,27 @@
-package basaraba.adndrii.movieguide.features.main
+package basaraba.adndrii.movieguide.features.main.movies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.use_case.GetNowPlayingMoviesUseCase
 import basaraba.adndrii.movieguide.use_case.GetUpcomingMoviesUseCase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.async
 
 class MoviesViewModel(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
 ) : ViewModel() {
 
-    fun getNowPlayingMoviesUseCase() = with(viewModelScope) {
-        launch {
+    fun loadMovies() = with(viewModelScope) {
+
+       val now = async {
             val response = getNowPlayingMoviesUseCase.invoke()
             println("movie response = $response")
         }
-    }
 
-    fun getUpComingMoviesUseCase() = with(viewModelScope) {
-        launch {
+       val upComing = async {
             val response = getUpcomingMoviesUseCase.invoke()
             println("movie response = $response")
         }
+
     }
 }

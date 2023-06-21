@@ -3,28 +3,28 @@ package basaraba.adndrii.movieguide.features.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import basaraba.adndrii.movieguide.features.main.MainScreen
-import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.Close
-import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.Main
+import basaraba.adndrii.movieguide.features.main.movie_details.MovieDetailScreen
+import basaraba.adndrii.movieguide.features.main.movies.MoviesScreen
+import basaraba.adndrii.movieguide.features.main.person_details.PersonDetailsScreen
+import basaraba.adndrii.movieguide.features.main.persons.PersonsScreen
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.MovieDetails
-import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.PeopleDetails
+import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.PersonDetails
 
 fun NavGraphBuilder.appNavigationGraph(
-    navController: NavController,
-    onClose: () -> Unit
+    navController: NavController
 ) {
-    composable(Main.route) {
-        MainScreen(navController = navController)
+    composable(BottomNavItem.Movies.route) {
+        MoviesScreen(navController)
     }
+
+    composable(BottomNavItem.Persons.route) {
+        PersonsScreen(navController)
+    }
+
     composable(MovieDetails.route) {
-        val movieId = checkNotNull(it.arguments?.getString(MovieDetails.ARG_MOVIE_ID)?.toInt())
-        // todo add movie details screen
+        MovieDetailScreen()
     }
-    composable(PeopleDetails.route) {
-        val peopleId = checkNotNull(it.arguments?.getString(PeopleDetails.ARG_PEOPLE_ID)?.toInt())
-        // todo add people details screen
-    }
-    composable(Close.route) {
-        onClose()
+    composable(PersonDetails.route) {
+        PersonDetailsScreen()
     }
 }

@@ -7,7 +7,7 @@ data class MovieDetailResponse(
     @SerializedName("backdrop_path")
     val backdropPath: String,
     @SerializedName("belongs_to_collection")
-    val belongsToCollection: Any?,
+    val belongsToCollection: List<MovieCollection>?,
     val budget: Long,
     val genres: List<Genre>,
     val homepage: String,
@@ -40,6 +40,15 @@ data class MovieDetailResponse(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Long
+)
+
+data class MovieCollection(
+    val id: Int,
+    val name: String,
+    @SerializedName("poster_path")
+    val posterPath: String,
+    @SerializedName("backdrop_path")
+    val backdropPath: String,
 )
 
 data class Genre(

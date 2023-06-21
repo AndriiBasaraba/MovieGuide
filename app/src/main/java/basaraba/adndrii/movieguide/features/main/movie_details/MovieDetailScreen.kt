@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.peoples
+package basaraba.adndrii.movieguide.features.main.movie_details
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,19 +10,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import basaraba.adndrii.movieguide.features.main.MainUiEvent
+import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
-fun PeoplesScreen(onEvent: (MainUiEvent) -> Unit) {
+fun MovieDetailScreen(
+    viewModel: MovieDetailsViewModel = koinViewModel()
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Blue)
+            .background(Color.White)
     ) {
         Text(
-            text = "Second screen",
-            color = Color.White,
+            text = "Movie details screen = ${viewModel.movieId}",
+            color = Color.Black,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .clickable { }
