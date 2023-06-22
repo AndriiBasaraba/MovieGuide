@@ -28,11 +28,12 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val currentRoute = getCurrentRoute(navController)
 
-            Scaffold(bottomBar = {
-                if (currentRoute == BottomNavItem.ROUTE_MOVIES || currentRoute == BottomNavItem.ROUTE_PERSONS) {
-                    MainBottomView(navController = navController)
-                }
-            }) {
+            Scaffold(
+                bottomBar = {
+                    if (currentRoute == BottomNavItem.ROUTE_MOVIES || currentRoute == BottomNavItem.ROUTE_PERSONS) {
+                        MainBottomView(navController = navController)
+                    }
+                }) {
                 AppNavigation(navController = navController, modifier = Modifier.padding(it))
             }
         }

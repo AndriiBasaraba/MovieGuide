@@ -1,6 +1,6 @@
 package basaraba.adndrii.movieguide.use_case.model
 
-data class MovieShortData(
+data class MovieDomainData(
     val id: Long,
     val title: String,
     val overview: String,

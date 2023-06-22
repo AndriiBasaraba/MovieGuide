@@ -8,10 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
+import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
 
 @Composable
-fun PersonsScreen(navController: NavController) {
+fun PersonsScreen(
+    navController: NavController,
+    viewModel: PersonsViewModel = koinViewModel()
+) {
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
             is PersonsUiEvent.ShowPersonDetails -> {

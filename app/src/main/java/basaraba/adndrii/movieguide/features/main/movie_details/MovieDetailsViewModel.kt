@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.features.main.movie_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import basaraba.adndrii.movieguide.use_case.GetMovieDetailUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(

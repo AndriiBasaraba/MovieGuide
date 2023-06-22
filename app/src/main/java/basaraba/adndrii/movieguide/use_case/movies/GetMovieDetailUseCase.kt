@@ -1,6 +1,7 @@
-package basaraba.adndrii.movieguide.use_case
+package basaraba.adndrii.movieguide.use_case.movies
 
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
+import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.data.source.remote
+package basaraba.adndrii.movieguide.data.source.remote.movies
 
 import basaraba.adndrii.movieguide.data.api.MovieApi
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
@@ -11,5 +11,6 @@ class MoviesRemoteSourceImpl(
 
     override suspend fun getUpcomingMovies(): MoviesResponse = api.getUpcomingMovies()
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetailResponse = api.getMovieDetails(movieId)
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailResponse =
+        api.getMovieDetails(movieId)
 }
