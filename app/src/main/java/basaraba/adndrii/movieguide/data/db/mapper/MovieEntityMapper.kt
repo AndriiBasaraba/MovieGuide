@@ -1,16 +1,16 @@
 package basaraba.adndrii.movieguide.data.db.mapper
 
-import basaraba.adndrii.movieguide.use_case.model.MovieShortData
+import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.data.db.MovieEntity
 
 interface MovieEntityMapper {
-    fun mapToDb(movies: List<MovieShortData>): List<MovieEntity>
-    fun mapFromDb(movies: List<MovieEntity>): List<MovieShortData>
+    fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity>
+    fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData>
 }
 
 class MovieEntityMapperImpl : MovieEntityMapper {
 
-    override fun mapToDb(movies: List<MovieShortData>): List<MovieEntity> = movies.map {
+    override fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity> = movies.map {
         with(it) {
             MovieEntity(
                 id = id,
@@ -19,8 +19,8 @@ class MovieEntityMapperImpl : MovieEntityMapper {
                 releaseDate = releaseDate,
                 poster = poster,
                 type = when (type) {
-                    MovieShortData.Type.Ongoing -> MovieEntity.Type.Ongoing
-                    MovieShortData.Type.Upcoming -> MovieEntity.Type.Upcoming
+                    MovieDomainData.Type.Ongoing -> MovieEntity.Type.Ongoing
+                    MovieDomainData.Type.Upcoming -> MovieEntity.Type.Upcoming
                     else -> null
                 }
             )
@@ -28,17 +28,17 @@ class MovieEntityMapperImpl : MovieEntityMapper {
     }
 
 
-    override fun mapFromDb(movies: List<MovieEntity>): List<MovieShortData> = movies.map {
+    override fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData> = movies.map {
         with(it) {
-            MovieShortData(
+            MovieDomainData(
                 id = id,
                 title = title,
                 overview = overview,
                 releaseDate = releaseDate,
                 poster = poster,
                 type = when (type) {
-                    MovieEntity.Type.Ongoing -> MovieShortData.Type.Ongoing
-                    MovieEntity.Type.Upcoming -> MovieShortData.Type.Upcoming
+                    MovieEntity.Type.Ongoing -> MovieDomainData.Type.Ongoing
+                    MovieEntity.Type.Upcoming -> MovieDomainData.Type.Upcoming
                     else -> null
                 }
             )

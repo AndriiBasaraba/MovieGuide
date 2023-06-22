@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.movies
+package basaraba.adndrii.movieguide.features.main.persons
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -12,28 +12,28 @@ import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
 
 @Composable
-fun MoviesScreen(
+fun PersonsScreen(
     navController: NavController,
-    viewModel: MoviesViewModel = koinViewModel()
+    viewModel: PersonsViewModel = koinViewModel()
 ) {
-    val onEvent: (MoviesUiEvent) -> Unit = { event ->
+    val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
-            is MoviesUiEvent.ShowMovieDetails -> {
-                navController.navigate(NavigationRoute.MovieDetails.getRouteNameWithArguments(event.id.toString()))
+            is PersonsUiEvent.ShowPersonDetails -> {
+                navController.navigate(NavigationRoute.PersonDetails.getRouteNameWithArguments(event.id.toString()))
             }
 
-            MoviesUiEvent.ReloadMoviesScreen -> {
+            PersonsUiEvent.ReloadPersonsScreen -> {
                 // ignored
             }
         }
     }
-    MoviesScreenUi(onEvent = onEvent)
+    PersonsScreenUi(onEvent = onEvent)
 }
 
 @Composable
-fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
+fun PersonsScreenUi(onEvent: (PersonsUiEvent) -> Unit) {
     Button(
-        onClick = { onEvent(MoviesUiEvent.ShowMovieDetails(Random.nextInt(0, 100))) },
+        onClick = { onEvent(PersonsUiEvent.ShowPersonDetails(Random.nextInt(0, 100))) },
         modifier = Modifier.padding(16.dp)
     ) {
         Text(text = "Click here!!")

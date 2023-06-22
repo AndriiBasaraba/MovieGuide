@@ -1,8 +1,9 @@
 package basaraba.adndrii.movieguide.di
 
-import basaraba.adndrii.movieguide.use_case.GetMovieDetailUseCase
-import basaraba.adndrii.movieguide.use_case.GetNowPlayingMoviesUseCase
-import basaraba.adndrii.movieguide.use_case.GetUpcomingMoviesUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetNowPlayingMoviesUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetUpcomingMoviesUseCase
+import basaraba.adndrii.movieguide.use_case.persons.GetPopularPersonsUseCase
 import org.koin.dsl.module
 
 object UseCaseModule {
@@ -10,5 +11,6 @@ object UseCaseModule {
         single { GetNowPlayingMoviesUseCase(get()) }
         single { GetUpcomingMoviesUseCase(get()) }
         single { GetMovieDetailUseCase(get()) }
+        single { GetPopularPersonsUseCase(get()) }
     }
 }
