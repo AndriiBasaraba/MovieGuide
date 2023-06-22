@@ -76,6 +76,17 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.foundation:foundation:1.4.3'
     implementation "androidx.compose.material:material:1.4.3"
+    implementation "androidx.compose.runtime:runtime-livedata:1.4.3"
+
+
+    def lifecycle_version = "2.6.1"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
     def nav_version = "2.6.0"
     implementation "androidx.navigation:navigation-compose:$nav_version"

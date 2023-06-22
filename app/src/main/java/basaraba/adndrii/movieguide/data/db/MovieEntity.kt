@@ -6,12 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "movie")
 data class MovieEntity(
-    @PrimaryKey @ColumnInfo(name = "id") val id: Long,
+    @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "overview") val overview: String,
     @ColumnInfo(name = "releaseDate") val releaseDate: String,
     @ColumnInfo(name = "poster") val poster: String,
-    @ColumnInfo(name = "type") val type: Type?
+    @ColumnInfo(name = "type") val type: Type?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "dbId") val dbId: Long = 0
 ) {
     enum class Type {
         Ongoing, Upcoming;
