@@ -6,5 +6,6 @@ import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
 class PersonsRemoteSourceImpl(
     private val api: PersonApi
 ) : PersonsRemoteSource {
-    override suspend fun getPopularPersons(): PersonsResponse = api.getPopularPersons()
+    override suspend fun getPopularPersons(page: Int): PersonsResponse =
+        api.getPopularPersons(page = page)
 }

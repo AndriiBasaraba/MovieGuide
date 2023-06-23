@@ -12,6 +12,14 @@ class PersonsRepositoryImpl(
     private val personsResponseMapper: PersonsResponseMapper
 ) : PersonsRepository {
 
+    override suspend fun getMorePopularPersons(page: Int): List<PersonDomainData> {
+        val personsFromRemote = personsResponseMapper.map(
+            personsRemoteSource.getPopularPersons(page)
+        )
+        personsLocalSource.insertAll(personsFromRemote)
+        return personsFromRemote
+    }
+
     override suspend fun getPopularPersons(forceReload: Boolean): List<PersonDomainData> {
         if (forceReload) {
             personsLocalSource.delete()

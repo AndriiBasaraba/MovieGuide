@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
+import basaraba.adndrii.movieguide.features.main.model.LoadingMoreData
 import basaraba.adndrii.movieguide.features.main.model.PersonUiData
 import basaraba.adndrii.movieguide.features.theme.Shapes
 import coil.compose.AsyncImage
@@ -45,7 +48,8 @@ import coil.compose.AsyncImage
 fun PersonsScreenUi(
     onEvent: (PersonsUiEvent) -> Unit,
     persons: List<PersonUiData>,
-    isRefreshing: Boolean
+    isRefreshing: Boolean,
+    isLoadingMore: LoadingMoreData
 ) {
     val state =
         rememberPullRefreshState(isRefreshing, { onEvent(PersonsUiEvent.ReloadPersonsScreen) })
@@ -62,66 +66,15 @@ fun PersonsScreenUi(
             items(persons) {
                 PersonCard(person = it, onEvent = onEvent)
             }
+            if (isLoadingMore.isBtnShown) {
+                item {
+                    LoadMorePersonCard(onEvent, isLoadingMore.isLoading)
+                }
+            }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
         PullRefreshIndicator(isRefreshing, state, Modifier.align(Alignment.TopCenter))
-    }
-}
-
-@Composable
-fun PersonCard(
-    person: PersonUiData,
-    onEvent: (PersonsUiEvent) -> Unit
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id)) }
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            .wrapContentHeight(),
-        shape = Shapes.medium,
-        border = BorderStroke(0.5.dp, Color.Gray),
-        backgroundColor = Color.White,
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row {
-                AsyncImage(
-                    model = person.avatar,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                    placeholder = painterResource(id = R.drawable.ic_avatar_placeholder)
-                )
-                Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(
-                        text = person.name,
-                        fontSize = 26.sp,
-                        color = Color.Black,
-                        fontWeight = W600,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Row {
-                        Text(
-                            text = "Department: ",
-                            fontSize = 16.sp,
-                            color = Color.DarkGray,
-                            fontWeight = W400
-
-                        )
-                        Text(
-                            text = person.department,
-                            fontSize = 16.sp,
-                            color = Color.Black,
-                            fontWeight = W500
-                        )
-                    }
-                }
-            }
-        }
     }
 }

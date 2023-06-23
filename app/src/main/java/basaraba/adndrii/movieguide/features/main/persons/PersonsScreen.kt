@@ -14,6 +14,7 @@ fun PersonsScreen(
 ) {
     val persons by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val isLoadingMore by viewModel.isLoadingMore.collectAsStateWithLifecycle()
 
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
@@ -24,7 +25,16 @@ fun PersonsScreen(
             PersonsUiEvent.ReloadPersonsScreen -> {
                 viewModel.refreshScreen()
             }
+
+            PersonsUiEvent.LoadMorePersons -> {
+                viewModel.loadNextPage()
+            }
         }
     }
-    PersonsScreenUi(onEvent = onEvent, persons = persons, isRefreshing = isRefreshing)
+    PersonsScreenUi(
+        onEvent = onEvent,
+        persons = persons,
+        isRefreshing = isRefreshing,
+        isLoadingMore = isLoadingMore
+    )
 }
