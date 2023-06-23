@@ -14,7 +14,6 @@ fun PersonsScreen(
 ) {
     val persons by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
-    val isLoadingMore by viewModel.isLoadingMore.collectAsStateWithLifecycle()
 
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
@@ -34,7 +33,6 @@ fun PersonsScreen(
     PersonsScreenUi(
         onEvent = onEvent,
         persons = persons,
-        isRefreshing = isRefreshing,
-        isLoadingMore = isLoadingMore
+        isRefreshing = isRefreshing
     )
 }

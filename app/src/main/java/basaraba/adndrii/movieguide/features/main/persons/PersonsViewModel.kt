@@ -3,10 +3,9 @@ package basaraba.adndrii.movieguide.features.main.persons
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.features.getCurrentPage
-import basaraba.adndrii.movieguide.features.isLoadingMoreEnabled
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
-import basaraba.adndrii.movieguide.features.main.model.LoadingMoreData
 import basaraba.adndrii.movieguide.features.main.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.model.ViewType
 import basaraba.adndrii.movieguide.use_case.persons.GetMorePopularPersonsUseCase
 import basaraba.adndrii.movieguide.use_case.persons.GetPopularPersonsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,8 +19,6 @@ class PersonsViewModel(
     private val personUiMapper: PersonUiMapper
 ) : ViewModel() {
 
-    private var page = 1
-
     private val _uiState = MutableStateFlow<List<PersonUiData>>(emptyList())
     val uiState: StateFlow<List<PersonUiData>>
         get() = _uiState.asStateFlow()
@@ -30,30 +27,25 @@ class PersonsViewModel(
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
-    private val _isLoadingMore = MutableStateFlow(LoadingMoreData())
-    val isLoadingMore: StateFlow<LoadingMoreData>
-        get() = _isLoadingMore.asStateFlow()
-
-    fun refreshScreen() {
-        page = 1
-        loadPersons(forceReload = true)
-    }
-
     fun loadNextPage() {
-        _isLoadingMore.value = LoadingMoreData(isBtnShown = true, isLoading = true)
-        page++
-        loadMorePersons()
+        val nextPage = _uiState.value.getCurrentPage() + 1
+        _uiState.value = _uiState.value.filter { it.viewType == ViewType.PERSON } +
+                PersonUiData.LoadingMore(isLoading = true)
+        loadMorePersons(nextPage)
     }
 
-    private fun loadMorePersons() = with(viewModelScope) {
+    private fun loadMorePersons(page: Int) = with(viewModelScope) {
         launch {
             val mappedData =
                 personUiMapper.map(
                     getMorePopularPersonsUseCase.invoke(page).getOrNull().orEmpty()
                 )
-            _uiState.value = uiState.value + mappedData
-            _isLoadingMore.value = LoadingMoreData(isBtnShown = mappedData.isLoadingMoreEnabled())
+            _uiState.value = _uiState.value.filter { it.viewType == ViewType.PERSON } + mappedData
         }
+    }
+
+    fun refreshScreen() {
+        loadPersons(forceReload = true)
     }
 
     private fun loadPersons(forceReload: Boolean = false) = with(viewModelScope) {
@@ -64,9 +56,7 @@ class PersonsViewModel(
                     getPopularPersonsUseCase.invoke(forceReload).getOrNull().orEmpty()
                 )
             _uiState.value = mappedData
-            _isLoadingMore.value = LoadingMoreData(isBtnShown = mappedData.isLoadingMoreEnabled())
             _isRefreshing.value = false
-            page = mappedData.getCurrentPage()
         }
     }
 

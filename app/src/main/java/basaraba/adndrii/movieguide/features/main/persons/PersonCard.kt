@@ -28,7 +28,7 @@ import coil.compose.AsyncImage
 
 @Composable
 fun PersonCard(
-    person: PersonUiData,
+    person: PersonUiData.Person,
     onEvent: (PersonsUiEvent) -> Unit
 ) {
     Card(
