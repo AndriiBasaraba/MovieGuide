@@ -5,10 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +25,6 @@ class MainActivity : ComponentActivity() {
         setContent { SetContent() }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun SetContent() {
         MovieGuideTheme {
@@ -37,7 +35,12 @@ class MainActivity : ComponentActivity() {
                 topBar = {
                     TopAppBar(
                         backgroundColor = Color.White,
-                        title = { Text(stringResource(R.string.app_name)) }
+                        title = {
+                            Text(
+                                text = stringResource(R.string.app_name),
+                                color = Color.Black
+                            )
+                        }
                     )
                 },
                 bottomBar = {
