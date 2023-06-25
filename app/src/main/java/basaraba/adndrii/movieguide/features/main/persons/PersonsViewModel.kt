@@ -25,6 +25,18 @@ class PersonsViewModel(
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
+    private val _screenView = MutableStateFlow(PersonsView.GRID)
+    val screenView: StateFlow<PersonsView>
+        get() = _screenView.asStateFlow()
+
+    fun changeScreenView() {
+        _screenView.value = if (_screenView.value == PersonsView.GRID) {
+            PersonsView.LIST
+        } else {
+            PersonsView.GRID
+        }
+    }
+
     fun loadNextPage() {
         val nextPage = _uiState.value.getCurrentPage() + DEFAULT_PAGE
         _uiState.value = _uiState.value.filter { it.viewType == ViewType.PERSON } +
@@ -38,6 +50,7 @@ class PersonsViewModel(
 
     private fun loadPersons(page: Int) = with(viewModelScope) {
         launch {
+            _isRefreshing.value = true
             val mappedData =
                 personUiMapper.map(
                     getPopularPersonsUseCase.invoke(page).getOrNull().orEmpty()
@@ -49,13 +62,12 @@ class PersonsViewModel(
                 _uiState.value.filter { it.viewType == ViewType.PERSON } + mappedData
             }
             _uiState.value = updatedList
+            _isRefreshing.value = false
         }
     }
 
     init {
-        _isRefreshing.value = true
         loadPersons(DEFAULT_PAGE)
-        _isRefreshing.value = false
     }
 
     companion object {

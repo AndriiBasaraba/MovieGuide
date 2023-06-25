@@ -5,7 +5,6 @@ sealed class PersonUiData(val viewType: ViewType) {
         val id: Long,
         val name: String,
         val avatar: String,
-        val department: String,
         val popularity: Double,
         val knownFor: String
     ) : PersonUiData(ViewType.PERSON)

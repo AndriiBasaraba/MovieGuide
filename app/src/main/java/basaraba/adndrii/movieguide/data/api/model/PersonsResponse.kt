@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class PersonsResponse(
     val id: Long,
     @SerializedName("known_for_department")
-    val department: String,
     val name: String,
     @SerializedName("profile_path")
     val avatar: String,

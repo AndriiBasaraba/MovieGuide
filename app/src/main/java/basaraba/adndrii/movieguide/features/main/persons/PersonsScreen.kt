@@ -14,6 +14,7 @@ fun PersonsScreen(
 ) {
     val persons by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val screenView by viewModel.screenView.collectAsStateWithLifecycle()
 
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
@@ -28,11 +29,16 @@ fun PersonsScreen(
             PersonsUiEvent.LoadMorePersons -> {
                 viewModel.loadNextPage()
             }
+
+            PersonsUiEvent.ChangeScreenView -> {
+                viewModel.changeScreenView()
+            }
         }
     }
     PersonsScreenUi(
         onEvent = onEvent,
         persons = persons,
-        isRefreshing = isRefreshing
+        isRefreshing = isRefreshing,
+        screenView = screenView
     )
 }

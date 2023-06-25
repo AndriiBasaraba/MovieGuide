@@ -1,13 +1,16 @@
 package basaraba.adndrii.movieguide.features.main.persons
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -15,46 +18,65 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.PersonUiData
-import basaraba.adndrii.movieguide.features.main.model.ViewType
+import basaraba.adndrii.movieguide.features.main.persons.views.grid.PersonsGridView
+import basaraba.adndrii.movieguide.features.main.persons.views.list.PersonsListView
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PersonsScreenUi(
     onEvent: (PersonsUiEvent) -> Unit,
     persons: List<PersonUiData>,
-    isRefreshing: Boolean
+    isRefreshing: Boolean,
+    screenView: PersonsView
 ) {
     val state =
         rememberPullRefreshState(isRefreshing, { onEvent(PersonsUiEvent.ReloadPersonsScreen) })
+    val isGridView = screenView == PersonsView.GRID
 
-    Box(
-        Modifier
-            .background(Color.White)
-            .fillMaxSize()
-            .pullRefresh(state)
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            items(persons) {
-                when (it.viewType) {
-                    ViewType.PERSON -> PersonCard(
-                        person = it as PersonUiData.Person,
-                        onEvent = onEvent
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color.White,
+                title = {
+                    Text(
+                        text = "Popular persons",
+                        color = Color.Black
                     )
-
-                    ViewType.LOAD_MORE -> PersonLoadMoreCard(
-                        isLoading = (it as PersonUiData.LoadingMore).isLoading,
-                        onEvent = onEvent
-                    )
+                },
+                actions = {
+                    IconButton(onClick = {
+                        onEvent(PersonsUiEvent.ChangeScreenView)
+                    }
+                    ) {
+                        Image(
+                            painter = painterResource(
+                                if (isGridView) R.drawable.ic_list else R.drawable.ic_grid
+                            ),
+                            modifier = Modifier.size(24.dp),
+                            contentDescription = null
+                        )
+                    }
                 }
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+            )
         }
-        PullRefreshIndicator(isRefreshing, state, Modifier.align(Alignment.TopCenter))
+    ) {
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .fillMaxSize()
+                .pullRefresh(state)
+                .padding(it)
+        ) {
+            if (isGridView) {
+                PersonsGridView(onEvent = onEvent, persons = persons)
+            } else {
+                PersonsListView(onEvent = onEvent, persons = persons)
+            }
+            PullRefreshIndicator(isRefreshing, state, Modifier.align(Alignment.TopCenter))
+        }
     }
 }

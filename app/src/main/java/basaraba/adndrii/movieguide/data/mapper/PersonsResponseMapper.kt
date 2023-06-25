@@ -17,7 +17,6 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
                     id = id,
                     name = name,
                     avatar = BuildConfig.POSTER_URL + avatar,
-                    department = department,
                     popularity = popularity,
                     knownFor = getKnowFor(knownFor)
                 )
@@ -25,5 +24,5 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
         }
 
     private fun getKnowFor(input: List<KnownFor>): String =
-        input.map { it.name ?: it.title }.joinToString(" , ")
+        input.map { it.name ?: it.title }.joinToString(", ")
 }

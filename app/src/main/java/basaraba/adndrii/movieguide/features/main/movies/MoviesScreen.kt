@@ -1,17 +1,24 @@
 package basaraba.adndrii.movieguide.features.main.movies
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import basaraba.adndrii.movieguide.R
+import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
 import org.koin.androidx.compose.koinViewModel
 import kotlin.random.Random
@@ -37,18 +44,33 @@ fun MoviesScreen(
 
 @Composable
 fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
-    Box(
-        modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = Color.White,
+                title = {
+                    Text(
+                        text = "Movies",
+                        color = Color.Black
+                    )
+                }
+            )
+        }
     ) {
-        Button(
-            onClick = { onEvent(MoviesUiEvent.ShowMovieDetails(Random.nextInt(0, 100))) },
+        Box(
             modifier = Modifier
-                .padding(16.dp)
-                .size(width = 120.dp, height = 60.dp)
+                .background(Color.White)
+                .fillMaxSize()
+                .padding(it)
         ) {
-            Text(text = "Click here!!", color = Color.White)
+            Button(
+                onClick = { onEvent(MoviesUiEvent.ShowMovieDetails(Random.nextInt(0, 100))) },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .size(width = 120.dp, height = 60.dp)
+            ) {
+                Text(text = "Click here!!", color = Color.White)
+            }
         }
     }
 }

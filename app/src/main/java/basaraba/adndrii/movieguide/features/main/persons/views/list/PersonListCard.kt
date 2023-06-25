@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.persons
+package basaraba.adndrii.movieguide.features.main.persons.views.list
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -23,11 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.theme.Shapes
 import coil.compose.AsyncImage
 
 @Composable
-fun PersonCard(
+fun PersonListCard(
     person: PersonUiData.Person,
     onEvent: (PersonsUiEvent) -> Unit
 ) {
@@ -35,13 +38,12 @@ fun PersonCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id)) }
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .wrapContentHeight(),
-        shape = Shapes.medium,
+        shape = RoundedCornerShape(12.dp),
         border = BorderStroke(0.5.dp, Color.Gray),
         backgroundColor = Color.White,
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(8.dp)) {
             Row {
                 AsyncImage(
                     model = person.avatar,
@@ -53,53 +55,29 @@ fun PersonCard(
                     placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
                     error = painterResource(id = R.drawable.ic_avatar_placeholder)
                 )
-                Column(modifier = Modifier.padding(start = 16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .align(Alignment.CenterVertically)
+                ) {
                     Text(
+                        modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp),
                         text = person.name,
-                        fontSize = 26.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.W600,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Text(
-                        text = person.knownFor,
-                        fontSize = 16.sp,
+                        fontSize = 22.sp,
                         color = Color.Black,
                         fontWeight = FontWeight.W500,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Row {
-                        Text(
-                            text = "Department: ",
-                            fontSize = 16.sp,
-                            color = Color.DarkGray,
-                            fontWeight = FontWeight.W400
-
-                        )
-                        Text(
-                            text = person.department,
-                            fontSize = 16.sp,
-                            color = Color.Black,
-                            fontWeight = FontWeight.W500
-                        )
-                    }
-                    Row {
-                        Text(
-                            text = "Popularity by TMDB: ",
-                            fontSize = 16.sp,
-                            color = Color.DarkGray,
-                            fontWeight = FontWeight.W400
-
-                        )
-                        Text(
-                            text = person.popularity.toString(),
-                            fontSize = 16.sp,
-                            color = Color.Black,
-                            fontWeight = FontWeight.W500
-                        )
-                    }
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                        text = person.knownFor,
+                        fontSize = 14.sp,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.W400,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
             }
         }
