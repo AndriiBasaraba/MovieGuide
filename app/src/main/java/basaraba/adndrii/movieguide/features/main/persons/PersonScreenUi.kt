@@ -1,7 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.persons
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,6 +37,9 @@ fun PersonsScreenUi(
     val isGridView = screenView == PersonsView.GRID
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        backgroundColor = Color.White,
         topBar = {
             TopAppBar(
                 backgroundColor = Color.White,
@@ -65,8 +67,6 @@ fun PersonsScreenUi(
     ) {
         Box(
             modifier = Modifier
-                .background(Color.White)
-                .fillMaxSize()
                 .pullRefresh(state)
                 .padding(it)
         ) {
