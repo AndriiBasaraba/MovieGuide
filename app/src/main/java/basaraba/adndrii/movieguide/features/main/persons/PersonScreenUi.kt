@@ -50,8 +50,7 @@ fun PersonsScreenUi(
                 actions = {
                     IconButton(onClick = {
                         onEvent(PersonsUiEvent.ChangeScreenView)
-                    }
-                    ) {
+                    }) {
                         Image(
                             painter = painterResource(
                                 if (isGridView) R.drawable.ic_list else R.drawable.ic_grid
