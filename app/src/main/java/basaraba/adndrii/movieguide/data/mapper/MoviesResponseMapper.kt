@@ -5,12 +5,12 @@ import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
 
 interface MoviesResponseMapper {
-    fun map(response: MoviesResponse, type: MovieDomainData.Type): List<MovieDomainData>
+    fun map(response: List<MoviesResponse>, type: MovieDomainData.Type): List<MovieDomainData>
 }
 
 class MoviesResponseMapperImpl : MoviesResponseMapper {
-    override fun map(response: MoviesResponse, type: MovieDomainData.Type): List<MovieDomainData> =
-        response.results.map {
+    override fun map(response: List<MoviesResponse>, type: MovieDomainData.Type): List<MovieDomainData> =
+        response.map {
             with(it) {
                 MovieDomainData(
                     id = id,

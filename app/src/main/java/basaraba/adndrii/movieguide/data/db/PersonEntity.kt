@@ -10,5 +10,7 @@ data class PersonEntity(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "avatar") val avatar: String,
     @ColumnInfo(name = "department") val department: String,
+    @ColumnInfo(name = "popularity") val popularity: Double,
+    @ColumnInfo(name = "knownFor") val knownFor: String,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "dbId") val dbId: Long = 0
 )

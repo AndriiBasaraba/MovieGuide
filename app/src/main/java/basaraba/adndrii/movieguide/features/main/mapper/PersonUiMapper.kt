@@ -19,7 +19,9 @@ class PersonUiMapperImpl : PersonUiMapper {
                         id = id,
                         name = name,
                         avatar = avatar,
-                        department = department
+                        department = department,
+                        popularity = popularity,
+                        knownFor = knownFor
                     )
                 }
             }

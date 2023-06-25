@@ -62,6 +62,14 @@ fun PersonCard(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                    Text(
+                        text = person.knownFor,
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W500,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                     Row {
                         Text(
                             text = "Department: ",
@@ -72,6 +80,21 @@ fun PersonCard(
                         )
                         Text(
                             text = person.department,
+                            fontSize = 16.sp,
+                            color = Color.Black,
+                            fontWeight = FontWeight.W500
+                        )
+                    }
+                    Row {
+                        Text(
+                            text = "Popularity by TMDB: ",
+                            fontSize = 16.sp,
+                            color = Color.DarkGray,
+                            fontWeight = FontWeight.W400
+
+                        )
+                        Text(
+                            text = person.popularity.toString(),
                             fontSize = 16.sp,
                             color = Color.Black,
                             fontWeight = FontWeight.W500

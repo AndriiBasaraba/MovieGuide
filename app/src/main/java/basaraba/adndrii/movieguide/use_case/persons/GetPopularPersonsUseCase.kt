@@ -9,10 +9,10 @@ class GetPopularPersonsUseCase(
     private val repository: PersonsRepository
 ) {
 
-    suspend operator fun invoke(forceReload: Boolean = false): Result<List<PersonDomainData>> {
+    suspend operator fun invoke(page: Int): Result<List<PersonDomainData>> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = repository.getPopularPersons(forceReload)
+                val response = repository.getPopularPersons(page = page)
                 Result.success(response)
             } catch (e: Throwable) {
                 Result.failure(e)

@@ -10,7 +10,7 @@ import org.koin.dsl.module
 object ViewModelModule {
     val module = module {
         viewModel { MoviesViewModel(get(), get()) }
-        viewModel { PersonsViewModel(get(), get(), get()) }
+        viewModel { PersonsViewModel(get(), get()) }
         viewModel { MovieDetailsViewModel(get(), get()) }
         viewModel { PersonDetailsViewModel(get()) }
     }

@@ -1,5 +1,6 @@
 package basaraba.adndrii.movieguide.data.api
 
+import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
 import retrofit2.http.GET
@@ -12,13 +13,13 @@ interface MovieApi {
     suspend fun getNowPlayingMovies(
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
-    ): MoviesResponse
+    ): CollectionBaseResponse<MoviesResponse>
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
-    ): MoviesResponse
+    ): CollectionBaseResponse<MoviesResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
