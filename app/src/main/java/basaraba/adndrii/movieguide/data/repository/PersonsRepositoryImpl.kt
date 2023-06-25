@@ -3,8 +3,12 @@ package basaraba.adndrii.movieguide.data.repository
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSource
+import basaraba.adndrii.movieguide.use_case.model.PersonDetailsData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class PersonsRepositoryImpl(
     private val personsRemoteSource: PersonsRemoteSource,
@@ -17,4 +21,17 @@ class PersonsRepositoryImpl(
             personsRemoteSource.getPopularPersons(page).results
         )
     }
+
+    override suspend fun getPersonDetails(personId: Long): PersonDetailsData =
+        withContext(Dispatchers.IO) {
+            val details = async { personsRemoteSource.getPersonDetails(personId) }
+            val images = async { personsRemoteSource.getPersonImages(personId) }
+            val movieCredits = async { personsRemoteSource.getPersonMovieCredits(personId) }
+
+            return@withContext personsResponseMapper.mapDetails(
+                details.await(),
+                images.await(),
+                movieCredits.await()
+            )
+        }
 }

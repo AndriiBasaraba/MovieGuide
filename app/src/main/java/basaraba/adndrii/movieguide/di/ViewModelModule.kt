@@ -12,6 +12,6 @@ object ViewModelModule {
         viewModel { MoviesViewModel(get(), get()) }
         viewModel { PersonsViewModel(get(), get()) }
         viewModel { MovieDetailsViewModel(get(), get()) }
-        viewModel { PersonDetailsViewModel(get()) }
+        viewModel { PersonDetailsViewModel(get(), get()) }
     }
 }
