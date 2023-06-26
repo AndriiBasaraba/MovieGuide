@@ -9,5 +9,6 @@ data class PersonEntity(
     @PrimaryKey @ColumnInfo(name = "id") val id: Long,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "avatar") val avatar: String,
-    @ColumnInfo(name = "department") val department: String
+    @ColumnInfo(name = "popularity") val popularity: Double,
+    @ColumnInfo(name = "knownFor") val knownFor: String
 )

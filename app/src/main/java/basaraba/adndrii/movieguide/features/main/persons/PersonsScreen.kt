@@ -1,21 +1,21 @@
 package basaraba.adndrii.movieguide.features.main.persons
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
 import org.koin.androidx.compose.koinViewModel
-import kotlin.random.Random
 
 @Composable
 fun PersonsScreen(
     navController: NavController,
     viewModel: PersonsViewModel = koinViewModel()
 ) {
+    val persons by viewModel.uiState.collectAsStateWithLifecycle()
+    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val screenView by viewModel.screenView.collectAsStateWithLifecycle()
+
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
             is PersonsUiEvent.ShowPersonDetails -> {
@@ -23,19 +23,22 @@ fun PersonsScreen(
             }
 
             PersonsUiEvent.ReloadPersonsScreen -> {
-                // ignored
+                viewModel.refreshScreen()
+            }
+
+            PersonsUiEvent.LoadMorePersons -> {
+                viewModel.loadNextPage()
+            }
+
+            PersonsUiEvent.ChangeScreenView -> {
+                viewModel.changeScreenView()
             }
         }
     }
-    PersonsScreenUi(onEvent = onEvent)
-}
-
-@Composable
-fun PersonsScreenUi(onEvent: (PersonsUiEvent) -> Unit) {
-    Button(
-        onClick = { onEvent(PersonsUiEvent.ShowPersonDetails(Random.nextInt(0, 100))) },
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Text(text = "Click here!!")
-    }
+    PersonsScreenUi(
+        onEvent = onEvent,
+        persons = persons,
+        isRefreshing = isRefreshing,
+        screenView = screenView
+    )
 }

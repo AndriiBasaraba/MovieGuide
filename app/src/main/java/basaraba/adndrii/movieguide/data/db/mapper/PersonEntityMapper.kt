@@ -16,7 +16,8 @@ class PersonEntityMapperImpl : PersonEntityMapper {
                     id = id,
                     name = name,
                     avatar = avatar,
-                    department = department
+                    popularity = popularity,
+                    knownFor = knownFor
                 )
             }
         }
@@ -27,7 +28,8 @@ class PersonEntityMapperImpl : PersonEntityMapper {
                 id = id,
                 name = name,
                 avatar = avatar,
-                department = department
+                popularity = popularity,
+                knownFor = knownFor
             )
         }
     }

@@ -22,7 +22,7 @@ class MoviesRepositoryImpl(
 
         if (moviesFromDb.isEmpty()) {
             val moviesFromRemote = moviesResponseMapper.map(
-                moviesRemoteDataSource.getNowPlayingMovies(),
+                moviesRemoteDataSource.getNowPlayingMovies().results,
                 MovieDomainData.Type.Ongoing
             )
             moviesLocalDataSource.insertAll(moviesFromRemote)
@@ -41,7 +41,7 @@ class MoviesRepositoryImpl(
 
         if (moviesFromDb.isEmpty()) {
             val moviesFromRemote = moviesResponseMapper.map(
-                moviesRemoteDataSource.getUpcomingMovies(),
+                moviesRemoteDataSource.getUpcomingMovies().results,
                 MovieDomainData.Type.Upcoming
             )
             moviesLocalDataSource.insertAll(moviesFromRemote)

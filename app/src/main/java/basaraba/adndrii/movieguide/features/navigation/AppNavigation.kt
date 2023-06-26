@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 fun AppNavigation(navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
-        startDestination = BottomNavItem.Movies.route,
+        startDestination = BottomNavItem.Persons.route,
         modifier = modifier
     ) {
         this.appNavigationGraph(navController)

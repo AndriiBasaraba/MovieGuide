@@ -1,18 +1,18 @@
 package basaraba.adndrii.movieguide.use_case.persons
 
-import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
+import basaraba.adndrii.movieguide.use_case.model.PersonDetailsData
 import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GetPopularPersonsUseCase(
+class GetPersonDetailsUseCase(
     private val repository: PersonsRepository
 ) {
 
-    suspend operator fun invoke(page: Int): Result<List<PersonDomainData>> {
+    suspend operator fun invoke(personId: Long): Result<PersonDetailsData> {
         return withContext(Dispatchers.IO) {
             try {
-                val response = repository.getPopularPersons(page = page)
+                val response = repository.getPersonDetails(personId = personId)
                 Result.success(response)
             } catch (e: Throwable) {
                 Result.failure(e)
