@@ -133,7 +133,9 @@ fun PersonDetailsScreenUi(
                             text = personDetails.placeOfBirth,
                             fontSize = 18.sp,
                             color = Color.DarkGray,
-                            fontWeight = FontWeight.W500
+                            fontWeight = FontWeight.W500,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Text(
                             text = stringResource(id = R.string.date_of_birth),
@@ -218,7 +220,10 @@ fun PersonDetailsScreenUi(
                 item {
                     Text(
                         text = stringResource(R.string.movies_count, personDetails.movieRoles.size),
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W500
                     )
                     LazyRow(
                         modifier = Modifier.fillMaxWidth(),
