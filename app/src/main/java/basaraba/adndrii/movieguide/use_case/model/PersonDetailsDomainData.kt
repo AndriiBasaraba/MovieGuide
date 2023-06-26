@@ -3,6 +3,7 @@ package basaraba.adndrii.movieguide.use_case.model
 data class PersonDetailsDomainData(
     val id: Long,
     val alsoKnownAs: List<String>,
+    val department: String,
     val name: String,
     val avatar: String,
     val biography: String,

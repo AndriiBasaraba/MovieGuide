@@ -6,12 +6,13 @@ sealed class NavigationRoute(val route: String) {
     }
 
     object PersonDetails : NavigationRoute(ROUTE_PERSON_DETAILS) {
-        fun getRouteNameWithArguments(personId: String): String =
-            "person/details?personId=$personId"
+        fun getRouteNameWithArguments(personId: String, personName: String): String =
+            "person/details?personId=$personId?personName=$personName"
     }
 
     companion object {
         internal const val ROUTE_MOVIE_DETAILS = "movie/details?movieId={movieId}"
-        internal const val ROUTE_PERSON_DETAILS = "person/details?personId={personId}"
+        internal const val ROUTE_PERSON_DETAILS =
+            "person/details?personId={personId}?personName={personName}"
     }
 }

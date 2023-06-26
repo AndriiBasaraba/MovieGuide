@@ -45,6 +45,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
         PersonDetailsDomainData(
             id = details.id,
             alsoKnownAs = details.alsoKnownAs,
+            department = details.knownForDepartment,
             name = details.name,
             avatar = BuildConfig.POSTER_URL + details.profilePath,
             biography = details.biography,

@@ -37,7 +37,7 @@ fun PersonGridCard(
         modifier = Modifier
             .width(cardWidth.dp)
             .wrapContentHeight()
-            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id)) },
+            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id, person.name)) },
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(0.5.dp, Color.Gray),
         backgroundColor = Color.White,
@@ -47,8 +47,7 @@ fun PersonGridCard(
                 model = person.avatar,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(cardWidth.dp)
-                    .height((cardWidth * 1.5).dp),
+                    .size(cardWidth.dp),
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
                 error = painterResource(id = R.drawable.ic_avatar_placeholder)

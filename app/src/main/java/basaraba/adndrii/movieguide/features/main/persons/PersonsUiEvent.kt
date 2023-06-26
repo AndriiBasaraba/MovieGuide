@@ -5,5 +5,5 @@ sealed interface PersonsUiEvent {
     object ReloadPersonsScreen : PersonsUiEvent
     object LoadMorePersons : PersonsUiEvent
     object ChangeScreenView : PersonsUiEvent
-    data class ShowPersonDetails(val id: Long) : PersonsUiEvent
+    data class ShowPersonDetails(val id: Long, val name: String) : PersonsUiEvent
 }

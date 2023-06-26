@@ -19,7 +19,12 @@ fun PersonsScreen(
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
             is PersonsUiEvent.ShowPersonDetails -> {
-                navController.navigate(NavigationRoute.PersonDetails.getRouteNameWithArguments(event.id.toString()))
+                navController.navigate(
+                    NavigationRoute.PersonDetails.getRouteNameWithArguments(
+                        personId = event.id.toString(),
+                        personName = event.name
+                    )
+                )
             }
 
             PersonsUiEvent.ReloadPersonsScreen -> {

@@ -3,6 +3,7 @@ package basaraba.adndrii.movieguide.features.main.model
 data class PersonDetailsUiData(
     val id: Long,
     val alsoKnownAs: List<String>,
+    val department: String,
     val name: String,
     val avatar: String,
     val biography: String,

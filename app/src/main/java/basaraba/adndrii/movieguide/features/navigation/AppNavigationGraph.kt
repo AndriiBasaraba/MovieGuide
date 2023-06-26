@@ -30,6 +30,6 @@ fun NavGraphBuilder.appNavigationGraph(
         MovieDetailScreen()
     }
     composable(PersonDetails.route) {
-        PersonDetailsScreen()
+        PersonDetailsScreen(navController)
     }
 }

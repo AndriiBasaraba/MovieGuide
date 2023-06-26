@@ -40,6 +40,7 @@ class PersonUiMapperImpl : PersonUiMapper {
             PersonDetailsUiData(
                 id = id,
                 alsoKnownAs = alsoKnownAs,
+                department = department,
                 name = name,
                 avatar = avatar,
                 biography = biography,
