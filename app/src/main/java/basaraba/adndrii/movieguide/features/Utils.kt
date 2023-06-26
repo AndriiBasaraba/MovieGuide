@@ -22,3 +22,6 @@ fun String?.isBottomViewShown(): Boolean =
     this == BottomNavItem.ROUTE_MOVIES ||
             this == BottomNavItem.ROUTE_WATCH_LIST ||
             this == BottomNavItem.ROUTE_PERSONS
+
+fun String.orDash(): String =
+    this.ifEmpty { "--" }

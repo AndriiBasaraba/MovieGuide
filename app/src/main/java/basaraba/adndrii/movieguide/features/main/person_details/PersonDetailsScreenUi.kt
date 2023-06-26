@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.PersonDetailsUiData
+import basaraba.adndrii.movieguide.features.orDash
 import coil.compose.AsyncImage
 
 @Composable
@@ -265,7 +266,7 @@ fun PersonDetailsScreenUi(
                                             .align(Alignment.CenterHorizontally)
                                     )
                                     Text(
-                                        text = movie.role,
+                                        text = movie.role.orDash(),
                                         modifier = Modifier
                                             .align(Alignment.CenterHorizontally)
                                             .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
