@@ -49,9 +49,10 @@ class PersonUiMapperImpl : PersonUiMapper {
                 placeOfBirth = placeOfBirth,
                 popularity = popularity,
                 images = images,
-                movieRoles = movieRoles.map { credit ->
+                movieRoles = movieRoles.sortedByDescending { it.popularity } .map { credit ->
                     MovieRoles(
                         id = credit.id,
+                        popularity = credit.popularity,
                         poster = credit.poster,
                         title = credit.title,
                         role = credit.role

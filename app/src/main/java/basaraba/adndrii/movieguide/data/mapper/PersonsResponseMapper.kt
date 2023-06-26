@@ -63,6 +63,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
     private fun mapMovie(input: Credit): MovieRoles =
         MovieRoles(
             id = input.id,
+            popularity = input.popularity,
             poster = BuildConfig.POSTER_URL + input.posterPath,
             title = input.title,
             role = input.character ?: input.job.orEmpty()

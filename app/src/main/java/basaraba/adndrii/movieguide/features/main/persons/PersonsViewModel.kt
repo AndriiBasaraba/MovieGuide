@@ -21,7 +21,7 @@ class PersonsViewModel(
     val uiState: StateFlow<List<PersonUiData>>
         get() = _uiState.asStateFlow()
 
-    private val _isRefreshing = MutableStateFlow(false)
+    private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
@@ -50,12 +50,10 @@ class PersonsViewModel(
 
     private fun loadPersons(page: Int) = with(viewModelScope) {
         launch {
-            _isRefreshing.value = true
             val mappedData =
                 personUiMapper.map(
                     getPopularPersonsUseCase.invoke(page).getOrNull().orEmpty()
                 )
-
             val updatedList = if (page == DEFAULT_PAGE) {
                 mappedData
             } else {

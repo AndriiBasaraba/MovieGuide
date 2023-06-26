@@ -17,6 +17,7 @@ data class PersonDetailsUiData(
 
 data class MovieRoles(
     val id: Long,
+    val popularity: Double,
     val poster: String,
     val title: String,
     val role: String
