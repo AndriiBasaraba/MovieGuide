@@ -1,6 +1,6 @@
-package basaraba.adndrii.movieguide.use_case.model
+package basaraba.adndrii.movieguide.features.main.model
 
-data class PersonDetailsData(
+data class PersonDetailsUiData(
     val id: Long,
     val alsoKnownAs: List<String>,
     val name: String,
