@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 
 @Composable
 fun getCurrentRoute(navController: NavController): String? {
@@ -16,3 +17,8 @@ fun <T> List<T>.isLoadingMoreEnabled(): Boolean =
 
 fun <T> List<T>.getCurrentPage(): Int =
     if (this.isEmpty()) 0 else this.size / 20
+
+fun String?.isBottomViewShown(): Boolean =
+    this == BottomNavItem.ROUTE_MOVIES ||
+            this == BottomNavItem.ROUTE_WATCH_LIST ||
+            this == BottomNavItem.ROUTE_PERSONS

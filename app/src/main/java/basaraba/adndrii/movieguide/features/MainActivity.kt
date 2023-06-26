@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import basaraba.adndrii.movieguide.features.main.MainBottomView
 import basaraba.adndrii.movieguide.features.navigation.AppNavigation
-import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 
 class MainActivity : ComponentActivity() {
 
@@ -24,11 +23,9 @@ class MainActivity : ComponentActivity() {
     private fun SetContent() {
         MovieGuideTheme {
             val navController = rememberNavController()
-            val currentRoute = getCurrentRoute(navController)
-
             Scaffold(
                 bottomBar = {
-                    if (currentRoute == BottomNavItem.ROUTE_MOVIES || currentRoute == BottomNavItem.ROUTE_PERSONS) {
+                    if (getCurrentRoute(navController).isBottomViewShown()) {
                         MainBottomView(navController = navController)
                     }
                 }) {

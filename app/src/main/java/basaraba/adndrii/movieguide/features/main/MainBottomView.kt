@@ -20,6 +20,7 @@ import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 fun MainBottomView(navController: NavController) {
     val bottomItems = listOf(
         BottomNavItem.Movies,
+        BottomNavItem.WatchList,
         BottomNavItem.Persons
     )
 
