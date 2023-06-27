@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.model
+package basaraba.adndrii.movieguide.features.main.persons.model
 
 sealed class PersonUiData(val viewType: ViewType) {
     data class Person(

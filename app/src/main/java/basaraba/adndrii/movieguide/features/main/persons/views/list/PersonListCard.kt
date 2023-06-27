@@ -24,9 +24,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
-import basaraba.adndrii.movieguide.features.theme.Shapes
 import coil.compose.AsyncImage
 
 @Composable
@@ -37,7 +36,7 @@ fun PersonListCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id)) }
+            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id, person.name)) }
             .wrapContentHeight(),
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(0.5.dp, Color.Gray),

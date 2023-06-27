@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.data.repository
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSource
-import basaraba.adndrii.movieguide.use_case.model.PersonDetailsData
+import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class PersonsRepositoryImpl(
         )
     }
 
-    override suspend fun getPersonDetails(personId: Long): PersonDetailsData =
+    override suspend fun getPersonDetails(personId: Long): PersonDetailsDomainData =
         withContext(Dispatchers.IO) {
             val details = async { personsRemoteSource.getPersonDetails(personId) }
             val images = async { personsRemoteSource.getPersonImages(personId) }

@@ -8,7 +8,7 @@ import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
 import basaraba.adndrii.movieguide.use_case.model.MovieRoles
-import basaraba.adndrii.movieguide.use_case.model.PersonDetailsData
+import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 
 interface PersonsResponseMapper {
@@ -17,7 +17,7 @@ interface PersonsResponseMapper {
         details: PersonDetailsResponse,
         images: PersonImagesResponse,
         movieRoles: MovieCreditsResponse
-    ): PersonDetailsData
+    ): PersonDetailsDomainData
 }
 
 class PersonsResponseMapperImpl : PersonsResponseMapper {
@@ -41,10 +41,11 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
         details: PersonDetailsResponse,
         images: PersonImagesResponse,
         movieRoles: MovieCreditsResponse
-    ): PersonDetailsData =
-        PersonDetailsData(
+    ): PersonDetailsDomainData =
+        PersonDetailsDomainData(
             id = details.id,
             alsoKnownAs = details.alsoKnownAs,
+            department = details.knownForDepartment,
             name = details.name,
             avatar = BuildConfig.POSTER_URL + details.profilePath,
             biography = details.biography,
@@ -62,6 +63,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
     private fun mapMovie(input: Credit): MovieRoles =
         MovieRoles(
             id = input.id,
+            popularity = input.popularity,
             poster = BuildConfig.POSTER_URL + input.posterPath,
             title = input.title,
             role = input.character ?: input.job.orEmpty()

@@ -1,9 +1,11 @@
 package basaraba.adndrii.movieguide.features.main.persons
 
+import basaraba.adndrii.movieguide.common.ViewEvent
 
-sealed interface PersonsUiEvent {
-    object ReloadPersonsScreen : PersonsUiEvent
-    object LoadMorePersons : PersonsUiEvent
-    object ChangeScreenView : PersonsUiEvent
-    data class ShowPersonDetails(val id: Long) : PersonsUiEvent
+
+abstract class PersonsUiEvent : ViewEvent {
+    object ReloadPersonsScreen : PersonsUiEvent()
+    object LoadMorePersons : PersonsUiEvent()
+    object ChangeScreenView : PersonsUiEvent()
+    data class ShowPersonDetails(val id: Long, val name: String) : PersonsUiEvent()
 }

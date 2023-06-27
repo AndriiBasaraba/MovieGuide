@@ -1,8 +1,9 @@
 package basaraba.adndrii.movieguide.use_case.model
 
-data class PersonDetailsData(
+data class PersonDetailsDomainData(
     val id: Long,
     val alsoKnownAs: List<String>,
+    val department: String,
     val name: String,
     val avatar: String,
     val biography: String,
@@ -16,6 +17,7 @@ data class PersonDetailsData(
 
 data class MovieRoles(
     val id: Long,
+    val popularity: Double,
     val poster: String,
     val title: String,
     val role: String
