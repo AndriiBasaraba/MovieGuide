@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.data.api.model
 import com.google.gson.annotations.SerializedName
 
 data class PersonImagesResponse(
-    val profiles: List<Image>
+    @SerializedName("profiles") val profiles: List<Image>
 )
 
 data class Image(

@@ -49,6 +49,7 @@ import basaraba.adndrii.movieguide.features.main.person_details.model.MovieRoles
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
 import basaraba.adndrii.movieguide.features.orDash
+import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import coil.compose.AsyncImage
 
 @Composable
@@ -68,7 +69,7 @@ fun PersonDetailsScreenUi(
         }
     ) {
         if (viewState.isLoading) {
-            Text(text = "loading")
+            ProgressBar()
         } else {
             val personDetails = viewState.data
             LazyColumn(
