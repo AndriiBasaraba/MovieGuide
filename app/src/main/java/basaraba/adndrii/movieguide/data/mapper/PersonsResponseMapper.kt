@@ -52,7 +52,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             name = details.name,
             avatar = BuildConfig.POSTER_URL + details.profilePath,
             biography = details.biography,
-            birthday = details.birthday,
+            birthday = details.birthday.orEmpty(),
             deathday = details.deathday.orEmpty(),
             placeOfBirth = details.placeOfBirth.orEmpty(),
             popularity = details.popularity,

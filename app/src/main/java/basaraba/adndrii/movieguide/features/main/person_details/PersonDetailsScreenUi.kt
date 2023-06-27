@@ -200,19 +200,21 @@ private fun PersonHeader(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = stringResource(id = R.string.date_of_birth),
-                modifier = Modifier.padding(top = 8.dp),
-                fontSize = 14.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.W400
-            )
-            Text(
-                text = personDetails.birthday,
-                fontSize = 18.sp,
-                color = Color.DarkGray,
-                fontWeight = FontWeight.W500
-            )
+            if (personDetails.birthday.isNotEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.date_of_birth),
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.W400
+                )
+                Text(
+                    text = personDetails.birthday,
+                    fontSize = 18.sp,
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.W500
+                )
+            }
             if (personDetails.deathday.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.date_of_death),

@@ -6,7 +6,7 @@ data class PersonDetailsResponse(
     @SerializedName("adult") val adult: Boolean,
     @SerializedName("also_known_as") val alsoKnownAs: List<String>,
     @SerializedName("biography") val biography: String,
-    @SerializedName("birthday") val birthday: String,
+    @SerializedName("birthday") val birthday: String?,
     @SerializedName("deathday") val deathday: String?,
     @SerializedName("gender") val gender: Long,
     @SerializedName("homepage") val homepage: String?,
