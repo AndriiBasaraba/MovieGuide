@@ -45,7 +45,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
+import basaraba.adndrii.movieguide.features.main.person_details.model.MovieRoles
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
+import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
 import basaraba.adndrii.movieguide.features.orDash
 import coil.compose.AsyncImage
 
@@ -54,38 +56,21 @@ fun PersonDetailsScreenUi(
     onEvent: (PersonDetailsUiEvent) -> Unit,
     viewState: PersonDetailsState
 ) {
-    val personDetails = viewState.data
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         backgroundColor = Color.White,
         topBar = {
-            TopAppBar(
-                backgroundColor = Color.White,
-                title = {
-                    Text(
-                        text = viewState.personName,
-                        color = Color.Black
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        onEvent(PersonDetailsUiEvent.Back)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
-                }
+            PersonTopBar(
+                onBackClick = { onEvent(PersonDetailsUiEvent.Back) },
+                personName = viewState.personName
             )
         }
     ) {
         if (viewState.isLoading) {
             Text(text = "loading")
         } else {
-            var showMore by remember { mutableStateOf(false) }
-
+            val personDetails = viewState.data
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -94,204 +79,266 @@ fun PersonDetailsScreenUi(
                 contentPadding = PaddingValues(bottom = 8.dp)
             ) {
                 item {
-                    Row(
-                        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
-                    ) {
-                        AsyncImage(
-                            model = personDetails.avatar,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(160.dp)
-                                .height(220.dp)
-                                .clip(RoundedCornerShape(12)),
-                            contentScale = ContentScale.Crop,
-                            placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
-                            error = painterResource(id = R.drawable.ic_avatar_placeholder)
-                        )
-                        Column(
-                            modifier = Modifier.padding(start = 8.dp)
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.known_for),
-                                fontSize = 14.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.W400
-                            )
-                            Text(
-                                text = personDetails.department,
-                                fontSize = 18.sp,
-                                color = Color.DarkGray,
-                                fontWeight = FontWeight.W500
-                            )
-                            Text(
-                                text = stringResource(id = R.string.birthplace),
-                                modifier = Modifier.padding(top = 8.dp),
-                                fontSize = 14.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.W400
-                            )
-                            Text(
-                                text = personDetails.placeOfBirth,
-                                fontSize = 18.sp,
-                                color = Color.DarkGray,
-                                fontWeight = FontWeight.W500,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            Text(
-                                text = stringResource(id = R.string.date_of_birth),
-                                modifier = Modifier.padding(top = 8.dp),
-                                fontSize = 14.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.W400
-                            )
-                            Text(
-                                text = personDetails.birthday,
-                                fontSize = 18.sp,
-                                color = Color.DarkGray,
-                                fontWeight = FontWeight.W500
-                            )
-                            if (personDetails.deathday.isNotEmpty()) {
-                                Text(
-                                    text = stringResource(id = R.string.date_of_death),
-                                    modifier = Modifier.padding(top = 8.dp),
-                                    fontSize = 14.sp,
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.W400
-                                )
-                                Text(
-                                    text = personDetails.deathday,
-                                    fontSize = 18.sp,
-                                    color = Color.DarkGray,
-                                    fontWeight = FontWeight.W500
-                                )
-                            }
-                        }
-                    }
+                    PersonHeader(personDetails = personDetails)
                 }
 
                 item {
-                    Column(modifier = Modifier
-                        .padding(start = 16.dp, end = 16.dp)
-                        .animateContentSize(animationSpec = tween(100))
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) { showMore = !showMore }) {
-                        if (personDetails.biography.isNotEmpty()) {
-                            Text(
-                                text = stringResource(id = R.string.biography),
-                                fontSize = 18.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.W500
-                            )
-                            Text(
-                                text = personDetails.biography,
-                                maxLines = if (showMore) Int.MAX_VALUE else 6,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.padding(top = 4.dp),
-                                fontSize = 14.sp,
-                                color = Color.Black,
-                                fontWeight = FontWeight.W400
-                            )
-                        }
-                    }
+                    PersonBiography(biography = personDetails.biography)
                 }
                 if (personDetails.images.isNotEmpty()) {
                     item {
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            items(personDetails.images) { image ->
-                                AsyncImage(
-                                    model = image,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(170.dp)
-                                        .clip(RoundedCornerShape(12)),
-                                    contentScale = ContentScale.Crop,
-                                    placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
-                                    error = painterResource(id = R.drawable.ic_avatar_placeholder)
-                                )
-                            }
-                        }
+                        PersonImages(images = personDetails.images)
                     }
                 }
                 if (personDetails.movieRoles.isNotEmpty()) {
                     item {
-                        Text(
-                            text = stringResource(
-                                R.string.movies_count,
-                                personDetails.movieRoles.size
-                            ),
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                            fontSize = 18.sp,
-                            color = Color.Black,
-                            fontWeight = FontWeight.W500
+                        PersonMoviesRoles(
+                            onMovieClick = { movieId ->
+                                onEvent(
+                                    PersonDetailsUiEvent.ShowMovieDetails(
+                                        movieId
+                                    )
+                                )
+                            },
+                            movieRoles = personDetails.movieRoles
                         )
-                        LazyRow(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        ) {
-                            items(personDetails.movieRoles) { movie ->
-                                Card(
-                                    modifier = Modifier
-                                        .width(160.dp)
-                                        .wrapContentHeight()
-                                        .wrapContentHeight()
-                                        .clickable {
-                                            onEvent(PersonDetailsUiEvent.ShowMovieDetails(movie.id))
-                                        },
-                                    shape = RoundedCornerShape(12.dp),
-                                    border = BorderStroke(0.5.dp, Color.Gray),
-                                    backgroundColor = Color.White,
-                                ) {
-                                    Column {
-                                        AsyncImage(
-                                            model = movie.poster,
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .width(160.dp)
-                                                .height(220.dp),
-                                            contentScale = ContentScale.Crop,
-                                            placeholder = painterResource(id = R.drawable.ic_image_placeholder),
-                                            error = painterResource(id = R.drawable.ic_image_placeholder)
-                                        )
-                                        Text(
-                                            text = movie.title,
-                                            modifier = Modifier
-                                                .align(Alignment.CenterHorizontally)
-                                                .padding(start = 8.dp, top = 8.dp, end = 8.dp),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            fontSize = 16.sp,
-                                            color = Color.Black,
-                                            fontWeight = FontWeight.W500
-                                        )
-                                        Text(
-                                            text = stringResource(id = R.string.as_in),
-                                            modifier = Modifier
-                                                .align(Alignment.CenterHorizontally)
-                                        )
-                                        Text(
-                                            text = movie.role.orDash(),
-                                            modifier = Modifier
-                                                .align(Alignment.CenterHorizontally)
-                                                .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            fontSize = 16.sp,
-                                            color = Color.DarkGray,
-                                            fontWeight = FontWeight.W500
-                                        )
-                                    }
-                                }
-                            }
-                        }
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PersonTopBar(
+    onBackClick: () -> Unit,
+    personName: String
+) {
+    TopAppBar(
+        backgroundColor = Color.White,
+        title = {
+            Text(
+                text = personName,
+                color = Color.Black
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                onBackClick.invoke()
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = null
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun PersonHeader(
+    personDetails: PersonDetailsUiData
+) {
+    Row(
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+    ) {
+        AsyncImage(
+            model = personDetails.avatar,
+            contentDescription = null,
+            modifier = Modifier
+                .width(160.dp)
+                .height(220.dp)
+                .clip(RoundedCornerShape(12)),
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
+            error = painterResource(id = R.drawable.ic_avatar_placeholder)
+        )
+        Column(
+            modifier = Modifier.padding(start = 8.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.known_for),
+                fontSize = 14.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.W400
+            )
+            Text(
+                text = personDetails.department,
+                fontSize = 18.sp,
+                color = Color.DarkGray,
+                fontWeight = FontWeight.W500
+            )
+            Text(
+                text = stringResource(id = R.string.birthplace),
+                modifier = Modifier.padding(top = 8.dp),
+                fontSize = 14.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.W400
+            )
+            Text(
+                text = personDetails.placeOfBirth,
+                fontSize = 18.sp,
+                color = Color.DarkGray,
+                fontWeight = FontWeight.W500,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = stringResource(id = R.string.date_of_birth),
+                modifier = Modifier.padding(top = 8.dp),
+                fontSize = 14.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.W400
+            )
+            Text(
+                text = personDetails.birthday,
+                fontSize = 18.sp,
+                color = Color.DarkGray,
+                fontWeight = FontWeight.W500
+            )
+            if (personDetails.deathday.isNotEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.date_of_death),
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.W400
+                )
+                Text(
+                    text = personDetails.deathday,
+                    fontSize = 18.sp,
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.W500
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PersonBiography(biography: String) {
+    var showMoreBiography by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier
+        .padding(start = 16.dp, end = 16.dp)
+        .animateContentSize(animationSpec = tween(100))
+        .clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null
+        ) { showMoreBiography = !showMoreBiography }) {
+        if (biography.isNotEmpty()) {
+            Text(
+                text = stringResource(id = R.string.biography),
+                fontSize = 18.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.W500
+            )
+            Text(
+                text = biography,
+                maxLines = if (showMoreBiography) Int.MAX_VALUE else 6,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 4.dp),
+                fontSize = 14.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.W400
+            )
+        }
+    }
+}
+
+@Composable
+private fun PersonImages(images: List<String>) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(images) { image ->
+            AsyncImage(
+                model = image,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(170.dp)
+                    .clip(RoundedCornerShape(12)),
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
+                error = painterResource(id = R.drawable.ic_avatar_placeholder)
+            )
+        }
+    }
+}
+
+@Composable
+private fun PersonMoviesRoles(
+    onMovieClick: (Long) -> Unit,
+    movieRoles: List<MovieRoles>
+) {
+    Text(
+        text = stringResource(
+            R.string.movies_count,
+            movieRoles.size
+        ),
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+        fontSize = 18.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.W500
+    )
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(movieRoles) { movie ->
+            Card(
+                modifier = Modifier
+                    .width(160.dp)
+                    .wrapContentHeight()
+                    .wrapContentHeight()
+                    .clickable {
+                        onMovieClick(movie.id)
+                    },
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(0.5.dp, Color.Gray),
+                backgroundColor = Color.White,
+            ) {
+                Column {
+                    AsyncImage(
+                        model = movie.poster,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(160.dp)
+                            .height(220.dp),
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.ic_image_placeholder),
+                        error = painterResource(id = R.drawable.ic_image_placeholder)
+                    )
+                    Text(
+                        text = movie.title,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(start = 8.dp, top = 8.dp, end = 8.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.W500
+                    )
+                    Text(
+                        text = stringResource(id = R.string.as_in),
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                    )
+                    Text(
+                        text = movie.role.orDash(),
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 16.sp,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.W500
+                    )
                 }
             }
         }
