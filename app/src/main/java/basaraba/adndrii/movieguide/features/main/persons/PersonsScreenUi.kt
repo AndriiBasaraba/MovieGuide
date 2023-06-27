@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -36,6 +38,8 @@ fun PersonsScreenUi(
     val state =
         rememberPullRefreshState(isRefreshing, { onEvent(PersonsUiEvent.ReloadPersonsScreen) })
     val isGridView = screenView == PersonsView.GRID
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
 
     Scaffold(
         modifier = Modifier
@@ -72,9 +76,9 @@ fun PersonsScreenUi(
                 .padding(it)
         ) {
             if (isGridView) {
-                PersonsGridView(onEvent = onEvent, persons = persons)
+                PersonsGridView(onEvent = onEvent, persons = persons, state = gridState)
             } else {
-                PersonsListView(onEvent = onEvent, persons = persons)
+                PersonsListView(onEvent = onEvent, persons = persons, state = listState)
             }
             PullRefreshIndicator(isRefreshing, state, Modifier.align(Alignment.TopCenter))
         }

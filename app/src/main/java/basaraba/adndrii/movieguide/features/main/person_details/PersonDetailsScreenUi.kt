@@ -83,7 +83,6 @@ fun PersonDetailsScreenUi(
         }
     ) {
         var showMore by remember { mutableStateOf(false) }
-        val imageSize = (LocalConfiguration.current.screenWidthDp - 70) / 2
 
         LazyColumn(
             modifier = Modifier
