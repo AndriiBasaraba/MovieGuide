@@ -185,21 +185,23 @@ private fun PersonHeader(
                 color = Color.DarkGray,
                 fontWeight = FontWeight.W500
             )
-            Text(
-                text = stringResource(id = R.string.birthplace),
-                modifier = Modifier.padding(top = 8.dp),
-                fontSize = 14.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.W400
-            )
-            Text(
-                text = personDetails.placeOfBirth,
-                fontSize = 18.sp,
-                color = Color.DarkGray,
-                fontWeight = FontWeight.W500,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+            if (personDetails.placeOfBirth.isNotEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.birthplace),
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontSize = 14.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.W400
+                )
+                Text(
+                    text = personDetails.placeOfBirth,
+                    fontSize = 18.sp,
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.W500,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             if (personDetails.birthday.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.date_of_birth),

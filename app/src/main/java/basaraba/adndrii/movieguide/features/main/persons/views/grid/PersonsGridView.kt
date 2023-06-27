@@ -4,31 +4,32 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
-import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 
 @Composable
 fun PersonsGridView(
-    onEvent: (PersonsUiEvent) -> Unit,
     persons: List<PersonUiData>,
-    state: LazyGridState
+    onEvent: (PersonsUiEvent) -> Unit
 ) {
     LazyVerticalGrid(
-        state = state,
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
     ) {
-        items(persons) {
+        items(
+            items = persons,
+            key = { it.itemId },
+            contentType = { it.viewType }
+        ) {
             when (it.viewType) {
                 ViewType.PERSON -> PersonGridCard(
                     person = it as PersonUiData.Person,
