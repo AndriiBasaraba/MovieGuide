@@ -9,8 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import basaraba.adndrii.movieguide.features.main.model.PersonUiData
-import basaraba.adndrii.movieguide.features.main.model.ViewType
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
 import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 
 @Composable

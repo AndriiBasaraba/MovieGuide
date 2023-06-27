@@ -12,9 +12,7 @@ fun PersonsScreen(
     navController: NavController,
     viewModel: PersonsViewModel = koinViewModel()
 ) {
-    val persons by viewModel.uiState.collectAsStateWithLifecycle()
-    val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
-    val screenView by viewModel.screenView.collectAsStateWithLifecycle()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     val onEvent: (PersonsUiEvent) -> Unit = { event ->
         when (event) {
@@ -27,23 +25,13 @@ fun PersonsScreen(
                 )
             }
 
-            PersonsUiEvent.ReloadPersonsScreen -> {
-                viewModel.refreshScreen()
-            }
-
-            PersonsUiEvent.LoadMorePersons -> {
-                viewModel.loadNextPage()
-            }
-
-            PersonsUiEvent.ChangeScreenView -> {
-                viewModel.changeScreenView()
+            else -> {
+                viewModel.setEvent(event)
             }
         }
     }
     PersonsScreenUi(
         onEvent = onEvent,
-        persons = persons,
-        isRefreshing = isRefreshing,
-        screenView = screenView
+        viewState = viewState
     )
 }

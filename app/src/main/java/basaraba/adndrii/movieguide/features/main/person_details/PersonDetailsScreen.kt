@@ -12,8 +12,7 @@ fun PersonDetailsScreen(
     navController: NavController,
     viewModel: PersonDetailsViewModel = koinViewModel()
 ) {
-    val personName by viewModel.personName.collectAsStateWithLifecycle()
-    val personDetails by viewModel.personDetailsState.collectAsStateWithLifecycle()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     val onEvent: (PersonDetailsUiEvent) -> Unit = { event ->
         when (event) {
@@ -27,13 +26,8 @@ fun PersonDetailsScreen(
         }
     }
 
-    val data = personDetails.data
-    if (data != null) {
-        PersonDetailsScreenUi(
-            onEvent = onEvent,
-            personName = personName,
-            personDetails = data
-
-        )
-    }
+    PersonDetailsScreenUi(
+        onEvent = onEvent,
+        viewState = viewState
+    )
 }

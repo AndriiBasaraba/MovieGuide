@@ -1,72 +1,94 @@
 package basaraba.adndrii.movieguide.features.main.persons
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import basaraba.adndrii.movieguide.common.BaseViewModel
 import basaraba.adndrii.movieguide.features.getCurrentPage
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
-import basaraba.adndrii.movieguide.features.main.model.PersonUiData
-import basaraba.adndrii.movieguide.features.main.model.ViewType
+import basaraba.adndrii.movieguide.features.main.persons.PersonsView.Companion.getChangedView
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonsState
+import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
 import basaraba.adndrii.movieguide.use_case.persons.GetPopularPersonsUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PersonsViewModel(
     private val getPopularPersonsUseCase: GetPopularPersonsUseCase,
     private val personUiMapper: PersonUiMapper
-) : ViewModel() {
+) : BaseViewModel<PersonsUiEvent, PersonsState>() {
 
-    private val _uiState = MutableStateFlow<List<PersonUiData>>(emptyList())
-    val uiState: StateFlow<List<PersonUiData>>
-        get() = _uiState.asStateFlow()
+    private var personsJob: Job? = null
 
-    private val _isRefreshing = MutableStateFlow(true)
-    val isRefreshing: StateFlow<Boolean>
-        get() = _isRefreshing.asStateFlow()
+    private val persons = MutableStateFlow(PersonsState())
 
-    private val _screenView = MutableStateFlow(PersonsView.GRID)
-    val screenView: StateFlow<PersonsView>
-        get() = _screenView.asStateFlow()
+    override val viewState: StateFlow<PersonsState> = persons.map {
+        PersonsState(
+            isRefreshing = it.isRefreshing,
+            screenView = it.screenView,
+            data = it.data
+        )
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, PersonsState())
 
-    fun changeScreenView() {
-        _screenView.value = if (_screenView.value == PersonsView.GRID) {
-            PersonsView.LIST
-        } else {
-            PersonsView.GRID
-        }
-    }
-
-    fun loadNextPage() {
-        val nextPage = _uiState.value.getCurrentPage() + DEFAULT_PAGE
-        _uiState.value = _uiState.value.filter { it.viewType == ViewType.PERSON } +
-                PersonUiData.LoadingMore(isLoading = true)
-        loadPersons(nextPage)
-    }
-
-    fun refreshScreen() {
-        loadPersons(DEFAULT_PAGE)
-    }
-
-    private fun loadPersons(page: Int) = with(viewModelScope) {
-        launch {
-            val mappedData =
-                personUiMapper.map(
-                    getPopularPersonsUseCase.invoke(page).getOrNull().orEmpty()
-                )
-            val updatedList = if (page == DEFAULT_PAGE) {
-                mappedData
-            } else {
-                _uiState.value.filter { it.viewType == ViewType.PERSON } + mappedData
+    override fun handleEvent(event: PersonsUiEvent) {
+        when (event) {
+            PersonsUiEvent.ChangeScreenView -> {
+                persons.update {
+                    it.copy(
+                        screenView = it.screenView.getChangedView()
+                    )
+                }
             }
-            _uiState.value = updatedList
-            _isRefreshing.value = false
+
+            PersonsUiEvent.ReloadPersonsScreen -> {
+                persons.update { it.copy(isRefreshing = true) }
+                loadPersons(DEFAULT_PAGE)
+            }
+
+            PersonsUiEvent.LoadMorePersons -> {
+                val nextPage = persons.value.data.getCurrentPage() + DEFAULT_PAGE
+                persons.update {
+                    it.copy(
+                        data = getPersonsWithoutFooter() + PersonUiData.LoadingMore(isLoading = true)
+                    )
+                }
+                loadPersons(nextPage)
+            }
         }
     }
 
     init {
         loadPersons(DEFAULT_PAGE)
     }
+
+    private fun loadPersons(page: Int) {
+        personsJob?.cancel()
+        personsJob = viewModelScope.launch {
+            getPopularPersonsUseCase.invoke(page).onSuccess { result ->
+                val mappedData = personUiMapper.map(result)
+                val updatedList = if (page == DEFAULT_PAGE) {
+                    mappedData
+                } else {
+                    getPersonsWithoutFooter() + mappedData
+                }
+
+                persons.update {
+                    it.copy(
+                        isRefreshing = false,
+                        data = updatedList
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getPersonsWithoutFooter(): List<PersonUiData> =
+        persons.value.data.filter { person -> person.viewType == ViewType.PERSON }
 
     companion object {
         private const val DEFAULT_PAGE = 1
