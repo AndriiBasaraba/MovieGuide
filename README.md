@@ -2,7 +2,7 @@
 Simple showcase Android application (WIP)
 
 # Main information
-Architecture: Clean + MVI
+Architecture: Clean + MVI /n
 UI: JetpackCompose
 DI: Koin
 Kotlin coroutines, Flow
