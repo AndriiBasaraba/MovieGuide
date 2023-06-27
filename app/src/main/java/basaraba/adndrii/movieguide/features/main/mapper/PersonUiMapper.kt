@@ -1,9 +1,9 @@
 package basaraba.adndrii.movieguide.features.main.mapper
 
 import basaraba.adndrii.movieguide.features.isLoadingMoreEnabled
-import basaraba.adndrii.movieguide.features.main.model.MovieRoles
-import basaraba.adndrii.movieguide.features.main.model.PersonDetailsUiData
-import basaraba.adndrii.movieguide.features.main.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.person_details.model.MovieRoles
+import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 

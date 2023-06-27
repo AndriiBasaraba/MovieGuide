@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.model.PersonUiData
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonsState
 import basaraba.adndrii.movieguide.features.main.persons.views.grid.PersonsGridView
 import basaraba.adndrii.movieguide.features.main.persons.views.list.PersonsListView
 
@@ -31,13 +31,13 @@ import basaraba.adndrii.movieguide.features.main.persons.views.list.PersonsListV
 @Composable
 fun PersonsScreenUi(
     onEvent: (PersonsUiEvent) -> Unit,
-    persons: List<PersonUiData>,
-    isRefreshing: Boolean,
-    screenView: PersonsView
+    viewState: PersonsState
 ) {
     val state =
-        rememberPullRefreshState(isRefreshing, { onEvent(PersonsUiEvent.ReloadPersonsScreen) })
-    val isGridView = screenView == PersonsView.GRID
+        rememberPullRefreshState(
+            viewState.isRefreshing,
+            { onEvent(PersonsUiEvent.ReloadPersonsScreen) })
+    val isGridView = viewState.screenView == PersonsView.GRID
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
 
@@ -76,11 +76,11 @@ fun PersonsScreenUi(
                 .padding(it)
         ) {
             if (isGridView) {
-                PersonsGridView(onEvent = onEvent, persons = persons, state = gridState)
+                PersonsGridView(onEvent = onEvent, persons = viewState.data, state = gridState)
             } else {
-                PersonsListView(onEvent = onEvent, persons = persons, state = listState)
+                PersonsListView(onEvent = onEvent, persons = viewState.data, state = listState)
             }
-            PullRefreshIndicator(isRefreshing, state, Modifier.align(Alignment.TopCenter))
+            PullRefreshIndicator(viewState.isRefreshing, state, Modifier.align(Alignment.TopCenter))
         }
     }
 }
