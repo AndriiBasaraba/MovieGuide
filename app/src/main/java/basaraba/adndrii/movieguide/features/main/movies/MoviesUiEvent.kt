@@ -1,7 +1,9 @@
 package basaraba.adndrii.movieguide.features.main.movies
 
+import basaraba.adndrii.movieguide.common.ViewEvent
 
-sealed interface MoviesUiEvent {
-    object ReloadMoviesScreen : MoviesUiEvent
-    data class ShowMovieDetails(val id: Long) : MoviesUiEvent
+
+abstract class MoviesUiEvent : ViewEvent {
+    object ReloadMoviesScreen : MoviesUiEvent()
+    data class ShowMovieDetails(val id: Long) : MoviesUiEvent()
 }

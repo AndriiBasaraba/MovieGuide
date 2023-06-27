@@ -12,7 +12,8 @@ data class PersonDetailsUiData(
     val placeOfBirth: String,
     val popularity: Double,
     val images: List<String>,
-    val movieRoles: List<MovieRoles>
+    val movieRoles: List<RoleCreditsUi>,
+    val tvShowRoles: List<RoleCreditsUi>
 ) {
     companion object {
         val initial = PersonDetailsUiData(
@@ -27,12 +28,13 @@ data class PersonDetailsUiData(
             placeOfBirth = "",
             popularity = 0.0,
             images = emptyList(),
-            movieRoles = emptyList()
+            movieRoles = emptyList(),
+            tvShowRoles = emptyList()
         )
     }
 }
 
-data class MovieRoles(
+data class RoleCreditsUi(
     val id: Long,
     val popularity: Double,
     val poster: String,

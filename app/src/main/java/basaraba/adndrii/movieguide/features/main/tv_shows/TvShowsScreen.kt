@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.movies
+package basaraba.adndrii.movieguide.features.main.tv_shows
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,30 +13,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun MoviesScreen(
-    navController: NavController,
-    viewModel: MoviesViewModel = koinViewModel()
+fun TvShowsScreen(
+    navController: NavController
 ) {
-    val onEvent: (MoviesUiEvent) -> Unit = { event ->
-        when (event) {
-            is MoviesUiEvent.ShowMovieDetails -> {
-                navController.navigate(NavigationRoute.MovieDetails.getRouteNameWithArguments(event.id.toString()))
-            }
-
-            MoviesUiEvent.ReloadMoviesScreen -> {
-                // ignored
-            }
-        }
-    }
-    MoviesScreenUi(onEvent = onEvent)
+    TvShowsScreenUi()
 }
 
 @Composable
-fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
+fun TvShowsScreenUi() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -44,7 +30,7 @@ fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
                 backgroundColor = Color.White,
                 title = {
                     Text(
-                        text = stringResource(id = R.string.movies),
+                        text = stringResource(id = R.string.tv_shows),
                         color = Color.Black
                     )
                 }
@@ -56,10 +42,8 @@ fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
                 .background(Color.White)
                 .padding(it)
         ) {
-            Text(
-                text = "here will be list of movies",
-                color = Color.Black,
-            )
+            Text(text = "here will be list of tv shows", color = Color.Black)
         }
     }
 }
+

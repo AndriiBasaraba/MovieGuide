@@ -27,11 +27,13 @@ class PersonsRepositoryImpl(
             val details = async { personsRemoteSource.getPersonDetails(personId) }
             val images = async { personsRemoteSource.getPersonImages(personId) }
             val movieCredits = async { personsRemoteSource.getPersonMovieCredits(personId) }
+            val tvShowCredits = async { personsRemoteSource.getPersonTvShowCredits(personId) }
 
             return@withContext personsResponseMapper.mapDetails(
                 details.await(),
                 images.await(),
-                movieCredits.await()
+                movieCredits.await(),
+                tvShowCredits.await()
             )
         }
 }

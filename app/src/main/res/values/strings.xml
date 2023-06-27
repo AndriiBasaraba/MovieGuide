@@ -3,6 +3,7 @@
     // Bottom view items
     <string name="movies">Movies</string>
     <string name="watch_list">Watch List</string>
+    <string name="tv_shows">TV Shows</string>
     <string name="persons">Persons</string>
     <string name="popular_persons">Popular persons</string>
 
@@ -13,6 +14,7 @@
     <string name="date_of_death">Date of Death</string>
 
     <string name="movies_count">Movies: (%d)</string>
+    <string name="tv_shows_count">TV Shows: (%d)</string>
     <string name="biography">Biography:</string>
     <string name="as_in">as</string>
 

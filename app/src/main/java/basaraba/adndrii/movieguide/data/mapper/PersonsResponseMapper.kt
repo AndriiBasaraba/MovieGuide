@@ -3,20 +3,22 @@ package basaraba.adndrii.movieguide.data.mapper
 import basaraba.adndrii.movieguide.BuildConfig
 import basaraba.adndrii.movieguide.data.api.model.Credit
 import basaraba.adndrii.movieguide.data.api.model.KnownFor
-import basaraba.adndrii.movieguide.data.api.model.MovieCreditsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
-import basaraba.adndrii.movieguide.use_case.model.MovieRoles
+import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
+import basaraba.adndrii.movieguide.features.isActor
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
+import basaraba.adndrii.movieguide.use_case.model.RoleCredits
 
 interface PersonsResponseMapper {
     fun map(response: List<PersonsResponse>): List<PersonDomainData>
     fun mapDetails(
         details: PersonDetailsResponse,
         images: PersonImagesResponse,
-        movieRoles: MovieCreditsResponse
+        movieRoles: RoleCreditsResponse,
+        tvShowRoles: RoleCreditsResponse
     ): PersonDetailsDomainData
 }
 
@@ -40,7 +42,8 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
     override fun mapDetails(
         details: PersonDetailsResponse,
         images: PersonImagesResponse,
-        movieRoles: MovieCreditsResponse
+        movieRoles: RoleCreditsResponse,
+        tvShowRoles: RoleCreditsResponse
     ): PersonDetailsDomainData =
         PersonDetailsDomainData(
             id = details.id,
@@ -54,18 +57,23 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             placeOfBirth = details.placeOfBirth.orEmpty(),
             popularity = details.popularity,
             images = images.profiles.map { BuildConfig.POSTER_URL + it.filePath },
-            movieRoles = mapMovieRoles(movieRoles)
+            movieRoles = mapRoleCredits(movieRoles, details.knownForDepartment.isActor()),
+            tvShowRoles = mapRoleCredits(tvShowRoles, details.knownForDepartment.isActor())
         )
 
-    private fun mapMovieRoles(input: MovieCreditsResponse): List<MovieRoles> =
-        input.cast.map { mapMovie(it) } + input.crew.map { mapMovie(it) }
+    private fun mapRoleCredits(input: RoleCreditsResponse, isActor: Boolean): List<RoleCredits> =
+        if (isActor) {
+            input.cast.orEmpty().map { mapCredit(it) }
+        } else {
+            input.crew.orEmpty().map { mapCredit(it) }
+        }
 
-    private fun mapMovie(input: Credit): MovieRoles =
-        MovieRoles(
+    private fun mapCredit(input: Credit): RoleCredits =
+        RoleCredits(
             id = input.id,
             popularity = input.popularity,
             poster = BuildConfig.POSTER_URL + input.posterPath,
-            title = input.title,
+            title = input.title ?: input.name.orEmpty(),
             role = input.character ?: input.job.orEmpty()
         )
 }

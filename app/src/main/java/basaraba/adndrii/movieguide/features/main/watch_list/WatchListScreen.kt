@@ -24,6 +24,7 @@ fun WatchListScreen(
 @Composable
 fun WatchListScreenUi() {
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 backgroundColor = Color.White,
@@ -39,10 +40,9 @@ fun WatchListScreenUi() {
         Box(
             modifier = Modifier
                 .background(Color.White)
-                .fillMaxSize()
                 .padding(it)
         ) {
-            Text(text = "List of movies that you saved", color = Color.White)
+            Text(text = "List of movies and tv shows that you saved", color = Color.Black)
         }
     }
 }

@@ -21,6 +21,7 @@ import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 fun MainBottomView(navController: NavController) {
     val bottomItems = listOf(
         BottomNavItem.Movies,
+        BottomNavItem.TvShows,
         BottomNavItem.WatchList,
         BottomNavItem.Persons
     )
@@ -29,14 +30,13 @@ fun MainBottomView(navController: NavController) {
         backgroundColor = Color.White,
         contentColor = Color.Black,
     ) {
-
         bottomItems.forEach { item ->
             BottomNavigationItem(
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
                         contentDescription = null,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(26.dp)
                     )
                 },
                 label = {

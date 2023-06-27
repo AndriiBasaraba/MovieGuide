@@ -45,9 +45,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.person_details.model.MovieRoles
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
+import basaraba.adndrii.movieguide.features.main.person_details.model.RoleCreditsUi
 import basaraba.adndrii.movieguide.features.orDash
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import coil.compose.AsyncImage
@@ -101,7 +101,23 @@ fun PersonDetailsScreenUi(
                                     )
                                 )
                             },
-                            movieRoles = personDetails.movieRoles
+                            creditsRoles = personDetails.movieRoles,
+                            type = RoleType.MOVIE
+                        )
+                    }
+                }
+                if (personDetails.tvShowRoles.isNotEmpty()) {
+                    item {
+                        PersonMoviesRoles(
+                            onTvShowClick = { tvShowId ->
+                                onEvent(
+                                    PersonDetailsUiEvent.ShowTvShowDetails(
+                                        tvShowId
+                                    )
+                                )
+                            },
+                            creditsRoles = personDetails.tvShowRoles,
+                            type = RoleType.TV_SHOW
                         )
                     }
                 }
@@ -271,13 +287,15 @@ private fun PersonImages(images: List<String>) {
 
 @Composable
 private fun PersonMoviesRoles(
-    onMovieClick: (Long) -> Unit,
-    movieRoles: List<MovieRoles>
+    onMovieClick: ((Long) -> Unit)? = null,
+    onTvShowClick: ((Long) -> Unit)? = null,
+    creditsRoles: List<RoleCreditsUi>,
+    type: RoleType
 ) {
     Text(
         text = stringResource(
-            R.string.movies_count,
-            movieRoles.size
+            if (type == RoleType.MOVIE) R.string.movies_count else R.string.tv_shows_count,
+            creditsRoles.size
         ),
         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         fontSize = 18.sp,
@@ -289,14 +307,18 @@ private fun PersonMoviesRoles(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        items(movieRoles) { movie ->
+        items(creditsRoles) { credit ->
             Card(
                 modifier = Modifier
                     .width(160.dp)
                     .wrapContentHeight()
                     .wrapContentHeight()
                     .clickable {
-                        onMovieClick(movie.id)
+                        if (type == RoleType.MOVIE) {
+                            onMovieClick?.invoke(credit.id)
+                        } else {
+                            onTvShowClick?.invoke(credit.id)
+                        }
                     },
                 shape = RoundedCornerShape(12.dp),
                 border = BorderStroke(0.5.dp, Color.Gray),
@@ -304,7 +326,7 @@ private fun PersonMoviesRoles(
             ) {
                 Column {
                     AsyncImage(
-                        model = movie.poster,
+                        model = credit.poster,
                         contentDescription = null,
                         modifier = Modifier
                             .width(160.dp)
@@ -314,7 +336,7 @@ private fun PersonMoviesRoles(
                         error = painterResource(id = R.drawable.ic_image_placeholder)
                     )
                     Text(
-                        text = movie.title,
+                        text = credit.title,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(start = 8.dp, top = 8.dp, end = 8.dp),
@@ -330,7 +352,7 @@ private fun PersonMoviesRoles(
                             .align(Alignment.CenterHorizontally)
                     )
                     Text(
-                        text = movie.role.orDash(),
+                        text = credit.role.orDash(),
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),

@@ -12,10 +12,11 @@ data class PersonDetailsDomainData(
     val placeOfBirth: String,
     val popularity: Double,
     val images: List<String>,
-    val movieRoles: List<MovieRoles>
+    val movieRoles: List<RoleCredits>,
+    val tvShowRoles: List<RoleCredits>
 )
 
-data class MovieRoles(
+data class RoleCredits(
     val id: Long,
     val popularity: Double,
     val poster: String,

@@ -1,10 +1,10 @@
 package basaraba.adndrii.movieguide.data.api
 
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieCreditsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
+import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -32,5 +32,11 @@ interface PersonApi {
     suspend fun getPersonMovieCredits(
         @Path("person_id") personId: Long,
         @Query("language") language: String = "en-US"
-    ): MovieCreditsResponse
+    ): RoleCreditsResponse
+
+    @GET("person/{person_id}/tv_credits")
+    suspend fun getPersonTvShowCredits(
+        @Path("person_id") personId: Long,
+        @Query("language") language: String = "en-US"
+    ): RoleCreditsResponse
 }

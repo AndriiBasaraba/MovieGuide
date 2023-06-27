@@ -21,7 +21,10 @@ fun <T> List<T>.getCurrentPage(): Int =
 fun String?.isBottomViewShown(): Boolean =
     this == BottomNavItem.ROUTE_MOVIES ||
             this == BottomNavItem.ROUTE_WATCH_LIST ||
-            this == BottomNavItem.ROUTE_PERSONS
+            this == BottomNavItem.ROUTE_PERSONS ||
+            this == BottomNavItem.ROUTE_TV_SHOWS
 
 fun String.orDash(): String =
     this.ifEmpty { "--" }
+
+fun String.isActor(): Boolean = this == "Acting"

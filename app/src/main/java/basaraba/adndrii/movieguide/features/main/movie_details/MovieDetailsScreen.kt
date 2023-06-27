@@ -14,7 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun MovieDetailScreen(
+fun MovieDetailsScreen(
     viewModel: MovieDetailsViewModel = koinViewModel()
 ) {
     Box(

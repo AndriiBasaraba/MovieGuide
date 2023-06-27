@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.source.remote.persons
 
 import basaraba.adndrii.movieguide.data.api.PersonApi
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieCreditsResponse
+import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
@@ -19,6 +19,9 @@ class PersonsRemoteSourceImpl(
     override suspend fun getPersonImages(personId: Long): PersonImagesResponse =
         api.getPersonImages(personId = personId)
 
-    override suspend fun getPersonMovieCredits(personId: Long): MovieCreditsResponse =
+    override suspend fun getPersonMovieCredits(personId: Long): RoleCreditsResponse =
         api.getPersonMovieCredits(personId = personId)
+
+    override suspend fun getPersonTvShowCredits(personId: Long): RoleCreditsResponse =
+        api.getPersonTvShowCredits(personId = personId)
 }
