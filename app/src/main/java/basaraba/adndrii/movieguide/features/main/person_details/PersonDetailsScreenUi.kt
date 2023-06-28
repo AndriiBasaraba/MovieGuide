@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -28,6 +29,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,8 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,7 +60,7 @@ fun PersonDetailsScreenUi(
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
             PersonTopBar(
                 onBackClick = { onEvent(PersonDetailsUiEvent.Back) },
@@ -132,11 +132,11 @@ private fun PersonTopBar(
     personName: String
 ) {
     TopAppBar(
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.colorScheme.background,
         title = {
             Text(
                 text = personName,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.secondary
             )
         },
         navigationIcon = {
@@ -145,7 +145,8 @@ private fun PersonTopBar(
             }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -159,30 +160,36 @@ private fun PersonHeader(
     Row(
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
     ) {
-        AsyncImage(
-            model = personDetails.avatar,
-            contentDescription = null,
-            modifier = Modifier
-                .width(160.dp)
-                .height(220.dp)
-                .clip(RoundedCornerShape(12)),
-            contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
-            error = painterResource(id = R.drawable.ic_avatar_placeholder)
-        )
+        Card(
+            modifier = Modifier.wrapContentSize(),
+            shape = RoundedCornerShape(12.dp),
+            border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
+            backgroundColor = MaterialTheme.colorScheme.background
+        ) {
+            AsyncImage(
+                model = personDetails.avatar,
+                contentDescription = null,
+                modifier = Modifier
+                    .width(160.dp)
+                    .height(220.dp),
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
+                error = painterResource(id = R.drawable.ic_avatar_placeholder)
+            )
+        }
         Column(
             modifier = Modifier.padding(start = 8.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.known_for),
                 fontSize = 14.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.W400
             )
             Text(
                 text = personDetails.department,
                 fontSize = 18.sp,
-                color = Color.DarkGray,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.W500
             )
             if (personDetails.placeOfBirth.isNotEmpty()) {
@@ -190,13 +197,13 @@ private fun PersonHeader(
                     text = stringResource(id = R.string.birthplace),
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W400
                 )
                 Text(
                     text = personDetails.placeOfBirth,
                     fontSize = 18.sp,
-                    color = Color.DarkGray,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W500,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -207,13 +214,13 @@ private fun PersonHeader(
                     text = stringResource(id = R.string.date_of_birth),
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W400
                 )
                 Text(
                     text = personDetails.birthday,
                     fontSize = 18.sp,
-                    color = Color.DarkGray,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W500
                 )
             }
@@ -222,13 +229,13 @@ private fun PersonHeader(
                     text = stringResource(id = R.string.date_of_death),
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W400
                 )
                 Text(
                     text = personDetails.deathday,
                     fontSize = 18.sp,
-                    color = Color.DarkGray,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W500
                 )
             }
@@ -251,7 +258,7 @@ private fun PersonBiography(biography: String) {
             Text(
                 text = stringResource(id = R.string.biography),
                 fontSize = 18.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.W500
             )
             Text(
@@ -260,7 +267,7 @@ private fun PersonBiography(biography: String) {
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(top = 4.dp),
                 fontSize = 14.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.secondary,
                 fontWeight = FontWeight.W400
             )
         }
@@ -275,16 +282,21 @@ private fun PersonImages(images: List<String>) {
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
         items(images) { image ->
-            AsyncImage(
-                model = image,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(170.dp)
-                    .clip(RoundedCornerShape(12)),
-                contentScale = ContentScale.Crop,
-                placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
-                error = painterResource(id = R.drawable.ic_avatar_placeholder)
-            )
+            Card(
+                modifier = Modifier.wrapContentSize(),
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
+                backgroundColor = MaterialTheme.colorScheme.background
+            ) {
+                AsyncImage(
+                    model = image,
+                    contentDescription = null,
+                    modifier = Modifier.size(170.dp),
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
+                    error = painterResource(id = R.drawable.ic_avatar_placeholder)
+                )
+            }
         }
     }
 }
@@ -303,7 +315,7 @@ private fun PersonMoviesRoles(
         ),
         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
         fontSize = 18.sp,
-        color = Color.Black,
+        color = MaterialTheme.colorScheme.secondary,
         fontWeight = FontWeight.W500
     )
     LazyRow(
@@ -325,8 +337,8 @@ private fun PersonMoviesRoles(
                         }
                     },
                 shape = RoundedCornerShape(12.dp),
-                border = BorderStroke(0.5.dp, Color.Gray),
-                backgroundColor = Color.White,
+                border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
+                backgroundColor = MaterialTheme.colorScheme.background
             ) {
                 Column {
                     AsyncImage(
@@ -347,13 +359,13 @@ private fun PersonMoviesRoles(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 16.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W500
                     )
                     Text(
                         text = stringResource(id = R.string.as_in),
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        color = MaterialTheme.colorScheme.secondary
                     )
                     Text(
                         text = credit.role.orDash(),
@@ -363,7 +375,7 @@ private fun PersonMoviesRoles(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 16.sp,
-                        color = Color.DarkGray,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W500
                     )
                 }

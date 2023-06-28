@@ -23,7 +23,7 @@ fun ProgressBar(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.Center)
                 .size(32.dp),
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 }

@@ -1,15 +1,14 @@
 package basaraba.adndrii.movieguide.features.main.movies
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
@@ -39,13 +38,14 @@ fun MoviesScreen(
 fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
-                backgroundColor = Color.White,
+                backgroundColor = MaterialTheme.colorScheme.background,
                 title = {
                     Text(
                         text = stringResource(id = R.string.movies),
-                        color = Color.Black
+                        color = MaterialTheme.colorScheme.secondary
                     )
                 }
             )
@@ -53,12 +53,11 @@ fun MoviesScreenUi(onEvent: (MoviesUiEvent) -> Unit) {
     ) {
         Box(
             modifier = Modifier
-                .background(Color.White)
                 .padding(it)
         ) {
             Text(
                 text = "here will be list of movies",
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }

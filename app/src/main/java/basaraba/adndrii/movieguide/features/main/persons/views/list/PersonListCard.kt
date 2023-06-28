@@ -12,11 +12,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -24,8 +24,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
+import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import coil.compose.AsyncImage
 
 @Composable
@@ -39,8 +39,8 @@ fun PersonListCard(
             .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id, person.name)) }
             .wrapContentHeight(),
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(0.5.dp, Color.Gray),
-        backgroundColor = Color.White,
+        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
+        backgroundColor = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Row {
@@ -63,7 +63,7 @@ fun PersonListCard(
                         modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 8.dp),
                         text = person.name,
                         fontSize = 22.sp,
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W500,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -72,7 +72,7 @@ fun PersonListCard(
                         modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
                         text = person.knownFor,
                         fontSize = 14.sp,
-                        color = Color.DarkGray,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W400,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
