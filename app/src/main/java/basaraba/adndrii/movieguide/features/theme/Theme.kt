@@ -19,7 +19,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     //primary color
-    primary = Color.Blue,
+    primary = Purple,
     //background color
     background = Color.White,
     //text color
