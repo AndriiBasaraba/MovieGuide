@@ -57,6 +57,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             placeOfBirth = details.placeOfBirth.orEmpty(),
             popularity = details.popularity,
             images = images.profiles.map { BuildConfig.POSTER_URL + it.filePath },
+            imdbId = details.imdbId.orEmpty(),
             movieRoles = mapRoleCredits(movieRoles, details.knownForDepartment.isActor()),
             tvShowRoles = mapRoleCredits(tvShowRoles, details.knownForDepartment.isActor())
         )
@@ -74,6 +75,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             popularity = input.popularity,
             poster = BuildConfig.POSTER_URL + input.posterPath,
             title = input.title ?: input.name.orEmpty(),
-            role = input.character ?: input.job.orEmpty()
+            role = input.character ?: input.job.orEmpty(),
+            voteAverage = input.voteAverage
         )
 }

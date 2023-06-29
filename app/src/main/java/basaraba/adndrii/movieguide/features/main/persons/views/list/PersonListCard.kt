@@ -23,19 +23,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import coil.compose.AsyncImage
 
 @Composable
 fun PersonListCard(
     person: PersonUiData.Person,
-    onEvent: (PersonsUiEvent) -> Unit
+    onClick: (Long, String) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id, person.name)) }
+            .clickable { onClick.invoke(person.id, person.name) }
             .wrapContentHeight(),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),

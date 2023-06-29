@@ -12,6 +12,7 @@ data class PersonDetailsDomainData(
     val placeOfBirth: String,
     val popularity: Double,
     val images: List<String>,
+    val imdbId: String,
     val movieRoles: List<RoleCredits>,
     val tvShowRoles: List<RoleCredits>
 )
@@ -21,5 +22,6 @@ data class RoleCredits(
     val popularity: Double,
     val poster: String,
     val title: String,
-    val role: String
+    val role: String,
+    val voteAverage: Double
 )

@@ -17,5 +17,6 @@ data class Credit(
     @SerializedName("name") val name: String?,
     @SerializedName("episode_count") val episodeCount: Int?,
     @SerializedName("character") val character: String?,
-    @SerializedName("job") val job: String?
+    @SerializedName("job") val job: String?,
+    @SerializedName("vote_average") val voteAverage: Double
 )

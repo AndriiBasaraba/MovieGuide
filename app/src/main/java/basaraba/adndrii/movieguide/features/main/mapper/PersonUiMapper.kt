@@ -50,6 +50,7 @@ class PersonUiMapperImpl : PersonUiMapper {
                 placeOfBirth = placeOfBirth,
                 popularity = popularity,
                 images = images,
+                imdbId = imdbId,
                 movieRoles = sortAndMapRoles(movieRoles),
                 tvShowRoles = sortAndMapRoles(tvShowRoles)
             )
@@ -65,6 +66,7 @@ class PersonUiMapperImpl : PersonUiMapper {
         popularity = credit.popularity,
         poster = credit.poster,
         title = credit.title,
-        role = credit.role
+        role = credit.role,
+        voteAverage = credit.voteAverage
     )
 }

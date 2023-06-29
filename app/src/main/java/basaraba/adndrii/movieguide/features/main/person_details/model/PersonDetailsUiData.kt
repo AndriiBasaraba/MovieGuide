@@ -12,6 +12,7 @@ data class PersonDetailsUiData(
     val placeOfBirth: String,
     val popularity: Double,
     val images: List<String>,
+    val imdbId: String,
     val movieRoles: List<RoleCreditsUi>,
     val tvShowRoles: List<RoleCreditsUi>
 ) {
@@ -28,6 +29,7 @@ data class PersonDetailsUiData(
             placeOfBirth = "",
             popularity = 0.0,
             images = emptyList(),
+            imdbId = "",
             movieRoles = emptyList(),
             tvShowRoles = emptyList()
         )
@@ -39,5 +41,6 @@ data class RoleCreditsUi(
     val popularity: Double,
     val poster: String,
     val title: String,
-    val role: String
+    val role: String,
+    val voteAverage: Double,
 )
