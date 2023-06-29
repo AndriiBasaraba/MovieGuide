@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,7 @@ fun MainBottomView(navController: NavController) {
     )
 
     BottomNavigation(
-        backgroundColor = MaterialTheme.colorScheme.background
+        backgroundColor = MaterialTheme.colorScheme.surface
     ) {
         bottomItems.forEach { item ->
             BottomNavigationItem(
@@ -44,8 +45,8 @@ fun MainBottomView(navController: NavController) {
                         fontSize = 12.sp
                     )
                 },
-                selectedContentColor = MaterialTheme.colorScheme.secondary,
-                unselectedContentColor = MaterialTheme.colorScheme.onSecondary,
+                selectedContentColor = MaterialTheme.colorScheme.inverseSurface,
+                unselectedContentColor = MaterialTheme.colorScheme.surfaceVariant,
                 alwaysShowLabel = true,
                 selected = getCurrentRoute(navController = navController) == item.route,
                 onClick = {

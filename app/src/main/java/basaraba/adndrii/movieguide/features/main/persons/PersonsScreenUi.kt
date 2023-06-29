@@ -6,27 +6,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonsState
 import basaraba.adndrii.movieguide.features.main.persons.views.grid.PersonsGridView
 import basaraba.adndrii.movieguide.features.main.persons.views.list.PersonsListView
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PersonsScreenUi(
     onEvent: (PersonsUiEvent) -> Unit,
@@ -40,14 +42,14 @@ fun PersonsScreenUi(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        backgroundColor = MaterialTheme.colorScheme.background,
         topBar = {
             TopAppBar(
                 backgroundColor = MaterialTheme.colorScheme.background,
                 title = {
                     Text(
                         text = stringResource(id = R.string.popular_persons),
-                        color = MaterialTheme.colorScheme.secondary
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
                     )
                 },
                 actions = {
@@ -60,7 +62,7 @@ fun PersonsScreenUi(
                             ),
                             modifier = Modifier.size(24.dp),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
                         )
                     }
                 }

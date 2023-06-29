@@ -16,7 +16,7 @@ fun ProgressBar(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surface)
             .then(modifier)
     ) {
         CircularProgressIndicator(
