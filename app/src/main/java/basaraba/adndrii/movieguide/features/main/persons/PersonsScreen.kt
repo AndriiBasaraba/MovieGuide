@@ -2,15 +2,15 @@ package basaraba.adndrii.movieguide.features.main.persons
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PersonsScreen(
     navController: NavController,
-    viewModel: PersonsViewModel = koinViewModel()
+    viewModel: PersonsViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 

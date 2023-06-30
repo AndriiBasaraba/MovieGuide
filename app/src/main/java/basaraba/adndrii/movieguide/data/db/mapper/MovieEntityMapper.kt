@@ -2,13 +2,14 @@ package basaraba.adndrii.movieguide.data.db.mapper
 
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.data.db.MovieEntity
+import javax.inject.Inject
 
 interface MovieEntityMapper {
     fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity>
     fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData>
 }
 
-class MovieEntityMapperImpl : MovieEntityMapper {
+class MovieEntityMapperImpl @Inject constructor()  : MovieEntityMapper {
 
     override fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity> = movies.map {
         with(it) {

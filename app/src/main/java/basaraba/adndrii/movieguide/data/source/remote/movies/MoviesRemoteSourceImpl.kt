@@ -4,8 +4,9 @@ import basaraba.adndrii.movieguide.data.api.MovieApi
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
+import javax.inject.Inject
 
-class MoviesRemoteSourceImpl(
+class MoviesRemoteSourceImpl @Inject constructor(
     private val api: MovieApi
 ) : MoviesRemoteSource {
     override suspend fun getNowPlayingMovies(): CollectionBaseResponse<MoviesResponse> =

@@ -11,6 +11,7 @@ import basaraba.adndrii.movieguide.features.isActor
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.model.RoleCredits
+import javax.inject.Inject
 
 interface PersonsResponseMapper {
     fun map(response: List<PersonsResponse>): List<PersonDomainData>
@@ -22,7 +23,7 @@ interface PersonsResponseMapper {
     ): PersonDetailsDomainData
 }
 
-class PersonsResponseMapperImpl : PersonsResponseMapper {
+class PersonsResponseMapperImpl @Inject constructor() : PersonsResponseMapper {
     override fun map(response: List<PersonsResponse>): List<PersonDomainData> =
         response.map {
             with(it) {

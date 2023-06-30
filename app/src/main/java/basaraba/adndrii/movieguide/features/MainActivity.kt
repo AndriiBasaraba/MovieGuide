@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import basaraba.adndrii.movieguide.features.main.MainBottomView
 import basaraba.adndrii.movieguide.features.navigation.AppNavigation
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

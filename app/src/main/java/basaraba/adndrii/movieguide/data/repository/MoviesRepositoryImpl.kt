@@ -5,10 +5,11 @@ import basaraba.adndrii.movieguide.data.db.MovieEntity
 import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapper
 import basaraba.adndrii.movieguide.data.source.local.movies.MoviesLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSource
-import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
+import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
+import javax.inject.Inject
 
-class MoviesRepositoryImpl(
+class MoviesRepositoryImpl @Inject constructor(
     private val moviesRemoteDataSource: MoviesRemoteSource,
     private val moviesLocalDataSource: MoviesLocalSource,
     private val moviesResponseMapper: MoviesResponseMapper
