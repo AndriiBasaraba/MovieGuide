@@ -383,7 +383,7 @@ private fun PersonRoles(
                     textSize = 16.sp,
                     strokeWidth = 3.dp,
                     modifier = Modifier
-                        .padding(top = 195.dp, start = 4.dp)
+                        .padding(top = 195.dp, start = 8.dp)
                         .size(50.dp)
                         .align(Alignment.TopStart)
                 )

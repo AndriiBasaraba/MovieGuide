@@ -33,6 +33,8 @@ fun RatingCircle(
         else -> Color.Green
     }
 
+    val colorBackground = color.copy(alpha = 0.25f)
+
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(50.dp),
@@ -55,6 +57,13 @@ fun RatingCircle(
                     color = Color.White
                 )
             }
+
+            CircularProgressIndicator(
+                progress = 1f,
+                color = colorBackground,
+                modifier = Modifier.fillMaxSize(),
+                strokeWidth = strokeWidth
+            )
 
             val progress = if (rating == 0.0) 1f else rating.toFloat() / 10
             CircularProgressIndicator(
