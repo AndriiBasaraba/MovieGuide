@@ -24,5 +24,4 @@ object ApiModule {
     fun provideMovieApi(
         retrofit: Retrofit
     ): MovieApi = retrofit.create(MovieApi::class.java)
-
 }

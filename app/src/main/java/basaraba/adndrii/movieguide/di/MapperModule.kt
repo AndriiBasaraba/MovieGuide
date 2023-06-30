@@ -18,35 +18,35 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class MapperModule {
+interface MapperModule {
 
     @Binds
     @Singleton
-    abstract fun provideMovieEntityMapper(
+    fun provideMovieEntityMapper(
         movieEntityMapper: MovieEntityMapperImpl
     ): MovieEntityMapper
 
     @Binds
     @Singleton
-    abstract fun providePersonEntityMapper(
+    fun providePersonEntityMapper(
         personEntityMapper: PersonEntityMapperImpl
     ): PersonEntityMapper
 
     @Binds
     @Singleton
-    abstract fun provideMoviesResponseMapper(
+    fun provideMoviesResponseMapper(
         moviesResponseMapper: MoviesResponseMapperImpl
     ): MoviesResponseMapper
 
     @Binds
     @Singleton
-    abstract fun providePersonsResponseMapper(
+    fun providePersonsResponseMapper(
         personsResponseMapper: PersonsResponseMapperImpl
     ): PersonsResponseMapper
 
     @Binds
     @Singleton
-    abstract fun providePersonUiMapper(
+    fun providePersonUiMapper(
         personUiMapper: PersonUiMapperImpl
     ): PersonUiMapper
 }

@@ -16,30 +16,29 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class SourceModule {
+interface SourceModule {
 
     @Binds
     @Singleton
-    abstract fun provideMoviesRemoteSource(
+    fun provideMoviesRemoteSource(
         moviesRemoteSource: MoviesRemoteSourceImpl
     ): MoviesRemoteSource
 
     @Binds
     @Singleton
-    abstract fun provideMoviesLocalSource(
+    fun provideMoviesLocalSource(
         scheduleLocalDataSource: MoviesLocalSourceImpl
     ): MoviesLocalSource
 
     @Binds
     @Singleton
-    abstract fun providePersonsRemoteSource(
+    fun providePersonsRemoteSource(
         personsRemoteSource: PersonsRemoteSourceImpl
     ): PersonsRemoteSource
 
     @Binds
     @Singleton
-    abstract fun providePersonsLocalSource(
+    fun providePersonsLocalSource(
         personsLocalSource: PersonsLocalSourceImpl
     ): PersonsLocalSource
-
 }
