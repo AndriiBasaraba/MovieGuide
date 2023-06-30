@@ -15,6 +15,7 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID])
+    val movieTitle: String = checkNotNull(savedStateHandle[MOVIE_TITLE])
 
     init {
         getMovieDetail()
@@ -24,10 +25,12 @@ class MovieDetailsViewModel @Inject constructor(
         launch {
             val response = getMovieDetailUseCase.invoke(movieId.toInt())
             println("movie response = $response")
+            println("movie title = $movieTitle")
         }
     }
 
     companion object {
         private const val MOVIE_ID = "movieId"
+        private const val MOVIE_TITLE = "movieTitle"
     }
 }

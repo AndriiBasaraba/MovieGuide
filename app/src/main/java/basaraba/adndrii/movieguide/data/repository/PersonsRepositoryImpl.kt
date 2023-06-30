@@ -3,10 +3,11 @@ package basaraba.adndrii.movieguide.data.repository
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSource
+import basaraba.adndrii.movieguide.di.IoDispatcher
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class PersonsRepositoryImpl @Inject constructor(
     private val personsRemoteSource: PersonsRemoteSource,
     private val personsLocalSource: PersonsLocalSource,
-    private val personsResponseMapper: PersonsResponseMapper
+    private val personsResponseMapper: PersonsResponseMapper,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : PersonsRepository {
 
     override suspend fun getPopularPersons(page: Int): List<PersonDomainData> {
@@ -24,7 +26,7 @@ class PersonsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPersonDetails(personId: Long): PersonDetailsDomainData =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             val details = async { personsRemoteSource.getPersonDetails(personId) }
             val images = async { personsRemoteSource.getPersonImages(personId) }
             val movieCredits = async { personsRemoteSource.getPersonMovieCredits(personId) }

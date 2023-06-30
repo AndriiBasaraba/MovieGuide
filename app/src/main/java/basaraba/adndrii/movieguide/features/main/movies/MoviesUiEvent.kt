@@ -5,5 +5,5 @@ import basaraba.adndrii.movieguide.common.ViewEvent
 
 abstract class MoviesUiEvent : ViewEvent {
     object ReloadMoviesScreen : MoviesUiEvent()
-    data class ShowMovieDetails(val id: Long) : MoviesUiEvent()
+    data class ShowMovieDetails(val id: Long, val title: String) : MoviesUiEvent()
 }

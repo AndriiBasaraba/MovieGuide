@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
 
 @Composable
 fun MoviesScreen(
@@ -25,7 +24,6 @@ fun MoviesScreen(
     val onEvent: (MoviesUiEvent) -> Unit = { event ->
         when (event) {
             is MoviesUiEvent.ShowMovieDetails -> {
-                navController.navigate(NavigationRoute.MovieDetails.getRouteNameWithArguments(event.id.toString()))
             }
 
             MoviesUiEvent.ReloadMoviesScreen -> {
