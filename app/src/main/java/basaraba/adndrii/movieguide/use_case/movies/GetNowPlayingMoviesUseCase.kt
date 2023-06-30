@@ -1,16 +1,19 @@
 package basaraba.adndrii.movieguide.use_case.movies
 
+import basaraba.adndrii.movieguide.di.IoDispatcher
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class GetNowPlayingMoviesUseCase(
-    private val repository: MoviesRepository
+class GetNowPlayingMoviesUseCase @Inject constructor(
+    private val repository: MoviesRepository,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
     suspend operator fun invoke(forceReload: Boolean = false): Result<List<MovieDomainData>> {
-        return withContext(Dispatchers.IO) {
+        return withContext(ioDispatcher) {
             try {
                 val response = repository.getNowPlayingMovies(forceReload)
                 Result.success(response)

@@ -12,15 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MoviesScreen(
     navController: NavController,
-    viewModel: MoviesViewModel = koinViewModel()
+    viewModel: MoviesViewModel = hiltViewModel()
 ) {
     val onEvent: (MoviesUiEvent) -> Unit = { event ->
         when (event) {

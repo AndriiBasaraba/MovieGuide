@@ -2,12 +2,13 @@ package basaraba.adndrii.movieguide.data.source.remote.persons
 
 import basaraba.adndrii.movieguide.data.api.PersonApi
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
-import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
+import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
+import javax.inject.Inject
 
-class PersonsRemoteSourceImpl(
+class PersonsRemoteSourceImpl @Inject constructor(
     private val api: PersonApi
 ) : PersonsRemoteSource {
     override suspend fun getPopularPersons(page: Int): CollectionBaseResponse<PersonsResponse> =

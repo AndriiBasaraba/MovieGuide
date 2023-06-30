@@ -7,13 +7,14 @@ import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.model.RoleCredits
+import javax.inject.Inject
 
 interface PersonUiMapper {
     fun map(input: List<PersonDomainData>): List<PersonUiData>
     fun mapPersonDetails(input: PersonDetailsDomainData): PersonDetailsUiData
 }
 
-class PersonUiMapperImpl : PersonUiMapper {
+class PersonUiMapperImpl @Inject constructor() : PersonUiMapper {
     override fun map(input: List<PersonDomainData>): List<PersonUiData> {
         val mappedList = mutableListOf<PersonUiData>()
 

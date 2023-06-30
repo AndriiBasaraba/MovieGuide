@@ -9,8 +9,9 @@ import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PersonsRepositoryImpl(
+class PersonsRepositoryImpl @Inject constructor(
     private val personsRemoteSource: PersonsRemoteSource,
     private val personsLocalSource: PersonsLocalSource,
     private val personsResponseMapper: PersonsResponseMapper

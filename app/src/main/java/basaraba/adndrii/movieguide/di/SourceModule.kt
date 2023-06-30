@@ -8,13 +8,38 @@ import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSource
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSourceImpl
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSource
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSourceImpl
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-object SourceModule {
-    val module = module {
-        single<MoviesRemoteSource> { MoviesRemoteSourceImpl(get()) }
-        single<PersonsRemoteSource> { PersonsRemoteSourceImpl(get()) }
-        single<MoviesLocalSource> { MoviesLocalSourceImpl(get(), get()) }
-        single<PersonsLocalSource> { PersonsLocalSourceImpl(get(), get()) }
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class SourceModule {
+
+    @Binds
+    @Singleton
+    abstract fun provideMoviesRemoteSource(
+        moviesRemoteSource: MoviesRemoteSourceImpl
+    ): MoviesRemoteSource
+
+    @Binds
+    @Singleton
+    abstract fun provideMoviesLocalSource(
+        scheduleLocalDataSource: MoviesLocalSourceImpl
+    ): MoviesLocalSource
+
+    @Binds
+    @Singleton
+    abstract fun providePersonsRemoteSource(
+        personsRemoteSource: PersonsRemoteSourceImpl
+    ): PersonsRemoteSource
+
+    @Binds
+    @Singleton
+    abstract fun providePersonsLocalSource(
+        personsLocalSource: PersonsLocalSourceImpl
+    ): PersonsLocalSource
+
 }
