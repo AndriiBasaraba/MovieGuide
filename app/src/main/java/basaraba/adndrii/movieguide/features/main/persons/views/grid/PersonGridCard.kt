@@ -20,14 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import coil.compose.AsyncImage
 
 @Composable
 fun PersonGridCard(
     person: PersonUiData.Person,
-    onEvent: (PersonsUiEvent) -> Unit
+    onClick: (Long, String) -> Unit
 ) {
     val cardWidth = (LocalConfiguration.current.screenWidthDp - 48) / 2
 
@@ -35,7 +34,7 @@ fun PersonGridCard(
         modifier = Modifier
             .width(cardWidth.dp)
             .wrapContentHeight()
-            .clickable { onEvent(PersonsUiEvent.ShowPersonDetails(person.id, person.name)) },
+            .clickable { onClick.invoke(person.id, person.name) },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)

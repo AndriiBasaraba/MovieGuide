@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.persons.views.list
+package basaraba.adndrii.movieguide.features.ui_components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,18 +19,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 
 @Composable
-fun PersonLoadMoreListCard(
-    onEvent: (PersonsUiEvent) -> Unit,
+fun LoadMoreCard(
+    onClick: () -> Unit,
     isLoading: Boolean
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
-            .clickable { if (isLoading.not()) onEvent(PersonsUiEvent.LoadMorePersons) },
+            .clickable { if (isLoading.not()) onClick.invoke() },
         shape = RoundedCornerShape(50.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)

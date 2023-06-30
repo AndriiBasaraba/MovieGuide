@@ -43,6 +43,8 @@ android {
         buildConfigField 'String', 'BASE_URL', BASE_URL
         buildConfigField 'String', 'AUTH_TOKEN', AUTH_TOKEN
         buildConfigField 'String', 'POSTER_URL', POSTER_URL
+        buildConfigField 'String', 'IMDB_PERSON_URL', IMDB_PERSON_URL
+        buildConfigField 'String', 'IMDB_MOVIE_URL', IMDB_MOVIE_URL
     }
 }
 

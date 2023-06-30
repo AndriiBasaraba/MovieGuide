@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -45,12 +46,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import basaraba.adndrii.movieguide.BuildConfig
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
 import basaraba.adndrii.movieguide.features.main.person_details.model.RoleCreditsUi
 import basaraba.adndrii.movieguide.features.orDash
+import basaraba.adndrii.movieguide.features.ui_components.ImdbIconButton
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
+import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +69,8 @@ fun PersonDetailsScreenUi(
         topBar = {
             PersonTopBar(
                 onBackClick = { onEvent(PersonDetailsUiEvent.Back) },
-                personName = viewState.personName
+                personName = viewState.personName,
+                imdbId = viewState.data.imdbId
             )
         }
     ) {
@@ -95,7 +101,7 @@ fun PersonDetailsScreenUi(
                 }
                 if (personDetails.movieRoles.isNotEmpty()) {
                     item {
-                        PersonMoviesRoles(
+                        PersonRoles(
                             onMovieClick = { movieId ->
                                 onEvent(
                                     PersonDetailsUiEvent.ShowMovieDetails(
@@ -110,7 +116,7 @@ fun PersonDetailsScreenUi(
                 }
                 if (personDetails.tvShowRoles.isNotEmpty()) {
                     item {
-                        PersonMoviesRoles(
+                        PersonRoles(
                             onTvShowClick = { tvShowId ->
                                 onEvent(
                                     PersonDetailsUiEvent.ShowTvShowDetails(
@@ -131,7 +137,8 @@ fun PersonDetailsScreenUi(
 @Composable
 private fun PersonTopBar(
     onBackClick: () -> Unit,
-    personName: String
+    personName: String,
+    imdbId: String
 ) {
     TopAppBar(
         backgroundColor = MaterialTheme.colorScheme.background,
@@ -150,6 +157,11 @@ private fun PersonTopBar(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null
                 )
+            }
+        },
+        actions = {
+            if (imdbId.isNotEmpty()) {
+                ImdbIconButton(BuildConfig.IMDB_PERSON_URL + imdbId)
             }
         }
     )
@@ -290,7 +302,7 @@ private fun PersonImages(images: List<String>) {
 }
 
 @Composable
-private fun PersonMoviesRoles(
+private fun PersonRoles(
     onMovieClick: ((Long) -> Unit)? = null,
     onTvShowClick: ((Long) -> Unit)? = null,
     creditsRoles: List<RoleCreditsUi>,
@@ -311,59 +323,70 @@ private fun PersonMoviesRoles(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
         items(creditsRoles) { credit ->
-            Card(
-                modifier = Modifier
-                    .width(160.dp)
-                    .wrapContentHeight()
-                    .wrapContentHeight()
-                    .clickable {
-                        if (type == RoleType.MOVIE) {
-                            onMovieClick?.invoke(credit.id)
-                        } else {
-                            onTvShowClick?.invoke(credit.id)
-                        }
-                    },
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
-            ) {
-                Column {
-                    AsyncImage(
-                        model = credit.poster,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(160.dp)
-                            .height(220.dp),
-                        contentScale = ContentScale.Crop,
-                        placeholder = painterResource(id = R.drawable.ic_image_placeholder),
-                        error = painterResource(id = R.drawable.ic_image_placeholder)
-                    )
-                    Text(
-                        text = credit.title,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(start = 8.dp, top = 8.dp, end = 8.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = stringResource(id = R.string.as_in),
-                        color = Color.Gray,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                    )
-                    Text(
-                        text = credit.role.orDash(),
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium
-                    )
+            Box {
+                Card(
+                    modifier = Modifier
+                        .width(160.dp)
+                        .wrapContentHeight()
+                        .wrapContentHeight()
+                        .clickable {
+                            if (type == RoleType.MOVIE) {
+                                onMovieClick?.invoke(credit.id)
+                            } else {
+                                onTvShowClick?.invoke(credit.id)
+                            }
+                        },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
+                ) {
+                    Column {
+                        AsyncImage(
+                            model = credit.poster,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .width(160.dp)
+                                .height(220.dp),
+                            contentScale = ContentScale.Crop,
+                            placeholder = painterResource(id = R.drawable.ic_image_placeholder),
+                            error = painterResource(id = R.drawable.ic_image_placeholder)
+                        )
+                        Text(
+                            text = credit.title,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(start = 8.dp, top = 26.dp, end = 8.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = stringResource(id = R.string.as_in),
+                            color = Color.Gray,
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                        )
+                        Text(
+                            text = credit.role.orDash(),
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(start = 8.dp, bottom = 8.dp, end = 8.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 }
+                RatingCircle(
+                    rating = credit.voteAverage,
+                    textSize = 16.sp,
+                    strokeWidth = 3.dp,
+                    modifier = Modifier
+                        .padding(top = 195.dp, start = 8.dp)
+                        .size(50.dp)
+                        .align(Alignment.TopStart)
+                )
             }
         }
     }
