@@ -12,14 +12,10 @@ class GetPersonDetailsUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(personId: Long): Result<PersonDetailsDomainData> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = repository.getPersonDetails(personId = personId)
-                Result.success(response)
-            } catch (e: Throwable) {
-                Result.failure(e)
+    suspend operator fun invoke(personId: Long): Result<PersonDetailsDomainData> =
+        withContext(ioDispatcher) {
+            runCatching {
+                repository.getPersonDetails(personId = personId)
             }
         }
-    }
 }

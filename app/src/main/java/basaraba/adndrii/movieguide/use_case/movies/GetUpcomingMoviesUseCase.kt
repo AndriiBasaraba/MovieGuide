@@ -12,14 +12,10 @@ class GetUpcomingMoviesUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(forceReload: Boolean = false): Result<List<MovieDomainData>> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = repository.getUpcomingMovies(forceReload)
-                Result.success(response)
-            } catch (e: Throwable) {
-                Result.failure(e)
+    suspend operator fun invoke(forceReload: Boolean = false): Result<List<MovieDomainData>> =
+        withContext(ioDispatcher) {
+            runCatching {
+                repository.getUpcomingMovies(forceReload)
             }
         }
-    }
 }

@@ -34,11 +34,11 @@ fun NavGraphBuilder.appNavigationGraph(
     }
 
     composable(MovieDetails.route) {
-        MovieDetailsScreen()
+        MovieDetailsScreen(navController)
     }
 
     composable(TvShowDetails.route) {
-        TvShowDetailsScreen()
+        TvShowDetailsScreen(navController)
     }
 
     composable(PersonDetails.route) {

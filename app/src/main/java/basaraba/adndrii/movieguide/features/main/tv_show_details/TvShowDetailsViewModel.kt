@@ -11,8 +11,10 @@ class TvShowDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val tvShowId: String = checkNotNull(savedStateHandle[TV_SHOW_ID])
+    val tvShowTitle: String = checkNotNull(savedStateHandle[TV_SHOW_TITLE])
 
     companion object {
         private const val TV_SHOW_ID = "tvShowId"
+        private const val TV_SHOW_TITLE = "tvShowTitle"
     }
 }

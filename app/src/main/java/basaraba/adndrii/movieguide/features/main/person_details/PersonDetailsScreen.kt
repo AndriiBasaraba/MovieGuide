@@ -21,11 +21,21 @@ fun PersonDetailsScreen(
             }
 
             is PersonDetailsUiEvent.ShowMovieDetails -> {
-                navController.navigate(NavigationRoute.MovieDetails.getRouteNameWithArguments(event.id.toString()))
+                navController.navigate(
+                    NavigationRoute.MovieDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.title
+                    )
+                )
             }
 
             is PersonDetailsUiEvent.ShowTvShowDetails -> {
-                navController.navigate(NavigationRoute.TvShowDetails.getRouteNameWithArguments(event.id.toString()))
+                navController.navigate(
+                    NavigationRoute.TvShowDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.title
+                    )
+                )
             }
         }
     }

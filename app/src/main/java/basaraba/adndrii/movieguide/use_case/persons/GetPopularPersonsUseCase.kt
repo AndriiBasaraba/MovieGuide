@@ -12,14 +12,10 @@ class GetPopularPersonsUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(page: Int): Result<List<PersonDomainData>> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = repository.getPopularPersons(page = page)
-                Result.success(response)
-            } catch (e: Throwable) {
-                Result.failure(e)
+    suspend operator fun invoke(page: Int): Result<List<PersonDomainData>> =
+        withContext(ioDispatcher) {
+            runCatching {
+                repository.getPopularPersons(page = page)
             }
         }
-    }
 }

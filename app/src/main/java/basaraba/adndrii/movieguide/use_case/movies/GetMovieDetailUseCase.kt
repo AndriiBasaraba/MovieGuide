@@ -12,14 +12,10 @@ class GetMovieDetailUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(movieId: Int): Result<MovieDetailResponse> {
-        return withContext(ioDispatcher) {
-            try {
-                val response = repository.getMovieDetails(movieId = movieId)
-                Result.success(response)
-            } catch (e: Throwable) {
-                Result.failure(e)
+    suspend operator fun invoke(movieId: Int): Result<MovieDetailResponse> =
+        withContext(ioDispatcher) {
+            runCatching {
+                repository.getMovieDetails(movieId = movieId)
             }
         }
-    }
 }

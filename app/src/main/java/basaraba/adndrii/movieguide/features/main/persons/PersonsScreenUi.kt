@@ -10,7 +10,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -28,7 +27,7 @@ import basaraba.adndrii.movieguide.features.main.persons.model.PersonsState
 import basaraba.adndrii.movieguide.features.main.persons.views.grid.PersonsGridView
 import basaraba.adndrii.movieguide.features.main.persons.views.list.PersonsListView
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun PersonsScreenUi(
     onEvent: (PersonsUiEvent) -> Unit,

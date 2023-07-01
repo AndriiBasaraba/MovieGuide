@@ -21,14 +21,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -47,18 +41,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import basaraba.adndrii.movieguide.BuildConfig
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
 import basaraba.adndrii.movieguide.features.main.person_details.model.RoleCreditsUi
 import basaraba.adndrii.movieguide.features.orDash
-import basaraba.adndrii.movieguide.features.ui_components.ImdbIconButton
+import basaraba.adndrii.movieguide.features.ui_components.DetailsTopBar
+import basaraba.adndrii.movieguide.features.ui_components.DetailsType
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
 import coil.compose.AsyncImage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonDetailsScreenUi(
     onEvent: (PersonDetailsUiEvent) -> Unit,
@@ -67,10 +60,11 @@ fun PersonDetailsScreenUi(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            PersonTopBar(
+            DetailsTopBar(
                 onBackClick = { onEvent(PersonDetailsUiEvent.Back) },
-                personName = viewState.personName,
-                imdbId = viewState.data.imdbId
+                title = viewState.personName,
+                imdbId = viewState.data.imdbId,
+                detailsType = DetailsType.PERSON
             )
         }
     ) {
@@ -102,10 +96,10 @@ fun PersonDetailsScreenUi(
                 if (personDetails.movieRoles.isNotEmpty()) {
                     item {
                         PersonRoles(
-                            onMovieClick = { movieId ->
+                            onMovieClick = { movieId, title ->
                                 onEvent(
                                     PersonDetailsUiEvent.ShowMovieDetails(
-                                        movieId
+                                        movieId, title
                                     )
                                 )
                             },
@@ -117,10 +111,10 @@ fun PersonDetailsScreenUi(
                 if (personDetails.tvShowRoles.isNotEmpty()) {
                     item {
                         PersonRoles(
-                            onTvShowClick = { tvShowId ->
+                            onTvShowClick = { tvShowId, title ->
                                 onEvent(
                                     PersonDetailsUiEvent.ShowTvShowDetails(
-                                        tvShowId
+                                        tvShowId, title
                                     )
                                 )
                             },
@@ -132,39 +126,6 @@ fun PersonDetailsScreenUi(
             }
         }
     }
-}
-
-@Composable
-private fun PersonTopBar(
-    onBackClick: () -> Unit,
-    personName: String,
-    imdbId: String
-) {
-    TopAppBar(
-        backgroundColor = MaterialTheme.colorScheme.background,
-        title = {
-            Text(
-                text = personName,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                onBackClick.invoke()
-            }) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = null
-                )
-            }
-        },
-        actions = {
-            if (imdbId.isNotEmpty()) {
-                ImdbIconButton(BuildConfig.IMDB_PERSON_URL + imdbId)
-            }
-        }
-    )
 }
 
 @Composable
@@ -303,8 +264,8 @@ private fun PersonImages(images: List<String>) {
 
 @Composable
 private fun PersonRoles(
-    onMovieClick: ((Long) -> Unit)? = null,
-    onTvShowClick: ((Long) -> Unit)? = null,
+    onMovieClick: ((Long, String) -> Unit)? = null,
+    onTvShowClick: ((Long, String) -> Unit)? = null,
     creditsRoles: List<RoleCreditsUi>,
     type: RoleType
 ) {
@@ -331,9 +292,9 @@ private fun PersonRoles(
                         .wrapContentHeight()
                         .clickable {
                             if (type == RoleType.MOVIE) {
-                                onMovieClick?.invoke(credit.id)
+                                onMovieClick?.invoke(credit.id, credit.title)
                             } else {
-                                onTvShowClick?.invoke(credit.id)
+                                onTvShowClick?.invoke(credit.id, credit.title)
                             }
                         },
                     shape = RoundedCornerShape(12.dp),
