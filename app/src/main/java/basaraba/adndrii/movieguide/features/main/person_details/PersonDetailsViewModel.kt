@@ -6,6 +6,7 @@ import basaraba.adndrii.movieguide.common.BaseViewModel
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.use_case.persons.GetPersonDetailsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,8 +15,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PersonDetailsViewModel(
+@HiltViewModel
+class PersonDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val useCase: GetPersonDetailsUseCase,
     private val mapper: PersonUiMapper

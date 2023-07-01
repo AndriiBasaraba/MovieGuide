@@ -1,16 +1,16 @@
 package basaraba.adndrii.movieguide.features.main.tv_shows
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
 
@@ -27,11 +27,12 @@ fun TvShowsScreenUi() {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                backgroundColor = Color.White,
+                backgroundColor = MaterialTheme.colorScheme.background,
                 title = {
                     Text(
                         text = stringResource(id = R.string.tv_shows),
-                        color = Color.Black
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             )
@@ -39,10 +40,12 @@ fun TvShowsScreenUi() {
     ) {
         Box(
             modifier = Modifier
-                .background(Color.White)
                 .padding(it)
         ) {
-            Text(text = "here will be list of tv shows", color = Color.Black)
+            Text(
+                text = "here will be list of tv shows",
+                color = MaterialTheme.colorScheme.inverseSurface
+            )
         }
     }
 }

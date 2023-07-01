@@ -11,6 +11,7 @@ import basaraba.adndrii.movieguide.features.isActor
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.model.RoleCredits
+import javax.inject.Inject
 
 interface PersonsResponseMapper {
     fun map(response: List<PersonsResponse>): List<PersonDomainData>
@@ -22,7 +23,7 @@ interface PersonsResponseMapper {
     ): PersonDetailsDomainData
 }
 
-class PersonsResponseMapperImpl : PersonsResponseMapper {
+class PersonsResponseMapperImpl @Inject constructor() : PersonsResponseMapper {
     override fun map(response: List<PersonsResponse>): List<PersonDomainData> =
         response.map {
             with(it) {
@@ -57,6 +58,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             placeOfBirth = details.placeOfBirth.orEmpty(),
             popularity = details.popularity,
             images = images.profiles.map { BuildConfig.POSTER_URL + it.filePath },
+            imdbId = details.imdbId.orEmpty(),
             movieRoles = mapRoleCredits(movieRoles, details.knownForDepartment.isActor()),
             tvShowRoles = mapRoleCredits(tvShowRoles, details.knownForDepartment.isActor())
         )
@@ -74,6 +76,7 @@ class PersonsResponseMapperImpl : PersonsResponseMapper {
             popularity = input.popularity,
             poster = BuildConfig.POSTER_URL + input.posterPath,
             title = input.title ?: input.name.orEmpty(),
-            role = input.character ?: input.job.orEmpty()
+            role = input.character ?: input.job.orEmpty(),
+            voteAverage = input.voteAverage
         )
 }

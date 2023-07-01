@@ -10,14 +10,43 @@ import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapperImpl
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapperImpl
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-object MapperModule {
-    val module = module {
-        single<MovieEntityMapper> { MovieEntityMapperImpl() }
-        single<PersonEntityMapper> { PersonEntityMapperImpl() }
-        single<MoviesResponseMapper> { MoviesResponseMapperImpl() }
-        single<PersonsResponseMapper> { PersonsResponseMapperImpl() }
-        single<PersonUiMapper> { PersonUiMapperImpl() }
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+interface MapperModule {
+
+    @Binds
+    @Singleton
+    fun provideMovieEntityMapper(
+        movieEntityMapper: MovieEntityMapperImpl
+    ): MovieEntityMapper
+
+    @Binds
+    @Singleton
+    fun providePersonEntityMapper(
+        personEntityMapper: PersonEntityMapperImpl
+    ): PersonEntityMapper
+
+    @Binds
+    @Singleton
+    fun provideMoviesResponseMapper(
+        moviesResponseMapper: MoviesResponseMapperImpl
+    ): MoviesResponseMapper
+
+    @Binds
+    @Singleton
+    fun providePersonsResponseMapper(
+        personsResponseMapper: PersonsResponseMapperImpl
+    ): PersonsResponseMapper
+
+    @Binds
+    @Singleton
+    fun providePersonUiMapper(
+        personUiMapper: PersonUiMapperImpl
+    ): PersonUiMapper
 }

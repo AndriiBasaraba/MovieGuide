@@ -3,8 +3,9 @@ package basaraba.adndrii.movieguide.data.source.local.persons
 import basaraba.adndrii.movieguide.data.db.MovieGuideDao
 import basaraba.adndrii.movieguide.data.db.mapper.PersonEntityMapper
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
+import javax.inject.Inject
 
-class PersonsLocalSourceImpl(
+class PersonsLocalSourceImpl @Inject constructor(
     private val movieGuideDao: MovieGuideDao,
     private val personEntityMapper: PersonEntityMapper
 ) : PersonsLocalSource {

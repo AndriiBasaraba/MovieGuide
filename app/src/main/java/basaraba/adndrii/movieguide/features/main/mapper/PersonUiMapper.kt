@@ -7,13 +7,14 @@ import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import basaraba.adndrii.movieguide.use_case.model.RoleCredits
+import javax.inject.Inject
 
 interface PersonUiMapper {
     fun map(input: List<PersonDomainData>): List<PersonUiData>
     fun mapPersonDetails(input: PersonDetailsDomainData): PersonDetailsUiData
 }
 
-class PersonUiMapperImpl : PersonUiMapper {
+class PersonUiMapperImpl @Inject constructor() : PersonUiMapper {
     override fun map(input: List<PersonDomainData>): List<PersonUiData> {
         val mappedList = mutableListOf<PersonUiData>()
 
@@ -50,6 +51,7 @@ class PersonUiMapperImpl : PersonUiMapper {
                 placeOfBirth = placeOfBirth,
                 popularity = popularity,
                 images = images,
+                imdbId = imdbId,
                 movieRoles = sortAndMapRoles(movieRoles),
                 tvShowRoles = sortAndMapRoles(tvShowRoles)
             )
@@ -65,6 +67,7 @@ class PersonUiMapperImpl : PersonUiMapper {
         popularity = credit.popularity,
         poster = credit.poster,
         title = credit.title,
-        role = credit.role
+        role = credit.role,
+        voteAverage = credit.voteAverage
     )
 }

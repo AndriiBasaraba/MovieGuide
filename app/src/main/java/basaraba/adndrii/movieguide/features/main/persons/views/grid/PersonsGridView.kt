@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
+import basaraba.adndrii.movieguide.features.ui_components.LoadMoreCard
 
 @Composable
 fun PersonsGridView(
@@ -28,17 +30,20 @@ fun PersonsGridView(
         items(
             items = persons,
             key = { it.itemId },
-            contentType = { it.viewType }
+            contentType = { it.viewType },
+            span = {
+                GridItemSpan(if (it.viewType == ViewType.PERSON) 1 else 2)
+            }
         ) {
             when (it.viewType) {
                 ViewType.PERSON -> PersonGridCard(
                     person = it as PersonUiData.Person,
-                    onEvent = onEvent
+                    onClick = { id, name -> onEvent(PersonsUiEvent.ShowPersonDetails(id, name)) }
                 )
 
-                ViewType.LOAD_MORE -> PersonLoadMoreGridCard(
+                ViewType.LOAD_MORE -> LoadMoreCard(
                     isLoading = (it as PersonUiData.LoadingMore).isLoading,
-                    onEvent = onEvent
+                    onClick = { onEvent(PersonsUiEvent.LoadMorePersons) }
                 )
             }
         }

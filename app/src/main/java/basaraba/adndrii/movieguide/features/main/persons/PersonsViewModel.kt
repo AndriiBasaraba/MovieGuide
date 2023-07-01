@@ -9,6 +9,7 @@ import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonsState
 import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
 import basaraba.adndrii.movieguide.use_case.persons.GetPopularPersonsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,8 +18,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PersonsViewModel(
+@HiltViewModel
+class PersonsViewModel @Inject constructor(
     private val getPopularPersonsUseCase: GetPopularPersonsUseCase,
     private val personUiMapper: PersonUiMapper
 ) : BaseViewModel<PersonsUiEvent, PersonsState>() {

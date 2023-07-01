@@ -4,8 +4,9 @@ import basaraba.adndrii.movieguide.data.db.MovieEntity
 import basaraba.adndrii.movieguide.data.db.MovieGuideDao
 import basaraba.adndrii.movieguide.data.db.mapper.MovieEntityMapper
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
+import javax.inject.Inject
 
-class MoviesLocalSourceImpl(
+class MoviesLocalSourceImpl @Inject constructor(
     private val movieGuideDao: MovieGuideDao,
     private val movieEntityMapper: MovieEntityMapper
 ) : MoviesLocalSource {

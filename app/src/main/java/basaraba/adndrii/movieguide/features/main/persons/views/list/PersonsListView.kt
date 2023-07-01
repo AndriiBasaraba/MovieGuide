@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.features.main.persons.PersonsUiEvent
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.features.main.persons.model.ViewType
+import basaraba.adndrii.movieguide.features.ui_components.LoadMoreCard
 
 @Composable
 fun PersonsListView(
@@ -30,12 +31,12 @@ fun PersonsListView(
             when (it.viewType) {
                 ViewType.PERSON -> PersonListCard(
                     person = it as PersonUiData.Person,
-                    onEvent = onEvent
+                    onClick = { id, name -> onEvent(PersonsUiEvent.ShowPersonDetails(id, name)) }
                 )
 
-                ViewType.LOAD_MORE -> PersonLoadMoreListCard(
+                ViewType.LOAD_MORE -> LoadMoreCard(
                     isLoading = (it as PersonUiData.LoadingMore).isLoading,
-                    onEvent = onEvent
+                    onClick = { onEvent(PersonsUiEvent.LoadMorePersons) }
                 )
             }
         }
