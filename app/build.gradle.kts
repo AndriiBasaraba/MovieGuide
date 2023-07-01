@@ -51,7 +51,8 @@ android {
     defaultConfig {
         buildConfigFieldFromGradleProperty("BASE_URL")
         buildConfigFieldFromGradleProperty("AUTH_TOKEN")
-        buildConfigFieldFromGradleProperty("POSTER_URL")
+        buildConfigFieldFromGradleProperty("IMAGE_URL_SMALL")
+        buildConfigFieldFromGradleProperty("IMAGE_URL_MEDIUM")
         buildConfigFieldFromGradleProperty("IMDB_PERSON_URL")
         buildConfigFieldFromGradleProperty("IMDB_MOVIE_URL")
     }

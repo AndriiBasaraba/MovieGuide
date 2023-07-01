@@ -1,7 +1,7 @@
 package basaraba.adndrii.movieguide.data.db.mapper
 
-import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.data.db.MovieEntity
+import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import javax.inject.Inject
 
 interface MovieEntityMapper {
@@ -9,7 +9,7 @@ interface MovieEntityMapper {
     fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData>
 }
 
-class MovieEntityMapperImpl @Inject constructor()  : MovieEntityMapper {
+class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
 
     override fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity> = movies.map {
         with(it) {
@@ -18,12 +18,7 @@ class MovieEntityMapperImpl @Inject constructor()  : MovieEntityMapper {
                 title = title,
                 overview = overview,
                 releaseDate = releaseDate,
-                poster = poster,
-                type = when (type) {
-                    MovieDomainData.Type.Ongoing -> MovieEntity.Type.Ongoing
-                    MovieDomainData.Type.Upcoming -> MovieEntity.Type.Upcoming
-                    else -> null
-                }
+                poster = poster
             )
         }
     }
@@ -36,12 +31,7 @@ class MovieEntityMapperImpl @Inject constructor()  : MovieEntityMapper {
                 title = title,
                 overview = overview,
                 releaseDate = releaseDate,
-                poster = poster,
-                type = when (type) {
-                    MovieEntity.Type.Ongoing -> MovieDomainData.Type.Ongoing
-                    MovieEntity.Type.Upcoming -> MovieDomainData.Type.Upcoming
-                    else -> null
-                }
+                poster = poster
             )
         }
     }

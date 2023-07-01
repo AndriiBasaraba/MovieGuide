@@ -13,8 +13,8 @@ data class PersonDetailsUiData(
     val popularity: Double,
     val images: List<String>,
     val imdbId: String,
-    val movieRoles: List<RoleCreditsUi>,
-    val tvShowRoles: List<RoleCreditsUi>
+    val movieRoles: List<PersonCreditsUi>,
+    val tvShowRoles: List<PersonCreditsUi>
 ) {
     companion object {
         val initial = PersonDetailsUiData(
@@ -36,7 +36,7 @@ data class PersonDetailsUiData(
     }
 }
 
-data class RoleCreditsUi(
+data class PersonCreditsUi(
     val id: Long,
     val popularity: Double,
     val poster: String,

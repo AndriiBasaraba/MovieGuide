@@ -13,14 +13,8 @@ interface MovieGuideDao {
     @Query("SELECT * FROM movie")
     suspend fun getAllMovies(): List<MovieEntity>
 
-    @Query("SELECT * FROM movie WHERE movie.type is :type")
-    suspend fun getAllMoviesByType(type: MovieEntity.Type): List<MovieEntity>
-
     @Query("DELETE FROM movie")
     suspend fun deleteMovies(): Int
-
-    @Query("DELETE FROM movie WHERE movie.type is :type")
-    suspend fun deleteMoviesByType(type: MovieEntity.Type): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllPersons(persons: List<PersonEntity>)

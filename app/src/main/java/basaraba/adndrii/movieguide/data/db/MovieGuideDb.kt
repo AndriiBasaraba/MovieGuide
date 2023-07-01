@@ -5,15 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import basaraba.adndrii.movieguide.data.db.converters.MovieTypeConverter
 
 @Database(
     entities = [MovieEntity::class, PersonEntity::class],
     version = 1,
     exportSchema = true
 )
-@TypeConverters(MovieTypeConverter::class)
+
 abstract class MovieGuideDb : RoomDatabase() {
 
     abstract fun movieGuideDao(): MovieGuideDao

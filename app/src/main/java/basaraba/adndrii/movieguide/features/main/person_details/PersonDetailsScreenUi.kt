@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
-import basaraba.adndrii.movieguide.features.main.person_details.model.RoleCreditsUi
+import basaraba.adndrii.movieguide.features.main.person_details.model.PersonCreditsUi
 import basaraba.adndrii.movieguide.features.orDash
 import basaraba.adndrii.movieguide.features.ui_components.DetailsTopBar
 import basaraba.adndrii.movieguide.features.ui_components.DetailsType
@@ -266,7 +266,7 @@ private fun PersonImages(images: List<String>) {
 private fun PersonRoles(
     onMovieClick: ((Long, String) -> Unit)? = null,
     onTvShowClick: ((Long, String) -> Unit)? = null,
-    creditsRoles: List<RoleCreditsUi>,
+    creditsRoles: List<PersonCreditsUi>,
     type: RoleType
 ) {
     Text(

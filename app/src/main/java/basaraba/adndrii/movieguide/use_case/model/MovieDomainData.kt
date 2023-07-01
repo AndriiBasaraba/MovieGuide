@@ -5,10 +5,5 @@ data class MovieDomainData(
     val title: String,
     val overview: String,
     val releaseDate: String,
-    val poster: String,
-    val type: Type?
-) {
-    enum class Type {
-        Ongoing, Upcoming
-    }
-}
+    val poster: String
+)

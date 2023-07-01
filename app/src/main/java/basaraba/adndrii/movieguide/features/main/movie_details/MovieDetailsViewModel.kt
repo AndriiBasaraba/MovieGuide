@@ -10,11 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
 
-    val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID])
     val movieTitle: String = checkNotNull(savedStateHandle[MOVIE_TITLE])
 
     init {
@@ -23,9 +22,8 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun getMovieDetail() = with(viewModelScope) {
         launch {
+            val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID])
             val response = getMovieDetailUseCase.invoke(movieId.toInt())
-            println("movie response = $response")
-            println("movie title = $movieTitle")
         }
     }
 
