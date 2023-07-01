@@ -90,7 +90,10 @@ fun PersonDetailsScreenUi(
                 }
                 if (personDetails.images.isNotEmpty()) {
                     item {
-                        PersonImages(images = personDetails.images)
+                        PersonImages(
+                            images = personDetails.images,
+                            onClick = { url -> onEvent(PersonDetailsUiEvent.ShowImagePreview(url)) }
+                        )
                     }
                 }
                 if (personDetails.movieRoles.isNotEmpty()) {
@@ -237,7 +240,10 @@ private fun PersonBiography(biography: String) {
 }
 
 @Composable
-private fun PersonImages(images: List<String>) {
+private fun PersonImages(
+    images: List<String>,
+    onClick: (String) -> Unit
+) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -245,7 +251,9 @@ private fun PersonImages(images: List<String>) {
     ) {
         items(images) { image ->
             Card(
-                modifier = Modifier.wrapContentSize(),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clickable { onClick.invoke(image) },
                 shape = RoundedCornerShape(12.dp),
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
             ) {

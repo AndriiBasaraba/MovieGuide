@@ -16,6 +16,10 @@ sealed class NavigationRoute(val route: String) {
             "person/details?personId=$personId?personName=$personName"
     }
 
+    object ImagePreview : NavigationRoute(ROUTE_IMAGE_PREVIEW) {
+        fun getRouteNameWithArguments(url: String): String = "image_preview?url=$url"
+    }
+
     companion object {
         internal const val ROUTE_MOVIE_DETAILS =
             "movie/details?movieId={movieId}?movieTitle={movieTitle}"
@@ -23,5 +27,6 @@ sealed class NavigationRoute(val route: String) {
             "tv_show/details?tvShowId={tvShowId}?tvShowTitle={tvShowTitle}"
         internal const val ROUTE_PERSON_DETAILS =
             "person/details?personId={personId}?personName={personName}"
+        internal const val ROUTE_IMAGE_PREVIEW = "image_preview?url={url}"
     }
 }

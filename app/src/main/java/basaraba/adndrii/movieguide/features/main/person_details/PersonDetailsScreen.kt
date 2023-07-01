@@ -37,6 +37,12 @@ fun PersonDetailsScreen(
                     )
                 )
             }
+
+            is PersonDetailsUiEvent.ShowImagePreview -> {
+                navController.navigate(
+                    NavigationRoute.ImagePreview.getRouteNameWithArguments(event.url)
+                )
+            }
         }
     }
 
