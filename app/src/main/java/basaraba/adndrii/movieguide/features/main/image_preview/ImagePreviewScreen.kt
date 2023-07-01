@@ -12,7 +12,7 @@ import coil.compose.AsyncImage
 @Composable
 fun ImagePreviewScreen(viewModel: ImagePreviewViewModel = hiltViewModel()) {
     AsyncImage(
-        model = viewModel.url.replace("w154", "w500"),
+        model = viewModel.url,
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop,
