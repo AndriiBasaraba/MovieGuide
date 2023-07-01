@@ -39,7 +39,7 @@ fun MovieDetailsScreen(
                 .padding(it)
         ) {
             Text(
-                text = "Movie details screen = ${viewModel.movieId}",
+                text = "Movie details screen = ${viewModel.movieTitle}",
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )

@@ -57,7 +57,7 @@ class PersonsResponseMapperImpl @Inject constructor() : PersonsResponseMapper {
             deathday = details.deathday.orEmpty(),
             placeOfBirth = details.placeOfBirth.orEmpty(),
             popularity = details.popularity,
-            images = images.profiles.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath },
+            images = images.profiles.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.drop(1),
             imdbId = details.imdbId.orEmpty(),
             movieRoles = mapRoleCredits(movieRoles, details.knownForDepartment.isActor()),
             tvShowRoles = mapRoleCredits(tvShowRoles, details.knownForDepartment.isActor())
