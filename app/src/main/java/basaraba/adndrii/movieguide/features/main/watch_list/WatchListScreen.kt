@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.R
 
 @Composable
 fun WatchListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: WatchListViewModel = hiltViewModel()
 ) {
     WatchListScreenUi()
 }

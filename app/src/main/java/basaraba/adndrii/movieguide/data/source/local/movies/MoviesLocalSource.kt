@@ -1,9 +1,10 @@
 package basaraba.adndrii.movieguide.data.source.local.movies
 
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
+import kotlinx.coroutines.flow.Flow
 
 interface MoviesLocalSource {
-    suspend fun getAll(): List<MovieDomainData>
+    fun getAll(): Flow<List<MovieDomainData>>
     suspend fun insertAll(movies: List<MovieDomainData>)
     suspend fun delete()
     suspend fun isMovieBookmarked(movieId: Int): Boolean

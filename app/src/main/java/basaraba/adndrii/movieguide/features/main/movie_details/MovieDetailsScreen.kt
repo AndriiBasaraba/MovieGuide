@@ -27,8 +27,14 @@ fun MovieDetailsScreen(
             DetailsTopBar(
                 onBackClick = { navController.popBackStack() },
                 title = viewModel.movieTitle,
+                //todo pass imdbId value
                 imdbId = "123",
-                detailsType = DetailsType.SHOW
+                detailsType = DetailsType.SHOW,
+                //todo pass bookmark value
+                isBookmarked = false,
+                onBookmarkClick = {
+                    //todo handle update bookmark here
+                }
             )
         }
     ) {

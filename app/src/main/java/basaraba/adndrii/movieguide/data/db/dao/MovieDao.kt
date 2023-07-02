@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import basaraba.adndrii.movieguide.data.db.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -12,7 +13,7 @@ interface MovieDao {
     suspend fun insertAllMovies(movies: List<MovieEntity>)
 
     @Query("SELECT * FROM movie")
-    suspend fun getAllMovies(): List<MovieEntity>
+    fun getAllMovies(): Flow<List<MovieEntity>>
 
     @Query("DELETE FROM movie")
     suspend fun deleteMovies(): Int

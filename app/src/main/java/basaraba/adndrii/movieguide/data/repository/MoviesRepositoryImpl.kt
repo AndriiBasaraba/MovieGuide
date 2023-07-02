@@ -9,6 +9,7 @@ import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
 import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -50,4 +51,7 @@ class MoviesRepositoryImpl @Inject constructor(
                 isMovieBookmarked.await()
             )
         }
+
+    override suspend fun getBookmarkedMovies(): Flow<List<MovieDomainData>> =
+        moviesLocalDataSource.getAll()
 }
