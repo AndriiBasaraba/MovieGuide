@@ -6,4 +6,5 @@ abstract class PersonDetailsUiEvent : ViewEvent {
     object Back : PersonDetailsUiEvent()
     data class ShowMovieDetails(val id: Long, val title: String) : PersonDetailsUiEvent()
     data class ShowTvShowDetails(val id: Long, val title: String) : PersonDetailsUiEvent()
+    data class ShowImagePreview(val url: String) : PersonDetailsUiEvent()
 }

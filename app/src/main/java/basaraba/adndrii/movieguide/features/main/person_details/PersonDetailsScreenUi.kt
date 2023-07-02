@@ -80,7 +80,10 @@ fun PersonDetailsScreenUi(
                 contentPadding = PaddingValues(bottom = 8.dp)
             ) {
                 item {
-                    PersonHeader(personDetails = personDetails)
+                    PersonHeader(
+                        personDetails = personDetails,
+                        onClick = { url -> onEvent(PersonDetailsUiEvent.ShowImagePreview(url)) }
+                    )
                 }
 
                 if (personDetails.biography.isNotEmpty()) {
@@ -90,7 +93,10 @@ fun PersonDetailsScreenUi(
                 }
                 if (personDetails.images.isNotEmpty()) {
                     item {
-                        PersonImages(images = personDetails.images)
+                        PersonImages(
+                            images = personDetails.images,
+                            onClick = { url -> onEvent(PersonDetailsUiEvent.ShowImagePreview(url)) }
+                        )
                     }
                 }
                 if (personDetails.movieRoles.isNotEmpty()) {
@@ -130,13 +136,16 @@ fun PersonDetailsScreenUi(
 
 @Composable
 private fun PersonHeader(
-    personDetails: PersonDetailsUiData
+    personDetails: PersonDetailsUiData,
+    onClick: (String) -> Unit
 ) {
     Row(
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
     ) {
         Card(
-            modifier = Modifier.wrapContentSize(),
+            modifier = Modifier
+                .wrapContentSize()
+                .clickable { onClick.invoke(personDetails.avatar) },
             shape = RoundedCornerShape(12.dp),
             elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
         ) {
@@ -237,7 +246,10 @@ private fun PersonBiography(biography: String) {
 }
 
 @Composable
-private fun PersonImages(images: List<String>) {
+private fun PersonImages(
+    images: List<String>,
+    onClick: (String) -> Unit
+) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -245,7 +257,9 @@ private fun PersonImages(images: List<String>) {
     ) {
         items(images) { image ->
             Card(
-                modifier = Modifier.wrapContentSize(),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clickable { onClick.invoke(image) },
                 shape = RoundedCornerShape(12.dp),
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
             ) {
