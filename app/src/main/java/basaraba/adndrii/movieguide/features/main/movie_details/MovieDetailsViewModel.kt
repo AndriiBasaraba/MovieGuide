@@ -24,6 +24,7 @@ class MovieDetailsViewModel @Inject constructor(
         launch {
             val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID])
             val response = getMovieDetailUseCase.invoke(movieId.toInt())
+            println("response = $response")
         }
     }
 

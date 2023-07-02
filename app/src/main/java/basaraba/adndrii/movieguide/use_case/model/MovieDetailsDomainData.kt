@@ -11,12 +11,21 @@ data class MovieDetailsDomainData(
     val runTime: Long,
     val tagLine: String,
     val voteAverage: Double,
+    val voteCount: Long,
     val status: String,
+    val movieCollection: MovieCollectionDomain?,
     val genres: List<MovieGenre>,
     val recommendations: List<MovieDomainData>,
     val keywords: List<MovieKeyword>,
     val images: List<String>,
-    val movieCredits: List<MovieCast>
+    val movieCredits: List<MovieCast>,
+    val isBookmarked: Boolean = false
+)
+
+data class MovieCollectionDomain(
+    val id: Int,
+    val name: String,
+    val posterPath: String
 )
 
 data class MovieGenre(

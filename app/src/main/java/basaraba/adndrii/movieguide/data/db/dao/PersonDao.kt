@@ -1,21 +1,13 @@
-package basaraba.adndrii.movieguide.data.db
+package basaraba.adndrii.movieguide.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import basaraba.adndrii.movieguide.data.db.PersonEntity
 
 @Dao
-interface MovieGuideDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllMovies(movies: List<MovieEntity>)
-
-    @Query("SELECT * FROM movie")
-    suspend fun getAllMovies(): List<MovieEntity>
-
-    @Query("DELETE FROM movie")
-    suspend fun deleteMovies(): Int
-
+interface PersonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllPersons(persons: List<PersonEntity>)
 

@@ -32,11 +32,12 @@ class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetailsDomainData =
         withContext(ioDispatcher) {
+            val isMovieBookmarked = async { moviesLocalDataSource.isMovieBookmarked(movieId) }
             val details = async { moviesRemoteDataSource.getMovieDetails(movieId) }
             val images = async { moviesRemoteDataSource.getMovieImages(movieId) }
             val credits = async { moviesRemoteDataSource.getMovieCredits(movieId) }
-//            val recommendations =
-//                async { moviesRemoteDataSource.getMovieRecommendations(movieId).results }
+            val recommendations =
+                async { moviesRemoteDataSource.getMovieRecommendations(movieId).results }
             val keywords = async { moviesRemoteDataSource.getMovieKeywords(movieId) }
 
 
@@ -44,8 +45,9 @@ class MoviesRepositoryImpl @Inject constructor(
                 details.await(),
                 images.await(),
                 credits.await(),
-                emptyList(),
-                keywords.await()
+                recommendations.await(),
+                keywords.await(),
+                isMovieBookmarked.await()
             )
         }
 }
