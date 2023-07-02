@@ -54,4 +54,12 @@ class MoviesRepositoryImpl @Inject constructor(
 
     override suspend fun getBookmarkedMovies(): Flow<List<MovieDomainData>> =
         moviesLocalDataSource.getAll()
+
+    override suspend fun deleteMovieBookmark(movieId: Int) {
+        moviesLocalDataSource.deleteMovie(movieId)
+    }
+
+    override suspend fun saveMovieBookmark(movie: MovieDomainData) {
+        moviesLocalDataSource.insert(movie)
+    }
 }

@@ -9,4 +9,6 @@ interface MoviesRepository {
     suspend fun getUpcomingMovies(forceReload: Boolean): List<MovieDomainData>
     suspend fun getMovieDetails(movieId: Int): MovieDetailsDomainData
     suspend fun getBookmarkedMovies(): Flow<List<MovieDomainData>>
+    suspend fun saveMovieBookmark(movie: MovieDomainData)
+    suspend fun deleteMovieBookmark(movieId: Int)
 }

@@ -12,18 +12,25 @@ class MoviesLocalSourceImpl @Inject constructor(
     private val movieEntityMapper: MovieEntityMapper
 ) : MoviesLocalSource {
     override fun getAll(): Flow<List<MovieDomainData>> =
-        movieDao.getAllMovies().map { movieEntityMapper.mapFromDb(it)  }
+        movieDao.getAllMovies().map { movieEntityMapper.mapFromDb(it) }
 
 
+    override suspend fun insert(movie: MovieDomainData) {
+        movieDao.insertMovie(movieEntityMapper.mapToDb(movie))
+    }
 
     override suspend fun insertAll(movies: List<MovieDomainData>) {
         movieDao.insertAllMovies(movieEntityMapper.mapToDb(movies))
     }
 
-    override suspend fun delete() {
+    override suspend fun deleteAll() {
         movieDao.deleteMovies()
     }
 
-    override suspend fun isMovieBookmarked(movieId: Int): Boolean  =
+    override suspend fun deleteMovie(movieId: Int) {
+        movieDao.deleteMovie(movieId)
+    }
+
+    override suspend fun isMovieBookmarked(movieId: Int): Boolean =
         movieDao.isMovieBookmarked(movieId)
 }

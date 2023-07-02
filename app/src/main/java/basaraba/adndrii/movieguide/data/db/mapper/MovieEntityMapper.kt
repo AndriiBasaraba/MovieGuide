@@ -6,13 +6,14 @@ import javax.inject.Inject
 
 interface MovieEntityMapper {
     fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity>
+    fun mapToDb(movie: MovieDomainData): MovieEntity
     fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData>
 }
 
 class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
 
-    override fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity> = movies.map {
-        with(it) {
+    override fun mapToDb(movie: MovieDomainData): MovieEntity =
+        with(movie) {
             MovieEntity(
                 id = id,
                 title = title,
@@ -21,8 +22,9 @@ class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
                 poster = poster
             )
         }
-    }
 
+    override fun mapToDb(movies: List<MovieDomainData>): List<MovieEntity> =
+        movies.map { mapToDb(it) }
 
     override fun mapFromDb(movies: List<MovieEntity>): List<MovieDomainData> = movies.map {
         with(it) {
@@ -31,7 +33,8 @@ class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
                 title = title,
                 overview = overview,
                 releaseDate = releaseDate,
-                poster = poster
+                poster = poster,
+                isBookmarked = true
             )
         }
     }

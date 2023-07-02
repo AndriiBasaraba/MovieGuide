@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesLocalSource {
     fun getAll(): Flow<List<MovieDomainData>>
     suspend fun insertAll(movies: List<MovieDomainData>)
-    suspend fun delete()
+    suspend fun insert(movie: MovieDomainData)
+    suspend fun deleteAll()
+    suspend fun deleteMovie(movieId: Int)
     suspend fun isMovieBookmarked(movieId: Int): Boolean
 }
