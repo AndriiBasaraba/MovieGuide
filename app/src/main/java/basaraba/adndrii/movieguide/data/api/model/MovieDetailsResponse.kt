@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetailResponse(
+data class MovieDetailsResponse(
     @SerializedName("adult") val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("belongs_to_collection") val belongsToCollection: MovieCollection?,

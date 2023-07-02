@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.data.mapper
 import basaraba.adndrii.movieguide.BuildConfig
 import basaraba.adndrii.movieguide.data.api.model.CastCrew
 import basaraba.adndrii.movieguide.data.api.model.MovieCastResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
+import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieImageResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
@@ -17,7 +17,7 @@ import javax.inject.Inject
 interface MoviesResponseMapper {
     fun map(response: List<MoviesResponse>): List<MovieDomainData>
     fun mapDetails(
-        details: MovieDetailResponse,
+        details: MovieDetailsResponse,
         images: MovieImageResponse,
         credits: MovieCastResponse,
         recommendations: List<MoviesResponse>,
@@ -40,7 +40,7 @@ class MoviesResponseMapperImpl @Inject constructor() : MoviesResponseMapper {
         }
 
     override fun mapDetails(
-        details: MovieDetailResponse,
+        details: MovieDetailsResponse,
         images: MovieImageResponse,
         credits: MovieCastResponse,
         recommendations: List<MoviesResponse>,

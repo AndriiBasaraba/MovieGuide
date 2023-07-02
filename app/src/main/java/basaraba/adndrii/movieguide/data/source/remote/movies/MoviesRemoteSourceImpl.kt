@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.data.source.remote.movies
 import basaraba.adndrii.movieguide.data.api.MovieApi
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieCastResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
+import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieImageResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
@@ -18,7 +18,7 @@ class MoviesRemoteSourceImpl @Inject constructor(
     override suspend fun getUpcomingMovies(): CollectionBaseResponse<MoviesResponse> =
         api.getUpcomingMovies()
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetailResponse =
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse =
         api.getMovieDetails(movieId)
 
     override suspend fun getMovieImages(movieId: Int): MovieImageResponse =

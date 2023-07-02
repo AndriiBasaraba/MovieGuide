@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.api
 
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieCastResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
+import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieImageResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
@@ -28,7 +28,7 @@ interface MovieApi {
     suspend fun getMovieDetails(
         @Path("movie_id") movieId: Int,
         @Query("language") language: String = "en-US"
-    ): MovieDetailResponse
+    ): MovieDetailsResponse
 
     @GET("movie/{movie_id}/images")
     suspend fun getMovieImages(
