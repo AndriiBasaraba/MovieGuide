@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -30,15 +33,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
+import basaraba.adndrii.movieguide.features.ui_components.SearchShowBar
+import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import kotlinx.coroutines.launch
@@ -72,6 +80,10 @@ fun WatchListScreenUi(
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
+            SearchShowBar(
+                query = viewState.searchQuery,
+                onQueryChange = { text -> onEvent(WatchListUiEvent.OnQueryChange(text)) }
+            )
             TabRow(
                 selectedTabIndex = tabIndex,
                 indicator = { tabPositions ->
@@ -105,7 +117,8 @@ fun WatchListScreenUi(
             }
 
             HorizontalPager(
-                state = pagerState
+                state = pagerState,
+                userScrollEnabled = false
             ) { pageIndex ->
                 when (pages[pageIndex]) {
                     WatchListPages.MOVIES -> WatchListMovies(
@@ -167,13 +180,53 @@ private fun WatchListMovieCard(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
         ) {
-
-
+            Row {
+                AsyncImage(
+                    model = movie.poster,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .wrapContentWidth()
+                        .clip(shape = RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.FillHeight,
+                    placeholder = painterResource(id = R.drawable.ic_image_placeholder),
+                    error = painterResource(id = R.drawable.ic_image_placeholder)
+                )
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp, end = 16.dp),
+                        text = movie.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 16.dp),
+                        text = movie.releaseDate,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 16.dp),
+                        text = movie.overview,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Normal,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
         IconButton(
             onClick = { onBookmarkClick.invoke(movie.id) },
             modifier = Modifier
-                .padding(top = 4.dp, end = 4.dp)
+                .padding(top = 4.dp, end = 8.dp)
                 .align(Alignment.TopEnd)
         ) {
             Image(

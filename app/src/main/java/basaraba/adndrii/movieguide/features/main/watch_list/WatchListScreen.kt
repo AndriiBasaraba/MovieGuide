@@ -27,6 +27,10 @@ fun WatchListScreen(
             is WatchListUiEvent.DeleteBookmark -> {
                 viewModel.setEvent(event)
             }
+
+            is WatchListUiEvent.OnQueryChange -> {
+                viewModel.setEvent(event)
+            }
         }
     }
 

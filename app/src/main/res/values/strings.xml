@@ -20,4 +20,6 @@
 
     <string name="load_next_page">Load next page</string>
 
+    <string name="search_hint">Search Movies and Tv Shows</string>
+
 </resources>

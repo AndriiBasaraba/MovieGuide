@@ -30,17 +30,24 @@ class WatchListViewModel @Inject constructor(
 
     override val viewState: StateFlow<WatchListState> = watchList.map {
         WatchListState(
+            searchQuery = it.searchQuery,
             isLoading = it.isLoading,
             isMoviesEmpty = it.isMoviesEmpty,
             isTvShowsEmpty = it.isTvShowsEmpty,
-            movies = it.movies,
-            tvShows = it.tvShows
+            movies = it.movies.filter { movie -> movie.title.contains(it.searchQuery, true) },
+            tvShows = it.tvShows.filter { tvShow -> tvShow.title.contains(it.searchQuery, true) }
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, WatchListState())
 
     override fun handleEvent(event: WatchListUiEvent) {
-        if (event is WatchListUiEvent.DeleteBookmark) {
-            viewModelScope.launch { deleteMovieBookmarkUseCase.invoke(event.id) }
+        when (event) {
+            is WatchListUiEvent.DeleteBookmark -> {
+                viewModelScope.launch { deleteMovieBookmarkUseCase.invoke(event.id) }
+            }
+
+            is WatchListUiEvent.OnQueryChange -> {
+                watchList.update { it.copy(searchQuery = event.text) }
+            }
         }
     }
 

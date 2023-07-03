@@ -4,6 +4,7 @@ import basaraba.adndrii.movieguide.common.ViewState
 import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 
 data class WatchListState(
+    val searchQuery: String = "",
     val isLoading: Boolean = false,
     val isMoviesEmpty: Boolean = false,
     val isTvShowsEmpty: Boolean = false,
