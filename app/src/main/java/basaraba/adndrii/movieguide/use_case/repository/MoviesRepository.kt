@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface MoviesRepository {
     suspend fun getNowPlayingMovies(forceReload: Boolean): List<MovieDomainData>
     suspend fun getUpcomingMovies(forceReload: Boolean): List<MovieDomainData>
-    suspend fun getMovieDetails(movieId: Int): MovieDetailsDomainData
+    suspend fun getMovieDetails(movieId: Long): MovieDetailsDomainData
     suspend fun getBookmarkedMovies(): Flow<List<MovieDomainData>>
     suspend fun saveMovieBookmark(movie: MovieDomainData)
-    suspend fun deleteMovieBookmark(movieId: Int)
+    suspend fun deleteMovieBookmark(movieId: Long)
 }

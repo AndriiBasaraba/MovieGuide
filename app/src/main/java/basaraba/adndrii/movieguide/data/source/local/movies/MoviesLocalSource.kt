@@ -8,6 +8,6 @@ interface MoviesLocalSource {
     suspend fun insertAll(movies: List<MovieDomainData>)
     suspend fun insert(movie: MovieDomainData)
     suspend fun deleteAll()
-    suspend fun deleteMovie(movieId: Int)
-    suspend fun isMovieBookmarked(movieId: Int): Boolean
+    suspend fun deleteMovie(movieId: Long)
+    suspend fun isMovieBookmarked(movieId: Long): Boolean
 }

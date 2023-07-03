@@ -58,7 +58,8 @@ class PersonUiMapperImpl @Inject constructor() : PersonUiMapper {
         }
 
     private fun sortAndMapRoles(input: List<PersonCredits>): List<PersonCreditsUi> =
-        input.sortedByDescending { it.popularity }.map { credit ->
+        // for now removed sorting, check if its better sortedByDescending { it.popularity }.
+        input.map { credit ->
             mapRoleCredits(credit)
         }
 

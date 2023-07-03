@@ -21,7 +21,7 @@ fun DetailsTopBar(
     title: String,
     imdbId: String,
     detailsType: DetailsType,
-    isBookmarked: Boolean = false,
+    isBookmarked: Boolean? = null,
     onBookmarkClick: ((Boolean) -> Unit)? = null
 ) {
     TopAppBar(
@@ -46,7 +46,7 @@ fun DetailsTopBar(
             }
         },
         actions = {
-            if (detailsType == DetailsType.SHOW) {
+            if (detailsType == DetailsType.SHOW && isBookmarked != null) {
                 IconButton(onClick = { onBookmarkClick?.invoke(isBookmarked.not()) }) {
                     Image(
                         painter = painterResource(

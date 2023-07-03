@@ -26,30 +26,30 @@ interface MovieApi {
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US"
     ): MovieDetailsResponse
 
     @GET("movie/{movie_id}/images")
     suspend fun getMovieImages(
-        @Path("movie_id") movieId: Int
+        @Path("movie_id") movieId: Long
     ): MovieImageResponse
 
     @GET("movie/{movie_id}/credits")
     suspend fun getMovieCredits(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US"
     ): MovieCastResponse
 
     @GET("movie/{movie_id}/recommendations")
     suspend fun getMovieRecommendations(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US"
     ): CollectionBaseResponse<MoviesResponse>
 
     @GET("movie/{movie_id}/keywords")
     suspend fun getMovieKeywords(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: Long,
         @Query("language") language: String = "en-US"
     ): MovieKeywordsResponse
 }

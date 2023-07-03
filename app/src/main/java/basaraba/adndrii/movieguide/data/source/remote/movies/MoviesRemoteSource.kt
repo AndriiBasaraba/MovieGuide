@@ -10,9 +10,9 @@ import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
 interface MoviesRemoteSource {
     suspend fun getNowPlayingMovies(): CollectionBaseResponse<MoviesResponse>
     suspend fun getUpcomingMovies(): CollectionBaseResponse<MoviesResponse>
-    suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse
-    suspend fun getMovieImages(movieId: Int): MovieImageResponse
-    suspend fun getMovieCredits(movieId: Int): MovieCastResponse
-    suspend fun getMovieRecommendations(movieId: Int): CollectionBaseResponse<MoviesResponse>
-    suspend fun getMovieKeywords(movieId: Int): MovieKeywordsResponse
+    suspend fun getMovieDetails(movieId: Long): MovieDetailsResponse
+    suspend fun getMovieImages(movieId: Long): MovieImageResponse
+    suspend fun getMovieCredits(movieId: Long): MovieCastResponse
+    suspend fun getMovieRecommendations(movieId: Long): CollectionBaseResponse<MoviesResponse>
+    suspend fun getMovieKeywords(movieId: Long): MovieKeywordsResponse
 }

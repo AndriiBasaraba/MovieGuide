@@ -18,18 +18,18 @@ class MoviesRemoteSourceImpl @Inject constructor(
     override suspend fun getUpcomingMovies(): CollectionBaseResponse<MoviesResponse> =
         api.getUpcomingMovies()
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse =
+    override suspend fun getMovieDetails(movieId: Long): MovieDetailsResponse =
         api.getMovieDetails(movieId)
 
-    override suspend fun getMovieImages(movieId: Int): MovieImageResponse =
+    override suspend fun getMovieImages(movieId: Long): MovieImageResponse =
         api.getMovieImages(movieId)
 
-    override suspend fun getMovieCredits(movieId: Int): MovieCastResponse =
+    override suspend fun getMovieCredits(movieId: Long): MovieCastResponse =
         api.getMovieCredits(movieId)
 
-    override suspend fun getMovieRecommendations(movieId: Int): CollectionBaseResponse<MoviesResponse> =
+    override suspend fun getMovieRecommendations(movieId: Long): CollectionBaseResponse<MoviesResponse> =
         api.getMovieRecommendations(movieId)
 
-    override suspend fun getMovieKeywords(movieId: Int): MovieKeywordsResponse =
+    override suspend fun getMovieKeywords(movieId: Long): MovieKeywordsResponse =
         api.getMovieKeywords(movieId)
 }

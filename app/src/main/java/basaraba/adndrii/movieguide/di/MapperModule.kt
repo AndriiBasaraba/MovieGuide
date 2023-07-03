@@ -8,6 +8,8 @@ import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapper
 import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapperImpl
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapperImpl
+import basaraba.adndrii.movieguide.features.main.mapper.MovieUiMapper
+import basaraba.adndrii.movieguide.features.main.mapper.MovieUiMapperImpl
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapperImpl
 import dagger.Binds
@@ -49,4 +51,10 @@ interface MapperModule {
     fun providePersonUiMapper(
         personUiMapper: PersonUiMapperImpl
     ): PersonUiMapper
+
+    @Binds
+    @Singleton
+    fun provideMovieUiMapper(
+        movieUiMapper: MovieUiMapperImpl
+    ): MovieUiMapper
 }

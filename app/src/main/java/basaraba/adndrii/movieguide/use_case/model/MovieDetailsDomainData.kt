@@ -2,6 +2,7 @@ package basaraba.adndrii.movieguide.use_case.model
 
 data class MovieDetailsDomainData(
     val id: Long,
+    val title: String,
     val imdbId: String,
     val overview: String,
     val budget: Long,
@@ -18,7 +19,7 @@ data class MovieDetailsDomainData(
     val recommendations: List<MovieDomainData>,
     val keywords: List<MovieKeyword>,
     val images: List<String>,
-    val movieCredits: List<MovieCast>,
+    val movieCredits: List<MovieCastDomain>,
     val isBookmarked: Boolean = false
 )
 
@@ -33,7 +34,7 @@ data class MovieGenre(
     val name: String
 )
 
-data class MovieCast(
+data class MovieCastDomain(
     val id: Long,
     val name: String,
     val popularity: Double,

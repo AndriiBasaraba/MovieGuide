@@ -8,7 +8,7 @@ import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieImageResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.MoviesResponse
-import basaraba.adndrii.movieguide.use_case.model.MovieCast
+import basaraba.adndrii.movieguide.use_case.model.MovieCastDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieCollectionDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
@@ -52,6 +52,7 @@ class MoviesResponseMapperImpl @Inject constructor() : MoviesResponseMapper {
     ): MovieDetailsDomainData =
         MovieDetailsDomainData(
             id = details.id,
+            title = details.title,
             imdbId = details.imdbId.orEmpty(),
             overview = details.overview,
             budget = details.budget,
@@ -79,8 +80,8 @@ class MoviesResponseMapperImpl @Inject constructor() : MoviesResponseMapper {
             posterPath = BuildConfig.IMAGE_URL_MEDIUM + input.posterPath
         )
 
-    private fun mapCredit(input: CastCrew): MovieCast =
-        MovieCast(
+    private fun mapCredit(input: CastCrew): MovieCastDomain =
+        MovieCastDomain(
             id = input.id,
             popularity = input.popularity,
             avatar = BuildConfig.IMAGE_URL_SMALL + input.profilePath,

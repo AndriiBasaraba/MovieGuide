@@ -27,10 +27,10 @@ class MoviesLocalSourceImpl @Inject constructor(
         movieDao.deleteMovies()
     }
 
-    override suspend fun deleteMovie(movieId: Int) {
+    override suspend fun deleteMovie(movieId: Long) {
         movieDao.deleteMovie(movieId)
     }
 
-    override suspend fun isMovieBookmarked(movieId: Int): Boolean =
+    override suspend fun isMovieBookmarked(movieId: Long): Boolean =
         movieDao.isMovieBookmarked(movieId)
 }
