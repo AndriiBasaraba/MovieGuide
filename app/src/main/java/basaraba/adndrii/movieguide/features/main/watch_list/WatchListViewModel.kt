@@ -4,10 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +18,12 @@ class WatchListViewModel @Inject constructor(
 
     private fun getBookmarkedMovies() {
         viewModelScope.launch {
-            getBookmarkedMoviesUseCase.invoke()
-                .flowOn(Dispatchers.IO)
-                .onEach {
-                    println("movies from db = $it")
-                }.launchIn(this)
+            getBookmarkedMoviesUseCase.invoke().onSuccess { bookmarksFlow ->
+                bookmarksFlow.collect { list ->
+                    println("movies from db = $list")
+                    println("movies from db count = ${list.size}")
+                }
+            }
         }
     }
 }

@@ -13,8 +13,10 @@ class GetBookmarkedMoviesUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(): Flow<List<MovieDomainData>> =
+    suspend operator fun invoke(): Result<Flow<List<MovieDomainData>>> =
         withContext(ioDispatcher) {
-            repository.getBookmarkedMovies()
+            runCatching {
+                repository.getBookmarkedMovies()
+            }
         }
 }
