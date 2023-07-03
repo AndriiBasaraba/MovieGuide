@@ -1,11 +1,11 @@
 package basaraba.adndrii.movieguide.features.main.mapper
 
+import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieCast
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieCollection
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsUiData
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieGenre
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieKeyword
-import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 import basaraba.adndrii.movieguide.use_case.model.MovieCastDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieCollectionDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
@@ -28,6 +28,7 @@ class MovieUiMapperImpl @Inject constructor() : MovieUiMapper {
                     overview = overview,
                     releaseDate = releaseDate,
                     poster = poster,
+                    voteAverage = voteAverage,
                     isBookmarked = isBookmarked
                 )
             }
@@ -85,6 +86,7 @@ class MovieUiMapperImpl @Inject constructor() : MovieUiMapper {
                 overview = overview,
                 releaseDate = releaseDate,
                 poster = poster,
+                voteAverage = voteAverage,
                 isBookmarked = true
             )
         }

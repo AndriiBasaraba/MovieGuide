@@ -37,6 +37,7 @@ class MoviesResponseMapperImpl @Inject constructor() : MoviesResponseMapper {
                     title = title,
                     overview = overview,
                     releaseDate = releaseDate,
+                    voteAverage = voteAverage,
                     poster = BuildConfig.IMAGE_URL_SMALL + posterPath
                 )
             }

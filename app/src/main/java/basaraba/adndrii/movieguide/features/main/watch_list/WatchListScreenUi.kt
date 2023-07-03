@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -23,7 +24,6 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TabRowDefaults
@@ -39,10 +39,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
+import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
 import basaraba.adndrii.movieguide.features.ui_components.SearchShowBar
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -162,7 +164,7 @@ private fun WatchListMovieCard(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .wrapContentHeight()
                 .clickable { onCardClick.invoke(movie.id, movie.title) },
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -173,10 +175,10 @@ private fun WatchListMovieCard(
                     model = movie.poster,
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .wrapContentWidth()
+                        .height(200.dp)
+                        .width(120.dp)
                         .clip(shape = RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.FillHeight,
+                    contentScale = ContentScale.Crop,
                     placeholder = painterResource(id = R.drawable.ic_image_placeholder),
                     error = painterResource(id = R.drawable.ic_image_placeholder)
                 )
@@ -211,18 +213,26 @@ private fun WatchListMovieCard(
                 }
             }
         }
-        IconButton(
-            onClick = { onBookmarkClick.invoke(movie.id) },
+
+        RatingCircle(
+            rating = movie.voteAverage,
+            textSize = 12.sp,
+            strokeWidth = 2.dp,
             modifier = Modifier
-                .padding(top = 2.dp, end = 8.dp)
+                .padding(start = 90.dp)
+                .size(40.dp)
+                .align(Alignment.BottomStart)
+        )
+
+        Image(
+            painter = painterResource(R.drawable.ic_filled_bookmarked),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface),
+            modifier = Modifier
+                .padding(top = 4.dp, end = 8.dp)
                 .align(Alignment.TopEnd)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_filled_bookmarked),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.inverseSurface)
-            )
-        }
+                .clickable { onBookmarkClick.invoke(movie.id) }
+        )
     }
 }
 

@@ -19,7 +19,8 @@ class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
                 title = title,
                 overview = overview,
                 releaseDate = releaseDate,
-                poster = poster
+                poster = poster,
+                voteAverage = voteAverage
             )
         }
 
@@ -34,6 +35,7 @@ class MovieEntityMapperImpl @Inject constructor() : MovieEntityMapper {
                 overview = overview,
                 releaseDate = releaseDate,
                 poster = poster,
+                voteAverage = voteAverage,
                 isBookmarked = true
             )
         }

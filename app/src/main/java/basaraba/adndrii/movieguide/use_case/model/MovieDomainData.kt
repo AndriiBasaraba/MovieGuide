@@ -6,5 +6,6 @@ data class MovieDomainData(
     val overview: String,
     val releaseDate: String,
     val poster: String,
+    val voteAverage: Double,
     val isBookmarked: Boolean = false
 )
