@@ -21,7 +21,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.IconButton
@@ -37,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -67,23 +65,13 @@ fun WatchListScreenUi(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                backgroundColor = MaterialTheme.colorScheme.background,
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.watch_list),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            )
-        }
-    ) {
-        Column(modifier = Modifier.padding(it)) {
             SearchShowBar(
                 query = viewState.searchQuery,
                 onQueryChange = { text -> onEvent(WatchListUiEvent.OnQueryChange(text)) }
             )
+        }
+    ) {
+        Column(modifier = Modifier.padding(it)) {
             TabRow(
                 selectedTabIndex = tabIndex,
                 indicator = { tabPositions ->
@@ -197,7 +185,7 @@ private fun WatchListMovieCard(
                         .align(Alignment.CenterVertically)
                 ) {
                     Text(
-                        modifier = Modifier.padding(start = 8.dp, end = 16.dp),
+                        modifier = Modifier.padding(start = 8.dp, end = 16.dp, top = 2.dp),
                         text = movie.title,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
@@ -226,7 +214,7 @@ private fun WatchListMovieCard(
         IconButton(
             onClick = { onBookmarkClick.invoke(movie.id) },
             modifier = Modifier
-                .padding(top = 4.dp, end = 8.dp)
+                .padding(top = 2.dp, end = 8.dp)
                 .align(Alignment.TopEnd)
         ) {
             Image(
