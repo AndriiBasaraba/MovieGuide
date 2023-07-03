@@ -5,7 +5,7 @@ import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieCollec
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsUiData
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieGenre
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieKeyword
-import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieUiData
+import basaraba.adndrii.movieguide.features.main.model.MovieUiData
 import basaraba.adndrii.movieguide.use_case.model.MovieCastDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieCollectionDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData

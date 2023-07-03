@@ -1,5 +1,7 @@
 package basaraba.adndrii.movieguide.features.main.movie_details.model
 
+import basaraba.adndrii.movieguide.features.main.model.MovieUiData
+
 data class MovieDetailsUiData(
     val id: Long,
     val title: String,

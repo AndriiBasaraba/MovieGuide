@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.features.main.movie_details.model
+package basaraba.adndrii.movieguide.features.main.model
 
 data class MovieUiData(
     val id: Long,

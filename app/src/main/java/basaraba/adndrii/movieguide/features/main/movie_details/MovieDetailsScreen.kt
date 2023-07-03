@@ -30,6 +30,15 @@ fun MovieDetailsScreen(
                 )
             }
 
+            is MovieDetailsUiEvent.ShowPersonDetails -> {
+                navController.navigate(
+                    NavigationRoute.PersonDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.name
+                    )
+                )
+            }
+
             is MovieDetailsUiEvent.ShowImagePreview -> {
                 navController.navigate(
                     NavigationRoute.ImagePreview.getRouteNameWithArguments(event.url)
