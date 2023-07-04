@@ -1,7 +1,7 @@
 package basaraba.adndrii.movieguide.use_case.movies
 
 import basaraba.adndrii.movieguide.di.IoDispatcher
-import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
+import basaraba.adndrii.movieguide.use_case.model.ShowDomainData
 import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -12,7 +12,7 @@ class GetNowPlayingMoviesUseCase @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(forceReload: Boolean = false): Result<List<MovieDomainData>> =
+    suspend operator fun invoke(forceReload: Boolean = false): Result<List<ShowDomainData>> =
         withContext(ioDispatcher) {
             runCatching {
                 repository.getNowPlayingMovies(forceReload)

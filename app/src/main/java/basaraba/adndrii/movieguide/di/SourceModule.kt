@@ -1,7 +1,7 @@
 package basaraba.adndrii.movieguide.di
 
-import basaraba.adndrii.movieguide.data.source.local.movies.MoviesLocalSource
-import basaraba.adndrii.movieguide.data.source.local.movies.MoviesLocalSourceImpl
+import basaraba.adndrii.movieguide.data.source.local.movies.ShowLocalSource
+import basaraba.adndrii.movieguide.data.source.local.movies.ShowLocalSourceImpl
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSource
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSourceImpl
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSource
@@ -27,8 +27,8 @@ interface SourceModule {
     @Binds
     @Singleton
     fun provideMoviesLocalSource(
-        scheduleLocalDataSource: MoviesLocalSourceImpl
-    ): MoviesLocalSource
+        scheduleLocalDataSource: ShowLocalSourceImpl
+    ): ShowLocalSource
 
     @Binds
     @Singleton

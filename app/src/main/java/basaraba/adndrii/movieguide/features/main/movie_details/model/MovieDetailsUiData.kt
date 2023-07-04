@@ -1,6 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.movie_details.model
 
-import basaraba.adndrii.movieguide.features.main.model.MovieUiData
+import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 
 data class MovieDetailsUiData(
     val id: Long,
@@ -17,11 +17,11 @@ data class MovieDetailsUiData(
     val voteCount: Long,
     val status: String,
     val movieCollection: MovieCollection?,
-    val genres: List<MovieGenre>,
-    val recommendations: List<MovieUiData>,
-    val keywords: List<MovieKeyword>,
+    val genres: List<ShowGenre>,
+    val recommendations: List<ShowUiData>,
+    val keywords: List<ShowKeyword>,
     val images: List<String>,
-    val movieCredits: List<MovieCast>,
+    val movieCredits: List<ShowCast>,
     var isBookmarked: Boolean?
 ) {
     companion object {
@@ -56,12 +56,12 @@ data class MovieCollection(
     val poster: String
 )
 
-data class MovieGenre(
+data class ShowGenre(
     val id: Long,
     val name: String
 )
 
-data class MovieCast(
+data class ShowCast(
     val id: Long,
     val name: String,
     val popularity: Double,
@@ -69,7 +69,7 @@ data class MovieCast(
     val role: String
 )
 
-data class MovieKeyword(
+data class ShowKeyword(
     val id: Long,
     val name: String
 )

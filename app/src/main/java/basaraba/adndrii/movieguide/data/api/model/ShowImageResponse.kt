@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieImageResponse(
+data class ShowImageResponse(
     @SerializedName("backdrops") val backdrops: List<Backdrop>
 )
 

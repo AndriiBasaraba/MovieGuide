@@ -36,12 +36,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
-import basaraba.adndrii.movieguide.features.main.model.MovieUiData
+import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
@@ -87,7 +88,7 @@ fun WatchListScreenUi(
                 backgroundColor = MaterialTheme.colorScheme.background,
                 contentColor = MaterialTheme.colorScheme.background
             ) {
-                pages.forEachIndexed { index, pair ->
+                pages.forEachIndexed { index, page ->
                     Tab(
                         selected = tabIndex == index,
                         onClick = {
@@ -97,7 +98,7 @@ fun WatchListScreenUi(
                         },
                         text = {
                             Text(
-                                text = pair.title,
+                                text = stringResource(id = page.title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Medium
                             )
@@ -156,7 +157,7 @@ private fun WatchListMovies(
 
 @Composable
 private fun WatchListMovieCard(
-    movie: MovieUiData,
+    movie: ShowUiData,
     onCardClick: (Long, String) -> Unit,
     onBookmarkClick: (Long) -> Unit
 ) {

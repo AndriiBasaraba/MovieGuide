@@ -15,11 +15,11 @@ data class MovieDetailsDomainData(
     val voteCount: Long,
     val status: String,
     val movieCollection: MovieCollectionDomain?,
-    val genres: List<MovieGenre>,
-    val recommendations: List<MovieDomainData>,
-    val keywords: List<MovieKeyword>,
+    val genres: List<ShowGenre>,
+    val recommendations: List<ShowDomainData>,
+    val keywords: List<ShowKeyword>,
     val images: List<String>,
-    val movieCredits: List<MovieCastDomain>,
+    val movieCredits: List<ShowCastDomain>,
     val isBookmarked: Boolean = false
 )
 
@@ -29,12 +29,12 @@ data class MovieCollectionDomain(
     val posterPath: String
 )
 
-data class MovieGenre(
+data class ShowGenre(
     val id: Long,
     val name: String
 )
 
-data class MovieCastDomain(
+data class ShowCastDomain(
     val id: Long,
     val name: String,
     val popularity: Double,
@@ -42,7 +42,7 @@ data class MovieCastDomain(
     val role: String
 )
 
-data class MovieKeyword(
+data class ShowKeyword(
     val id: Long,
     val name: String
 )

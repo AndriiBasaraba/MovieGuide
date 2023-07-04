@@ -1,18 +1,18 @@
 package basaraba.adndrii.movieguide.use_case.movies
 
 import basaraba.adndrii.movieguide.di.IoDispatcher
-import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
+import basaraba.adndrii.movieguide.use_case.repository.WatchListRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DeleteMovieBookmarkUseCase @Inject constructor(
-    private val repository: MoviesRepository,
+    private val repository: WatchListRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(movieId: Long) =
+    suspend operator fun invoke(showId: Long) =
         withContext(ioDispatcher) {
-            repository.deleteMovieBookmark(movieId = movieId)
+            repository.deleteShowBookmark(showId = showId)
         }
 }

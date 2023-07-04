@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieKeywordsResponse(
+data class ShowKeywordsResponse(
     @SerializedName("keywords") val keywords: List<Keyword>
 )
 

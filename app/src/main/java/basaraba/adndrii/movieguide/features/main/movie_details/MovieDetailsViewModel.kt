@@ -3,7 +3,7 @@ package basaraba.adndrii.movieguide.features.main.movie_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.common.BaseViewModel
-import basaraba.adndrii.movieguide.features.main.mapper.MovieUiMapper
+import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsState
 import basaraba.adndrii.movieguide.use_case.movies.DeleteMovieBookmarkUseCase
 import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailUseCase
@@ -25,7 +25,7 @@ class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase,
     private val deleteMovieBookmarkUseCase: DeleteMovieBookmarkUseCase,
     private val saveMovieBookmarkUseCase: SaveMovieBookmarkUseCase,
-    private val mapper: MovieUiMapper
+    private val mapper: ShowUiMapper
 ) : BaseViewModel<MovieDetailsUiEvent, MovieDetailsState>() {
 
     private var movieDetailsJob: Job? = null

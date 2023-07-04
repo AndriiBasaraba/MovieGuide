@@ -1,55 +1,57 @@
 package basaraba.adndrii.movieguide.data.api
 
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
-import basaraba.adndrii.movieguide.data.api.model.ShowCastResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
+import basaraba.adndrii.movieguide.data.api.model.ShowCastResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowImageResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowResponse
+import basaraba.adndrii.movieguide.data.api.model.TvShowDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface MovieApi {
+interface TvShowApi {
 
-    @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(
+    @GET("tv/popular")
+    suspend fun getPopularTvShows(
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): CollectionBaseResponse<ShowResponse>
 
-    @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShows(
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): CollectionBaseResponse<ShowResponse>
 
-    @GET("movie/{movie_id}")
-    suspend fun getMovieDetails(
-        @Path("movie_id") movieId: Long,
+
+    @GET("tv/{series_id}")
+    suspend fun getTvShowDetails(
+        @Path("series_id") seriesId: Long,
         @Query("language") language: String = "en-US"
-    ): MovieDetailsResponse
+    ): TvShowDetailsResponse
 
-    @GET("movie/{movie_id}/images")
-    suspend fun getMovieImages(
-        @Path("movie_id") movieId: Long
+    @GET("tv/{series_id}/images")
+    suspend fun getTvShowImages(
+        @Path("series_id") seriesId: Long
     ): ShowImageResponse
 
-    @GET("movie/{movie_id}/credits")
-    suspend fun getMovieCredits(
-        @Path("movie_id") movieId: Long,
+    @GET("tv/{series_id}/credits")
+    suspend fun getTvShowCredits(
+        @Path("series_id") seriesId: Long,
         @Query("language") language: String = "en-US"
     ): ShowCastResponse
 
-    @GET("movie/{movie_id}/recommendations")
-    suspend fun getMovieRecommendations(
-        @Path("movie_id") movieId: Long,
+    @GET("tv/{series_id}/recommendations")
+    suspend fun getTvShowRecommendations(
+        @Path("series_id") seriesId: Long,
         @Query("language") language: String = "en-US"
     ): CollectionBaseResponse<ShowResponse>
 
-    @GET("movie/{movie_id}/keywords")
-    suspend fun getMovieKeywords(
-        @Path("movie_id") movieId: Long,
+    @GET("tv/{series_id}/keywords")
+    suspend fun geTvShowKeywords(
+        @Path("series_id") seriesId: Long,
         @Query("language") language: String = "en-US"
     ): ShowKeywordsResponse
 }

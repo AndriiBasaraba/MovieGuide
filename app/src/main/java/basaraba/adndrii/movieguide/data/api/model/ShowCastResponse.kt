@@ -2,7 +2,7 @@ package basaraba.adndrii.movieguide.data.api.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieCastResponse(
+data class ShowCastResponse(
     @SerializedName("cast") val cast: List<CastCrew>?,
     @SerializedName("crew") val crew: List<CastCrew>?
 )

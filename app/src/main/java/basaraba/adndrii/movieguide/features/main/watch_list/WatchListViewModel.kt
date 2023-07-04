@@ -2,7 +2,8 @@ package basaraba.adndrii.movieguide.features.main.watch_list
 
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.common.BaseViewModel
-import basaraba.adndrii.movieguide.features.main.mapper.MovieUiMapper
+import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
+import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
 import basaraba.adndrii.movieguide.use_case.movies.DeleteMovieBookmarkUseCase
 import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedMoviesUseCase
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class WatchListViewModel @Inject constructor(
     private val getBookmarkedMoviesUseCase: GetBookmarkedMoviesUseCase,
     private val deleteMovieBookmarkUseCase: DeleteMovieBookmarkUseCase,
-    private val mapper: MovieUiMapper
+    private val mapper: ShowUiMapper
 ) : BaseViewModel<WatchListUiEvent, WatchListState>() {
 
     private var watchListJob: Job? = null
@@ -32,8 +33,6 @@ class WatchListViewModel @Inject constructor(
         WatchListState(
             searchQuery = it.searchQuery,
             isLoading = it.isLoading,
-            isMoviesEmpty = it.isMoviesEmpty,
-            isTvShowsEmpty = it.isTvShowsEmpty,
             movies = it.movies.filter { movie -> movie.title.contains(it.searchQuery, true) },
             tvShows = it.tvShows.filter { tvShow -> tvShow.title.contains(it.searchQuery, true) }
         )
@@ -61,11 +60,12 @@ class WatchListViewModel @Inject constructor(
             watchList.update { it.copy(isLoading = true) }
             getBookmarkedMoviesUseCase.invoke().onSuccess { bookmarksFlow ->
                 bookmarksFlow.collect { list ->
+                    val mappedList = mapper.map(list)
                     watchList.update {
                         it.copy(
                             isLoading = false,
-                            isMoviesEmpty = list.isEmpty(),
-                            movies = mapper.map(list)
+                            movies = mappedList.filter { movie -> movie.type == ShowUiData.Type.MOVIE },
+                            tvShows = mappedList.filter { tvShow -> tvShow.type == ShowUiData.Type.TV_SHOW }
                         )
                     }
                 }
