@@ -1,13 +1,15 @@
 package basaraba.adndrii.movieguide.di
 
-import basaraba.adndrii.movieguide.data.db.mapper.MovieEntityMapper
-import basaraba.adndrii.movieguide.data.db.mapper.MovieEntityMapperImpl
+import basaraba.adndrii.movieguide.data.db.mapper.ShowEntityMapper
+import basaraba.adndrii.movieguide.data.db.mapper.ShowEntityMapperImpl
 import basaraba.adndrii.movieguide.data.db.mapper.PersonEntityMapper
 import basaraba.adndrii.movieguide.data.db.mapper.PersonEntityMapperImpl
-import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapper
-import basaraba.adndrii.movieguide.data.mapper.MoviesResponseMapperImpl
+import basaraba.adndrii.movieguide.data.mapper.ShowResponseMapper
+import basaraba.adndrii.movieguide.data.mapper.ShowResponseMapperImpl
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapper
 import basaraba.adndrii.movieguide.data.mapper.PersonsResponseMapperImpl
+import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
+import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapperImpl
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapper
 import basaraba.adndrii.movieguide.features.main.mapper.PersonUiMapperImpl
 import dagger.Binds
@@ -23,8 +25,8 @@ interface MapperModule {
     @Binds
     @Singleton
     fun provideMovieEntityMapper(
-        movieEntityMapper: MovieEntityMapperImpl
-    ): MovieEntityMapper
+        movieEntityMapper: ShowEntityMapperImpl
+    ): ShowEntityMapper
 
     @Binds
     @Singleton
@@ -34,9 +36,9 @@ interface MapperModule {
 
     @Binds
     @Singleton
-    fun provideMoviesResponseMapper(
-        moviesResponseMapper: MoviesResponseMapperImpl
-    ): MoviesResponseMapper
+    fun provideShowResponseMapper(
+        showResponseMapper: ShowResponseMapperImpl
+    ): ShowResponseMapper
 
     @Binds
     @Singleton
@@ -49,4 +51,10 @@ interface MapperModule {
     fun providePersonUiMapper(
         personUiMapper: PersonUiMapperImpl
     ): PersonUiMapper
+
+    @Binds
+    @Singleton
+    fun provideShowUiMapper(
+        showUiMapper: ShowUiMapperImpl
+    ): ShowUiMapper
 }

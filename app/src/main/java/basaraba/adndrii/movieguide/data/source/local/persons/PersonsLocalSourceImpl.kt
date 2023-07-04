@@ -1,22 +1,22 @@
 package basaraba.adndrii.movieguide.data.source.local.persons
 
-import basaraba.adndrii.movieguide.data.db.MovieGuideDao
+import basaraba.adndrii.movieguide.data.db.dao.PersonDao
 import basaraba.adndrii.movieguide.data.db.mapper.PersonEntityMapper
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
 import javax.inject.Inject
 
 class PersonsLocalSourceImpl @Inject constructor(
-    private val movieGuideDao: MovieGuideDao,
+    private val personDao: PersonDao,
     private val personEntityMapper: PersonEntityMapper
 ) : PersonsLocalSource {
     override suspend fun getAll(): List<PersonDomainData> =
-        personEntityMapper.mapFromDb(movieGuideDao.getAllPersons())
+        personEntityMapper.mapFromDb(personDao.getAllPersons())
 
     override suspend fun insertAll(persons: List<PersonDomainData>) {
-        movieGuideDao.insertAllPersons(personEntityMapper.mapToDb(persons))
+        personDao.insertAllPersons(personEntityMapper.mapToDb(persons))
     }
 
     override suspend fun delete() {
-        movieGuideDao.deletePersons()
+        personDao.deletePersons()
     }
 }

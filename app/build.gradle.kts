@@ -51,7 +51,8 @@ android {
     defaultConfig {
         buildConfigFieldFromGradleProperty("BASE_URL")
         buildConfigFieldFromGradleProperty("AUTH_TOKEN")
-        buildConfigFieldFromGradleProperty("POSTER_URL")
+        buildConfigFieldFromGradleProperty("IMAGE_URL_SMALL")
+        buildConfigFieldFromGradleProperty("IMAGE_URL_MEDIUM")
         buildConfigFieldFromGradleProperty("IMDB_PERSON_URL")
         buildConfigFieldFromGradleProperty("IMDB_MOVIE_URL")
     }
@@ -109,6 +110,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    val accompanistVersion = "0.30.1"
+    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-pager-indicators:$accompanistVersion")
 }
 
 fun ApplicationDefaultConfig.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {

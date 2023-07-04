@@ -13,6 +13,8 @@ import basaraba.adndrii.movieguide.features.main.watch_list.WatchListScreen
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.MovieDetails
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.PersonDetails
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.TvShowDetails
+import basaraba.adndrii.movieguide.features.navigation.NavigationRoute.ImagePreview
+import basaraba.adndrii.movieguide.features.main.image_preview.ImagePreviewScreen
 
 fun NavGraphBuilder.appNavigationGraph(
     navController: NavController
@@ -43,5 +45,9 @@ fun NavGraphBuilder.appNavigationGraph(
 
     composable(PersonDetails.route) {
         PersonDetailsScreen(navController)
+    }
+
+    composable(ImagePreview.route) {
+        ImagePreviewScreen()
     }
 }

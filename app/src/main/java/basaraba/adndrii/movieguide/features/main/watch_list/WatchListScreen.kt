@@ -1,51 +1,47 @@
 package basaraba.adndrii.movieguide.features.main.watch_list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TopAppBar
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import basaraba.adndrii.movieguide.R
+import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
 
 @Composable
 fun WatchListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: WatchListViewModel = hiltViewModel()
 ) {
-    WatchListScreenUi()
-}
-
-@Composable
-fun WatchListScreenUi() {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                backgroundColor = MaterialTheme.colorScheme.background,
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.watch_list),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+    val onEvent: (WatchListUiEvent) -> Unit = { event ->
+        when (event) {
+            is WatchListUiEvent.OpenMovieDetails -> {
+                navController.navigate(
+                    NavigationRoute.MovieDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.title
                     )
-                }
-            )
-        }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(it)
-        ) {
-            Text(
-                text = "List of movies and tv shows that you saved",
-                color = MaterialTheme.colorScheme.inverseSurface
-            )
+                )
+            }
+
+            is WatchListUiEvent.OpenTvShowDetails -> {
+                navController.navigate(
+                    NavigationRoute.TvShowDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.title
+                    )
+                )
+            }
+
+            is WatchListUiEvent.DeleteBookmark -> {
+                viewModel.setEvent(event)
+            }
+
+            is WatchListUiEvent.OnQueryChange -> {
+                viewModel.setEvent(event)
+            }
         }
     }
+
+    WatchListScreenUi(onEvent = onEvent, viewState = viewState)
 }

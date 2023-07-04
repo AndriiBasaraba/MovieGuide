@@ -1,8 +1,9 @@
 package basaraba.adndrii.movieguide.di
 
 import android.content.Context
-import basaraba.adndrii.movieguide.data.db.MovieGuideDao
 import basaraba.adndrii.movieguide.data.db.MovieGuideDb
+import basaraba.adndrii.movieguide.data.db.dao.ShowDao
+import basaraba.adndrii.movieguide.data.db.dao.PersonDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +20,8 @@ object DatabaseModule {
         MovieGuideDb.getInstance(appContext)
 
     @Provides
-    fun provideMovieGuideDao(database: MovieGuideDb): MovieGuideDao = database.movieGuideDao()
+    fun provideMovieDao(database: MovieGuideDb): ShowDao = database.showDao()
+
+    @Provides
+    fun providePersonDao(database: MovieGuideDb): PersonDao = database.personDao()
 }

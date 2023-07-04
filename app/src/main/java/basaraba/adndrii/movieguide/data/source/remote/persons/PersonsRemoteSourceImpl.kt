@@ -5,7 +5,7 @@ import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonImagesResponse
 import basaraba.adndrii.movieguide.data.api.model.PersonsResponse
-import basaraba.adndrii.movieguide.data.api.model.RoleCreditsResponse
+import basaraba.adndrii.movieguide.data.api.model.PersonCreditsResponse
 import javax.inject.Inject
 
 class PersonsRemoteSourceImpl @Inject constructor(
@@ -20,9 +20,9 @@ class PersonsRemoteSourceImpl @Inject constructor(
     override suspend fun getPersonImages(personId: Long): PersonImagesResponse =
         api.getPersonImages(personId = personId)
 
-    override suspend fun getPersonMovieCredits(personId: Long): RoleCreditsResponse =
+    override suspend fun getPersonMovieCredits(personId: Long): PersonCreditsResponse =
         api.getPersonMovieCredits(personId = personId)
 
-    override suspend fun getPersonTvShowCredits(personId: Long): RoleCreditsResponse =
+    override suspend fun getPersonTvShowCredits(personId: Long): PersonCreditsResponse =
         api.getPersonTvShowCredits(personId = personId)
 }

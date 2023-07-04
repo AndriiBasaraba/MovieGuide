@@ -15,7 +15,7 @@ sealed class BottomNavItem(
         BottomNavItem(R.string.tv_shows, R.drawable.ic_bottom_bar_tv_shows, ROUTE_TV_SHOWS)
 
     object WatchList :
-        BottomNavItem(R.string.watch_list, R.drawable.ic_outline_favorite, ROUTE_WATCH_LIST)
+        BottomNavItem(R.string.watch_list, R.drawable.ic_outline_bookmarked, ROUTE_WATCH_LIST)
 
     object Persons :
         BottomNavItem(R.string.persons, R.drawable.ic_bottom_bar_peoples, ROUTE_PERSONS)

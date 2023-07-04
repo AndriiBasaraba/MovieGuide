@@ -1,14 +1,16 @@
 package basaraba.adndrii.movieguide.use_case.model
 
-data class MovieDomainData(
+data class ShowDomainData(
     val id: Long,
     val title: String,
     val overview: String,
     val releaseDate: String,
     val poster: String,
-    val type: Type?
+    val voteAverage: Double,
+    val type: Type?,
+    val isBookmarked: Boolean = false
 ) {
     enum class Type {
-        Ongoing, Upcoming
+        MOVIE, TV_SHOW
     }
 }

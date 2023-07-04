@@ -1,10 +1,10 @@
 package basaraba.adndrii.movieguide.use_case.repository
 
-import basaraba.adndrii.movieguide.use_case.model.MovieDomainData
-import basaraba.adndrii.movieguide.data.api.model.MovieDetailResponse
+import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
+import basaraba.adndrii.movieguide.use_case.model.ShowDomainData
 
 interface MoviesRepository {
-    suspend fun getNowPlayingMovies(forceReload: Boolean): List<MovieDomainData>
-    suspend fun getUpcomingMovies(forceReload: Boolean): List<MovieDomainData>
-    suspend fun getMovieDetails(movieId: Int): MovieDetailResponse
+    suspend fun getNowPlayingMovies(forceReload: Boolean): List<ShowDomainData>
+    suspend fun getUpcomingMovies(forceReload: Boolean): List<ShowDomainData>
+    suspend fun getMovieDetails(movieId: Long): MovieDetailsDomainData
 }

@@ -2,11 +2,11 @@ package basaraba.adndrii.movieguide.features.main.mapper
 
 import basaraba.adndrii.movieguide.features.isLoadingMoreEnabled
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
-import basaraba.adndrii.movieguide.features.main.person_details.model.RoleCreditsUi
+import basaraba.adndrii.movieguide.features.main.person_details.model.PersonCreditsUi
 import basaraba.adndrii.movieguide.features.main.persons.model.PersonUiData
 import basaraba.adndrii.movieguide.use_case.model.PersonDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.PersonDomainData
-import basaraba.adndrii.movieguide.use_case.model.RoleCredits
+import basaraba.adndrii.movieguide.use_case.model.PersonCredits
 import javax.inject.Inject
 
 interface PersonUiMapper {
@@ -57,12 +57,13 @@ class PersonUiMapperImpl @Inject constructor() : PersonUiMapper {
             )
         }
 
-    private fun sortAndMapRoles(input: List<RoleCredits>): List<RoleCreditsUi> =
-        input.sortedByDescending { it.popularity }.map { credit ->
+    private fun sortAndMapRoles(input: List<PersonCredits>): List<PersonCreditsUi> =
+        // for now removed sorting, check if its better sortedByDescending { it.popularity }.
+        input.map { credit ->
             mapRoleCredits(credit)
         }
 
-    private fun mapRoleCredits(credit: RoleCredits) = RoleCreditsUi(
+    private fun mapRoleCredits(credit: PersonCredits) = PersonCreditsUi(
         id = credit.id,
         popularity = credit.popularity,
         poster = credit.poster,
