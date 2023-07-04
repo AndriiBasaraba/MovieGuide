@@ -6,16 +6,21 @@ import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetail
 import basaraba.adndrii.movieguide.features.main.movie_details.model.ShowCast
 import basaraba.adndrii.movieguide.features.main.movie_details.model.ShowGenre
 import basaraba.adndrii.movieguide.features.main.movie_details.model.ShowKeyword
+import basaraba.adndrii.movieguide.features.main.tv_show_details.model.SeasonUi
+import basaraba.adndrii.movieguide.features.main.tv_show_details.model.TvShowDetailsUiData
 import basaraba.adndrii.movieguide.use_case.model.MovieCollectionDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
 import basaraba.adndrii.movieguide.use_case.model.ShowCastDomain
 import basaraba.adndrii.movieguide.use_case.model.ShowDomainData
+import basaraba.adndrii.movieguide.use_case.model.TvShowDetailsDomainData
 import javax.inject.Inject
 
 interface ShowUiMapper {
     fun map(input: List<ShowDomainData>): List<ShowUiData>
     fun mapMovieDetails(input: MovieDetailsDomainData): MovieDetailsUiData
+    fun mapTvShowDetails(input: TvShowDetailsDomainData): TvShowDetailsUiData
     fun mapToDomain(input: MovieDetailsUiData): ShowDomainData
+    fun mapToDomain(input: TvShowDetailsUiData): ShowDomainData
 }
 
 class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
@@ -61,7 +66,7 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                 genres = genres.map { genre -> ShowGenre(genre.id, genre.name) },
                 recommendations = map(recommendations),
                 keywords = keywords.map { keyword -> ShowKeyword(keyword.id, keyword.name) },
-                movieCredits = movieCredits.map { credit -> mapMovieCredits(credit) }
+                movieCredits = movieCredits.map { credit -> mapShowCredits(credit) }
             )
         }
 
@@ -72,7 +77,41 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
             poster = input.posterPath
         )
 
-    private fun mapMovieCredits(input: ShowCastDomain): ShowCast =
+    override fun mapTvShowDetails(input: TvShowDetailsDomainData): TvShowDetailsUiData =
+        with(input) {
+            TvShowDetailsUiData(
+                id = id,
+                title = title,
+                imdbId = imdbId,
+                overview = overview,
+                poster = poster,
+                firstAirDate = firstAirDate,
+                lastAirDate = lastAirDate,
+                tagLine = tagLine,
+                voteAverage = voteAverage,
+                voteCount = voteCount,
+                status = status,
+                isBookmarked = isBookmarked,
+                images = images,
+                genres = genres.map { genre -> ShowGenre(genre.id, genre.name) },
+                recommendations = map(recommendations),
+                keywords = keywords.map { keyword -> ShowKeyword(keyword.id, keyword.name) },
+                tvShowCredits = tvShowCredits.map { credit -> mapShowCredits(credit) },
+                numberOfEpisodes = numberOfEpisodes,
+                numberOfSeasons = numberOfSeasons,
+                seasons = seasons.map { season ->
+                    SeasonUi(
+                        airDate = season.airDate,
+                        episodeCount = season.episodeCount,
+                        name = season.name,
+                        posterPath = season.posterPath,
+                        voteAverage = season.voteAverage
+                    )
+                }
+            )
+        }
+
+    private fun mapShowCredits(input: ShowCastDomain): ShowCast =
         with(input) {
             ShowCast(
                 id = id,
@@ -93,6 +132,20 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                 poster = poster,
                 voteAverage = voteAverage,
                 type = ShowDomainData.Type.MOVIE,
+                isBookmarked = true
+            )
+        }
+
+    override fun mapToDomain(input: TvShowDetailsUiData): ShowDomainData =
+        with(input) {
+            ShowDomainData(
+                id = id,
+                title = title,
+                overview = overview,
+                releaseDate = firstAirDate,
+                poster = poster,
+                voteAverage = voteAverage,
+                type = ShowDomainData.Type.TV_SHOW,
                 isBookmarked = true
             )
         }

@@ -1,4 +1,4 @@
-package basaraba.adndrii.movieguide.data.source.local.movies
+package basaraba.adndrii.movieguide.data.source.local.shows
 
 import basaraba.adndrii.movieguide.data.db.dao.ShowDao
 import basaraba.adndrii.movieguide.data.db.mapper.ShowEntityMapper
@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class ShowLocalSourceImpl @Inject constructor(
+class ShowsLocalSourceImpl @Inject constructor(
     private val showDao: ShowDao,
     private val showEntityMapper: ShowEntityMapper
-) : ShowLocalSource {
+) : ShowsLocalSource {
     override fun getAll(): Flow<List<ShowDomainData>> =
         showDao.getAllShows().map { showEntityMapper.mapFromDb(it) }
 

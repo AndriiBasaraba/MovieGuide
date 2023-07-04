@@ -1,13 +1,15 @@
 package basaraba.adndrii.movieguide.di
 
-import basaraba.adndrii.movieguide.data.source.local.movies.ShowLocalSource
-import basaraba.adndrii.movieguide.data.source.local.movies.ShowLocalSourceImpl
+import basaraba.adndrii.movieguide.data.source.local.shows.ShowsLocalSource
+import basaraba.adndrii.movieguide.data.source.local.shows.ShowsLocalSourceImpl
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSource
 import basaraba.adndrii.movieguide.data.source.local.persons.PersonsLocalSourceImpl
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSource
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSourceImpl
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSource
 import basaraba.adndrii.movieguide.data.source.remote.persons.PersonsRemoteSourceImpl
+import basaraba.adndrii.movieguide.data.source.remote.tv_shows.TvShowsRemoteSource
+import basaraba.adndrii.movieguide.data.source.remote.tv_shows.TvShowsRemoteSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,9 +28,9 @@ interface SourceModule {
 
     @Binds
     @Singleton
-    fun provideMoviesLocalSource(
-        scheduleLocalDataSource: ShowLocalSourceImpl
-    ): ShowLocalSource
+    fun provideShowLocalSource(
+        showLocalDataSource: ShowsLocalSourceImpl
+    ): ShowsLocalSource
 
     @Binds
     @Singleton
@@ -41,4 +43,10 @@ interface SourceModule {
     fun providePersonsLocalSource(
         personsLocalSource: PersonsLocalSourceImpl
     ): PersonsLocalSource
+
+    @Binds
+    @Singleton
+    fun provideTvShowsRemoteSource(
+        tvShowsRemoteSource: TvShowsRemoteSourceImpl
+    ): TvShowsRemoteSource
 }

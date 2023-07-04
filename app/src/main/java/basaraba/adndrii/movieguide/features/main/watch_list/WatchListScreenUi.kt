@@ -112,7 +112,7 @@ fun WatchListScreenUi(
                 userScrollEnabled = false
             ) { pageIndex ->
                 when (pages[pageIndex]) {
-                    WatchListPages.MOVIES -> WatchListMovies(
+                    WatchListPages.MOVIES -> WatchListShow(
                         onEvent = onEvent,
                         viewState = viewState
                     )
@@ -128,7 +128,7 @@ fun WatchListScreenUi(
 }
 
 @Composable
-private fun WatchListMovies(
+private fun WatchListShow(
     onEvent: (WatchListUiEvent) -> Unit,
     viewState: WatchListState
 ) {
@@ -142,9 +142,9 @@ private fun WatchListMovies(
         ) {
             items(viewState.movies) { movie ->
                 WatchListMovieCard(
-                    movie = movie,
+                    show = movie,
                     onCardClick = { movieId, title ->
-                        onEvent(WatchListUiEvent.ShowMovieDetails(movieId, title))
+                        onEvent(WatchListUiEvent.OpenMovieDetails(movieId, title))
                     },
                     onBookmarkClick = { movieId ->
                         onEvent(WatchListUiEvent.DeleteBookmark(movieId))
@@ -157,7 +157,7 @@ private fun WatchListMovies(
 
 @Composable
 private fun WatchListMovieCard(
-    movie: ShowUiData,
+    show: ShowUiData,
     onCardClick: (Long, String) -> Unit,
     onBookmarkClick: (Long) -> Unit
 ) {
@@ -166,14 +166,14 @@ private fun WatchListMovieCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .clickable { onCardClick.invoke(movie.id, movie.title) },
+                .clickable { onCardClick.invoke(show.id, show.title) },
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp)
         ) {
             Row {
                 AsyncImage(
-                    model = movie.poster,
+                    model = show.poster,
                     contentDescription = null,
                     modifier = Modifier
                         .height(200.dp)
@@ -189,7 +189,7 @@ private fun WatchListMovieCard(
                 ) {
                     Text(
                         modifier = Modifier.padding(start = 8.dp, end = 16.dp, top = 2.dp),
-                        text = movie.title,
+                        text = show.title,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
@@ -197,7 +197,7 @@ private fun WatchListMovieCard(
                     )
                     Text(
                         modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 16.dp),
-                        text = movie.releaseDate,
+                        text = show.releaseDate,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium,
                         maxLines = 1,
@@ -205,7 +205,7 @@ private fun WatchListMovieCard(
                     )
                     Text(
                         modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 16.dp),
-                        text = movie.overview,
+                        text = show.overview,
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Normal,
                         maxLines = 4,
@@ -216,7 +216,7 @@ private fun WatchListMovieCard(
         }
 
         RatingCircle(
-            rating = movie.voteAverage,
+            rating = show.voteAverage,
             textSize = 12.sp,
             strokeWidth = 2.dp,
             modifier = Modifier
@@ -232,7 +232,7 @@ private fun WatchListMovieCard(
             modifier = Modifier
                 .padding(top = 4.dp, end = 8.dp)
                 .align(Alignment.TopEnd)
-                .clickable { onBookmarkClick.invoke(movie.id) }
+                .clickable { onBookmarkClick.invoke(show.id) }
         )
     }
 }
@@ -242,5 +242,26 @@ private fun WatchListTvShows(
     onEvent: (WatchListUiEvent) -> Unit,
     viewState: WatchListState
 ) {
+    if (viewState.isLoading) {
+        ProgressBar()
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+        ) {
+            items(viewState.tvShows) { tvShow ->
+                WatchListMovieCard(
+                    show = tvShow,
+                    onCardClick = { tvShowId, title ->
+                        onEvent(WatchListUiEvent.OpenTvShowDetails(tvShowId, title))
+                    },
+                    onBookmarkClick = { tvShowId ->
+                        onEvent(WatchListUiEvent.DeleteBookmark(tvShowId))
+                    }
+                )
+            }
+        }
+    }
 
 }

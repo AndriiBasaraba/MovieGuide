@@ -2,18 +2,22 @@ package basaraba.adndrii.movieguide.data.mapper
 
 import basaraba.adndrii.movieguide.BuildConfig
 import basaraba.adndrii.movieguide.data.api.model.CastCrew
+import basaraba.adndrii.movieguide.data.api.model.ExternalIdsResponse
 import basaraba.adndrii.movieguide.data.api.model.MovieCollection
 import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowCastResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowImageResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowKeywordsResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowResponse
+import basaraba.adndrii.movieguide.data.api.model.TvShowDetailsResponse
 import basaraba.adndrii.movieguide.use_case.model.MovieCollectionDomain
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
+import basaraba.adndrii.movieguide.use_case.model.SeasonDomain
 import basaraba.adndrii.movieguide.use_case.model.ShowCastDomain
 import basaraba.adndrii.movieguide.use_case.model.ShowDomainData
 import basaraba.adndrii.movieguide.use_case.model.ShowGenre
 import basaraba.adndrii.movieguide.use_case.model.ShowKeyword
+import basaraba.adndrii.movieguide.use_case.model.TvShowDetailsDomainData
 import javax.inject.Inject
 
 interface ShowResponseMapper {
@@ -26,6 +30,16 @@ interface ShowResponseMapper {
         keywords: ShowKeywordsResponse,
         isMovieBookmarked: Boolean
     ): MovieDetailsDomainData
+
+    fun mapDetails(
+        details: TvShowDetailsResponse,
+        images: ShowImageResponse,
+        credits: ShowCastResponse,
+        recommendations: List<ShowResponse>,
+        keywords: ShowKeywordsResponse,
+        isTvShowBookmarked: Boolean,
+        externalIds: ExternalIdsResponse
+    ): TvShowDetailsDomainData
 }
 
 class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
@@ -71,7 +85,7 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             status = details.status,
             movieCollection = mapCollection(details.belongsToCollection),
             genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
-            keywords = keywords.keywords.map { ShowKeyword(id = it.id, name = it.name) }.take(5),
+            keywords = keywords.keywords?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
             images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
             movieCredits = credits.cast?.map { mapCredit(it) }.orEmpty(),
             recommendations = map(recommendations, ShowDomainData.Type.MOVIE).take(10),
@@ -83,6 +97,47 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             id = input.id,
             name = input.name,
             posterPath = BuildConfig.IMAGE_URL_MEDIUM + input.posterPath
+        )
+
+
+    override fun mapDetails(
+        details: TvShowDetailsResponse,
+        images: ShowImageResponse,
+        credits: ShowCastResponse,
+        recommendations: List<ShowResponse>,
+        keywords: ShowKeywordsResponse,
+        isTvShowBookmarked: Boolean,
+        externalIds: ExternalIdsResponse
+    ): TvShowDetailsDomainData =
+        TvShowDetailsDomainData(
+            id = details.id,
+            title = details.name,
+            imdbId = externalIds.imdbId.orEmpty(),
+            overview = details.overview,
+            poster = BuildConfig.IMAGE_URL_MEDIUM + details.posterPath,
+            firstAirDate = details.firstAirDate,
+            lastAirDate = details.lastAirDate,
+            numberOfEpisodes = details.numberOfEpisodes,
+            numberOfSeasons = details.numberOfSeasons,
+            seasons = details.seasons.map { season ->
+                SeasonDomain(
+                    airDate = season.airDate.orEmpty(),
+                    episodeCount = season.episodeCount,
+                    name = season.name,
+                    posterPath = BuildConfig.IMAGE_URL_MEDIUM + season.posterPath,
+                    voteAverage = season.voteAverage
+                )
+            },
+            tagLine = details.tagline,
+            voteAverage = details.voteAverage,
+            voteCount = details.voteCount,
+            status = details.status,
+            genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
+            keywords = keywords.results?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
+            images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
+            tvShowCredits = credits.cast?.map { mapCredit(it) }.orEmpty(),
+            recommendations = map(recommendations, ShowDomainData.Type.MOVIE).take(10),
+            isBookmarked = isTvShowBookmarked
         )
 
     private fun mapCredit(input: CastCrew): ShowCastDomain =

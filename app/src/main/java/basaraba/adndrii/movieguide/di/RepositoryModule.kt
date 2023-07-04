@@ -2,9 +2,11 @@ package basaraba.adndrii.movieguide.di
 
 import basaraba.adndrii.movieguide.data.repository.MoviesRepositoryImpl
 import basaraba.adndrii.movieguide.data.repository.PersonsRepositoryImpl
+import basaraba.adndrii.movieguide.data.repository.TvShowsRepositoryImpl
 import basaraba.adndrii.movieguide.data.repository.WatchListRepositoryImpl
 import basaraba.adndrii.movieguide.use_case.repository.MoviesRepository
 import basaraba.adndrii.movieguide.use_case.repository.PersonsRepository
+import basaraba.adndrii.movieguide.use_case.repository.TvShowsRepository
 import basaraba.adndrii.movieguide.use_case.repository.WatchListRepository
 import dagger.Binds
 import dagger.Module
@@ -33,4 +35,10 @@ interface RepositoryModule {
     fun provideWatchListRepository(
         watchListRepository: WatchListRepositoryImpl
     ): WatchListRepository
+
+    @Binds
+    @Singleton
+    fun provideTvShowsRepository(
+        tvShowsRepository: TvShowsRepositoryImpl
+    ): TvShowsRepository
 }

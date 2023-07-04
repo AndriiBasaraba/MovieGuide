@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SaveMovieBookmarkUseCase @Inject constructor(
+class SaveShowBookmarkUseCase @Inject constructor(
     private val repository: WatchListRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {

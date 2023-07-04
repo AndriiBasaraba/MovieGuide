@@ -1,7 +1,7 @@
 package basaraba.adndrii.movieguide.data.api
 
 import basaraba.adndrii.movieguide.data.api.model.CollectionBaseResponse
-import basaraba.adndrii.movieguide.data.api.model.MovieDetailsResponse
+import basaraba.adndrii.movieguide.data.api.model.ExternalIdsResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowCastResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowImageResponse
 import basaraba.adndrii.movieguide.data.api.model.ShowKeywordsResponse
@@ -24,7 +24,6 @@ interface TvShowApi {
         @Query("language") language: String = "en-US",
         @Query("page") page: Int = 1
     ): CollectionBaseResponse<ShowResponse>
-
 
     @GET("tv/{series_id}")
     suspend fun getTvShowDetails(
@@ -54,4 +53,10 @@ interface TvShowApi {
         @Path("series_id") seriesId: Long,
         @Query("language") language: String = "en-US"
     ): ShowKeywordsResponse
+
+
+    @GET("tv/{series_id}/external_ids")
+    suspend fun getTvShowExternalIds(
+        @Path("series_id") seriesId: Long
+    ): ExternalIdsResponse
 }

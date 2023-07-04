@@ -22,9 +22,9 @@ data class TvShowDetailsResponse(
 )
 
 data class SeasonResponse(
-    @SerializedName("air_date") val airDate: String,
+    @SerializedName("air_date") val airDate: String?,
     @SerializedName("episode_count") val episodeCount: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("poster_path") val posterPath: String,
+    @SerializedName("poster_path") val posterPath: String?,
     @SerializedName("vote_average") val voteAverage: Double
 )

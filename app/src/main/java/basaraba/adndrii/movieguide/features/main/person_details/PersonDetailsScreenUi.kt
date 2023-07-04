@@ -104,7 +104,7 @@ fun PersonDetailsScreenUi(
                         PersonRoles(
                             onMovieClick = { movieId, title ->
                                 onEvent(
-                                    PersonDetailsUiEvent.ShowMovieDetails(
+                                    PersonDetailsUiEvent.OpenMovieDetails(
                                         movieId, title
                                     )
                                 )
@@ -119,7 +119,7 @@ fun PersonDetailsScreenUi(
                         PersonRoles(
                             onTvShowClick = { tvShowId, title ->
                                 onEvent(
-                                    PersonDetailsUiEvent.ShowTvShowDetails(
+                                    PersonDetailsUiEvent.OpenTvShowDetails(
                                         tvShowId, title
                                     )
                                 )

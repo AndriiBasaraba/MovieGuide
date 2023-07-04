@@ -16,7 +16,7 @@ fun MoviesScreen(
 ) {
     val onEvent: (MoviesUiEvent) -> Unit = { event ->
         when (event) {
-            is MoviesUiEvent.ShowMovieDetails -> {
+            is MoviesUiEvent.OpenMovieDetails -> {
             }
 
             MoviesUiEvent.ReloadMoviesScreen -> {

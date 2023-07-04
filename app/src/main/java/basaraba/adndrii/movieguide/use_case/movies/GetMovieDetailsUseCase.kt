@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetMovieDetailUseCase @Inject constructor(
+class GetMovieDetailsUseCase @Inject constructor(
     private val repository: MoviesRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {

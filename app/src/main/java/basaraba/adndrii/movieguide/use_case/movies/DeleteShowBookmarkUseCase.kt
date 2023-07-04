@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DeleteMovieBookmarkUseCase @Inject constructor(
+class DeleteShowBookmarkUseCase @Inject constructor(
     private val repository: WatchListRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {

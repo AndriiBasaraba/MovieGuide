@@ -1,7 +1,7 @@
 package basaraba.adndrii.movieguide.data.repository
 
 import basaraba.adndrii.movieguide.data.mapper.ShowResponseMapper
-import basaraba.adndrii.movieguide.data.source.local.movies.ShowLocalSource
+import basaraba.adndrii.movieguide.data.source.local.shows.ShowsLocalSource
 import basaraba.adndrii.movieguide.data.source.remote.movies.MoviesRemoteSource
 import basaraba.adndrii.movieguide.di.IoDispatcher
 import basaraba.adndrii.movieguide.use_case.model.MovieDetailsDomainData
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(
     private val moviesRemoteDataSource: MoviesRemoteSource,
-    private val showsLocalDataSource: ShowLocalSource,
+    private val showsLocalDataSource: ShowsLocalSource,
     private val showResponseMapper: ShowResponseMapper,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : MoviesRepository {

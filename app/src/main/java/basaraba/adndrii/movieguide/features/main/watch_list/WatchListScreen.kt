@@ -15,9 +15,18 @@ fun WatchListScreen(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     val onEvent: (WatchListUiEvent) -> Unit = { event ->
         when (event) {
-            is WatchListUiEvent.ShowMovieDetails -> {
+            is WatchListUiEvent.OpenMovieDetails -> {
                 navController.navigate(
                     NavigationRoute.MovieDetails.getRouteNameWithArguments(
+                        event.id.toString(),
+                        event.title
+                    )
+                )
+            }
+
+            is WatchListUiEvent.OpenTvShowDetails -> {
+                navController.navigate(
+                    NavigationRoute.TvShowDetails.getRouteNameWithArguments(
                         event.id.toString(),
                         event.title
                     )

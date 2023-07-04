@@ -5,7 +5,7 @@ import basaraba.adndrii.movieguide.common.BaseViewModel
 import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
 import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
-import basaraba.adndrii.movieguide.use_case.movies.DeleteMovieBookmarkUseCase
+import basaraba.adndrii.movieguide.use_case.movies.DeleteShowBookmarkUseCase
 import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WatchListViewModel @Inject constructor(
     private val getBookmarkedMoviesUseCase: GetBookmarkedMoviesUseCase,
-    private val deleteMovieBookmarkUseCase: DeleteMovieBookmarkUseCase,
+    private val deleteShowBookmarkUseCase: DeleteShowBookmarkUseCase,
     private val mapper: ShowUiMapper
 ) : BaseViewModel<WatchListUiEvent, WatchListState>() {
 
@@ -41,7 +41,7 @@ class WatchListViewModel @Inject constructor(
     override fun handleEvent(event: WatchListUiEvent) {
         when (event) {
             is WatchListUiEvent.DeleteBookmark -> {
-                viewModelScope.launch { deleteMovieBookmarkUseCase.invoke(event.id) }
+                viewModelScope.launch { deleteShowBookmarkUseCase.invoke(event.id) }
             }
 
             is WatchListUiEvent.OnQueryChange -> {
@@ -51,10 +51,10 @@ class WatchListViewModel @Inject constructor(
     }
 
     init {
-        getBookmarkedMovies()
+        getBookmarkedShows()
     }
 
-    private fun getBookmarkedMovies() {
+    private fun getBookmarkedShows() {
         watchListJob?.cancel()
         watchListJob = viewModelScope.launch {
             watchList.update { it.copy(isLoading = true) }

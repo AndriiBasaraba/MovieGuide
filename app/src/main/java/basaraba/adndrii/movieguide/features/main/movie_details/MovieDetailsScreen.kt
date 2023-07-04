@@ -21,7 +21,7 @@ fun MovieDetailsScreen(
                 navController.popBackStack()
             }
 
-            is MovieDetailsUiEvent.ShowMovieDetails -> {
+            is MovieDetailsUiEvent.OpenMovieDetails -> {
                 navController.navigate(
                     NavigationRoute.MovieDetails.getRouteNameWithArguments(
                         event.id.toString(),

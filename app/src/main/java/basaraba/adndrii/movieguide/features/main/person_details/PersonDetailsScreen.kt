@@ -20,7 +20,7 @@ fun PersonDetailsScreen(
                 navController.popBackStack()
             }
 
-            is PersonDetailsUiEvent.ShowMovieDetails -> {
+            is PersonDetailsUiEvent.OpenMovieDetails -> {
                 navController.navigate(
                     NavigationRoute.MovieDetails.getRouteNameWithArguments(
                         event.id.toString(),
@@ -29,7 +29,7 @@ fun PersonDetailsScreen(
                 )
             }
 
-            is PersonDetailsUiEvent.ShowTvShowDetails -> {
+            is PersonDetailsUiEvent.OpenTvShowDetails -> {
                 navController.navigate(
                     NavigationRoute.TvShowDetails.getRouteNameWithArguments(
                         event.id.toString(),

@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.common.BaseViewModel
 import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsState
-import basaraba.adndrii.movieguide.use_case.movies.DeleteMovieBookmarkUseCase
-import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailUseCase
-import basaraba.adndrii.movieguide.use_case.movies.SaveMovieBookmarkUseCase
+import basaraba.adndrii.movieguide.use_case.movies.DeleteShowBookmarkUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailsUseCase
+import basaraba.adndrii.movieguide.use_case.movies.SaveShowBookmarkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getMovieDetailUseCase: GetMovieDetailUseCase,
-    private val deleteMovieBookmarkUseCase: DeleteMovieBookmarkUseCase,
-    private val saveMovieBookmarkUseCase: SaveMovieBookmarkUseCase,
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val deleteShowBookmarkUseCase: DeleteShowBookmarkUseCase,
+    private val saveShowBookmarkUseCase: SaveShowBookmarkUseCase,
     private val mapper: ShowUiMapper
 ) : BaseViewModel<MovieDetailsUiEvent, MovieDetailsState>() {
 
@@ -43,7 +43,7 @@ class MovieDetailsViewModel @Inject constructor(
     override fun handleEvent(event: MovieDetailsUiEvent) {
         if (event is MovieDetailsUiEvent.UpdateBookmark) {
             val isBookmarked = event.isBookmarked
-            if (isBookmarked) saveMovieBookmark() else deleteMovieBookmark()
+            if (isBookmarked) saveBookmark() else deleteBookmark()
 
             movieDetails.update {
                 it.copy(data = it.data.copy(isBookmarked = isBookmarked))
@@ -51,28 +51,28 @@ class MovieDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun saveMovieBookmark() {
+    private fun saveBookmark() {
         viewModelScope.launch {
-            saveMovieBookmarkUseCase.invoke(mapper.mapToDomain(movieDetails.value.data))
+            saveShowBookmarkUseCase.invoke(mapper.mapToDomain(movieDetails.value.data))
         }
     }
 
-    private fun deleteMovieBookmark() {
+    private fun deleteBookmark() {
         viewModelScope.launch {
-            deleteMovieBookmarkUseCase.invoke(movieDetails.value.data.id)
+            deleteShowBookmarkUseCase.invoke(movieDetails.value.data.id)
         }
     }
 
     init {
-        getMovieDetail()
+        getMovieDetails()
     }
 
-    private fun getMovieDetail() {
+    private fun getMovieDetails() {
         movieDetailsJob?.cancel()
         movieDetailsJob = viewModelScope.launch {
             movieDetails.update { it.copy(isLoading = true) }
             val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID]).toString()
-            getMovieDetailUseCase.invoke(movieId = movieId.toLong()).onSuccess { result ->
+            getMovieDetailsUseCase.invoke(movieId = movieId.toLong()).onSuccess { result ->
                 movieDetails.update {
                     it.copy(
                         isLoading = false,
