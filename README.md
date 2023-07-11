@@ -6,9 +6,10 @@
 
 Architecture: Clean + MVI\
 UI: JetpackCompose\
-DI: Koin\
-Kotlin coroutines, Flow\
-Retrofit2\
-Kotlin serialization\
-Coil\
+DI: Hilt\
+Concurrency: Kotlin coroutines, Flow\
+HTTP client: Retrofit2\
+DB: Room
+Data serialization: Kotlin serialization\
+Image: Coil\
 This API uses the [TheMovieDB.org API](http://api.themoviedb.org/)
