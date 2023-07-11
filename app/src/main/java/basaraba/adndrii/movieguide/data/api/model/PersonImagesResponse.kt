@@ -1,11 +1,14 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PersonImagesResponse(
-    @SerializedName("profiles") val profiles: List<Image>
+    @SerialName("profiles") val profiles: List<Image>
 )
 
+@Serializable
 data class Image(
-    @SerializedName("file_path") val filePath: String
+    @SerialName("file_path") val filePath: String
 )

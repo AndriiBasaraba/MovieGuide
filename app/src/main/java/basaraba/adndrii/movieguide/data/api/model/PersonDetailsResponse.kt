@@ -1,20 +1,22 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PersonDetailsResponse(
-    @SerializedName("adult") val adult: Boolean,
-    @SerializedName("also_known_as") val alsoKnownAs: List<String>,
-    @SerializedName("biography") val biography: String,
-    @SerializedName("birthday") val birthday: String?,
-    @SerializedName("deathday") val deathday: String?,
-    @SerializedName("gender") val gender: Long,
-    @SerializedName("homepage") val homepage: String?,
-    @SerializedName("id") val id: Long,
-    @SerializedName("imdb_id") val imdbId: String?,
-    @SerializedName("known_for_department") val knownForDepartment: String,
-    @SerializedName("name") val name: String,
-    @SerializedName("place_of_birth") val placeOfBirth: String?,
-    @SerializedName("popularity") val popularity: Double,
-    @SerializedName("profile_path") val profilePath: String
+    @SerialName("adult") val adult: Boolean,
+    @SerialName("also_known_as") val alsoKnownAs: List<String>,
+    @SerialName("biography") val biography: String,
+    @SerialName("birthday") val birthday: String? = null,
+    @SerialName("deathday") val deathday: String? = null,
+    @SerialName("gender") val gender: Long,
+    @SerialName("homepage") val homepage: String? = null,
+    @SerialName("id") val id: Long,
+    @SerialName("imdb_id") val imdbId: String? = null,
+    @SerialName("known_for_department") val knownForDepartment: String,
+    @SerialName("name") val name: String,
+    @SerialName("place_of_birth") val placeOfBirth: String? = null,
+    @SerialName("popularity") val popularity: Double,
+    @SerialName("profile_path") val profilePath: String
 )

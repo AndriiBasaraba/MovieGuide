@@ -1,13 +1,16 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ShowKeywordsResponse(
-    @SerializedName("keywords") val keywords: List<Keyword>?,
-    @SerializedName("results") val results: List<Keyword>?
+    @SerialName("keywords") val keywords: List<Keyword>? = null,
+    @SerialName("results") val results: List<Keyword>? = null
 )
 
+@Serializable
 data class Keyword(
-    @SerializedName("id") val id: Long,
-    @SerializedName("name") val name: String
+    @SerialName("id") val id: Long,
+    @SerialName("name") val name: String
 )

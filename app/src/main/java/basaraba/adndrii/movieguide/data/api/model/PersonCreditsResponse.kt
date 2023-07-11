@@ -1,22 +1,25 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PersonCreditsResponse(
-    @SerializedName("cast") val cast: List<Credit>?,
-    @SerializedName("crew") val crew: List<Credit>?
+    @SerialName("cast") val cast: List<Credit>?,
+    @SerialName("crew") val crew: List<Credit>?
 )
 
+@Serializable
 data class Credit(
-    @SerializedName("id") val id: Long,
-    @SerializedName("popularity") val popularity: Double,
-    @SerializedName("poster_path") val posterPath: String?,
-    @SerializedName("release_date") val releaseDate: String?,
-    @SerializedName("first_air_date") val firstAirDate: String?,
-    @SerializedName("title") val title: String?,
-    @SerializedName("name") val name: String?,
-    @SerializedName("episode_count") val episodeCount: Int?,
-    @SerializedName("character") val character: String?,
-    @SerializedName("job") val job: String?,
-    @SerializedName("vote_average") val voteAverage: Double
+    @SerialName("id") val id: Long,
+    @SerialName("popularity") val popularity: Double,
+    @SerialName("poster_path") val posterPath: String? = null,
+    @SerialName("release_date") val releaseDate: String? = null,
+    @SerialName("first_air_date") val firstAirDate: String? = null,
+    @SerialName("title") val title: String? = null,
+    @SerialName("name") val name: String? = null,
+    @SerialName("episode_count") val episodeCount: Int? = null,
+    @SerialName("character") val character: String? = null,
+    @SerialName("job") val job: String? = null,
+    @SerialName("vote_average") val voteAverage: Double
 )
