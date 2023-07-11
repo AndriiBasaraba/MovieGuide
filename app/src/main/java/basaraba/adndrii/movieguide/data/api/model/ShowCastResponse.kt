@@ -1,18 +1,21 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ShowCastResponse(
-    @SerializedName("cast") val cast: List<CastCrew>?,
-    @SerializedName("crew") val crew: List<CastCrew>?
+    @SerialName("cast") val cast: List<CastCrew>?,
+    @SerialName("crew") val crew: List<CastCrew>?
 )
 
+@Serializable
 data class CastCrew(
-    @SerializedName("id") val id: Long,
-    @SerializedName("known_for_department") val knownForDepartment: String,
-    @SerializedName("name") val name: String,
-    @SerializedName("popularity") val popularity: Double,
-    @SerializedName("profile_path") val profilePath: String?,
-    @SerializedName("character") val character: String?,
-    @SerializedName("job") val job: String?
+    @SerialName("id") val id: Long,
+    @SerialName("known_for_department") val knownForDepartment: String,
+    @SerialName("name") val name: String,
+    @SerialName("popularity") val popularity: Double,
+    @SerialName("profile_path") val profilePath: String? = null,
+    @SerialName("character") val character: String? = null,
+    @SerialName("job") val job: String? = null
 )

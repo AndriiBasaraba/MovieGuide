@@ -1,10 +1,12 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CollectionBaseResponse<T>(
-    @SerializedName("page") val page: Long,
-    @SerializedName("results") val results: List<T>,
-    @SerializedName("total_pages") val totalPages: Long,
-    @SerializedName("total_results") val totalResults: Long
+    @SerialName("page") val page: Long,
+    @SerialName("results") val results: List<T>,
+    @SerialName("total_pages") val totalPages: Long,
+    @SerialName("total_results") val totalResults: Long
 )

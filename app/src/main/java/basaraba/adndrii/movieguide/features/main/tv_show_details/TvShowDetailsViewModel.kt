@@ -81,9 +81,6 @@ class TvShowDetailsViewModel @Inject constructor(
                     )
                 }
             }
-                .onFailure {
-                    val s = 1
-                }
         }
     }
 

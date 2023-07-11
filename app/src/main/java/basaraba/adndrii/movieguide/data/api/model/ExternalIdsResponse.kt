@@ -1,7 +1,9 @@
 package basaraba.adndrii.movieguide.data.api.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class ExternalIdsResponse(
-    @SerializedName("imdb_id") val imdbId: String?
+    @SerialName("imdb_id") val imdbId: String? = null
 )
