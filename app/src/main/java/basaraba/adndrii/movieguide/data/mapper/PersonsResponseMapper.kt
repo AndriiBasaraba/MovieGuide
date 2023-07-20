@@ -66,12 +66,19 @@ class PersonsResponseMapperImpl @Inject constructor() : PersonsResponseMapper {
     private fun mapRoleCredits(
         input: PersonCreditsResponse,
         isActor: Boolean
-    ): List<PersonCredits> =
+    ): List<PersonCredits> {
         if (isActor) {
-            input.cast.orEmpty().map { mapCredit(it) }
+            input.cast.orEmpty()
         } else {
-            input.crew.orEmpty().map { mapCredit(it) }
+            input.crew.orEmpty()
+        }.also { credits ->
+            return credits.map { mapCredit(it) }
+                .sortedByDescending { it.popularity }
+                //todo need to think if this filtering is needed
+                .filter { it.role != "" }
+                .filterNot { it.role.lowercase().contains("self") }
         }
+    }
 
     private fun mapCredit(input: Credit): PersonCredits =
         PersonCredits(

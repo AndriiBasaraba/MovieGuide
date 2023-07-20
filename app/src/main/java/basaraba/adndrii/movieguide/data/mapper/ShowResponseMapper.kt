@@ -87,7 +87,11 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
             keywords = keywords.keywords?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
             images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
-            movieCredits = credits.cast?.map { mapCredit(it) }.orEmpty(),
+            movieCredits = credits.cast?.map { mapCredit(it) }.orEmpty()
+                .sortedByDescending { it.popularity }
+                //todo need to think if this filtering is needed
+                .filter { it.role != "" }
+                .filterNot { it.role.lowercase().contains("self") },
             recommendations = map(recommendations, ShowDomainData.Type.MOVIE).take(10),
             isBookmarked = isMovieBookmarked
         )
@@ -98,7 +102,6 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             name = input.name,
             posterPath = BuildConfig.IMAGE_URL_MEDIUM + input.posterPath
         )
-
 
     override fun mapDetails(
         details: TvShowDetailsResponse,
@@ -135,7 +138,11 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
             keywords = keywords.results?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
             images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
-            tvShowCredits = credits.cast?.map { mapCredit(it) }.orEmpty(),
+            tvShowCredits = credits.cast?.map { mapCredit(it) }.orEmpty()
+                .sortedByDescending { it.popularity }
+                //todo need to think if this filtering is needed
+                .filter { it.role != "" }
+                .filterNot { it.role.lowercase().contains("self") },
             recommendations = map(recommendations, ShowDomainData.Type.MOVIE).take(10),
             isBookmarked = isTvShowBookmarked
         )
