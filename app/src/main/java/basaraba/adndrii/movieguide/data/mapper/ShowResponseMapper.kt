@@ -55,7 +55,7 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
                     overview = overview,
                     releaseDate = releaseDate.orEmpty(),
                     voteAverage = voteAverage,
-                    poster = BuildConfig.IMAGE_URL_SMALL + posterPath,
+                    poster = BuildConfig.IMAGE_URL_SMALL + posterPath.orEmpty(),
                     type = type
                 )
             }
@@ -85,7 +85,8 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             status = details.status,
             movieCollection = mapCollection(details.belongsToCollection),
             genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
-            keywords = keywords.keywords?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
+            keywords = keywords.keywords?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5)
+                .orEmpty(),
             images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
             movieCredits = credits.cast?.map { mapCredit(it) }.orEmpty()
                 .sortedByDescending { it.popularity }
@@ -136,7 +137,8 @@ class ShowResponseMapperImpl @Inject constructor() : ShowResponseMapper {
             voteCount = details.voteCount,
             status = details.status,
             genres = details.genres.map { ShowGenre(id = it.id, name = it.name) },
-            keywords = keywords.results?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5).orEmpty(),
+            keywords = keywords.results?.map { ShowKeyword(id = it.id, name = it.name) }?.take(5)
+                .orEmpty(),
             images = images.backdrops.map { BuildConfig.IMAGE_URL_MEDIUM + it.filePath }.take(20),
             tvShowCredits = credits.cast?.map { mapCredit(it) }.orEmpty()
                 .sortedByDescending { it.popularity }

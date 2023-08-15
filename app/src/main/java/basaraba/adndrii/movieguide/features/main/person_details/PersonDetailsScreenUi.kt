@@ -1,9 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.person_details
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,12 +39,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
+import basaraba.adndrii.movieguide.features.main.person_details.model.PersonCreditsUi
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsState
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
-import basaraba.adndrii.movieguide.features.main.person_details.model.PersonCreditsUi
 import basaraba.adndrii.movieguide.features.orDash
 import basaraba.adndrii.movieguide.features.ui_components.DetailsTopBar
 import basaraba.adndrii.movieguide.features.ui_components.DetailsType
+import basaraba.adndrii.movieguide.features.ui_components.ExpandableText
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
 import coil.compose.AsyncImage
@@ -57,6 +55,8 @@ fun PersonDetailsScreenUi(
     onEvent: (PersonDetailsUiEvent) -> Unit,
     viewState: PersonDetailsState
 ) {
+    var showMoreBiography by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -88,7 +88,14 @@ fun PersonDetailsScreenUi(
 
                 if (personDetails.biography.isNotEmpty()) {
                     item {
-                        PersonBiography(biography = personDetails.biography)
+                        ExpandableText(
+                            text = personDetails.biography,
+                            headerText = R.string.biography,
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                            isExpanded = showMoreBiography
+                        ) { isExpanded ->
+                            showMoreBiography = isExpanded
+                        }
                     }
                 }
                 if (personDetails.images.isNotEmpty()) {
@@ -219,33 +226,6 @@ private fun PersonHeader(
 }
 
 @Composable
-private fun PersonBiography(biography: String) {
-    var showMoreBiography by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier
-        .padding(start = 16.dp, end = 16.dp)
-        .animateContentSize(animationSpec = tween(100))
-        .clickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null
-        ) { showMoreBiography = !showMoreBiography }) {
-        Text(
-            text = stringResource(id = R.string.biography),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium
-        )
-        Text(
-            text = biography,
-            maxLines = if (showMoreBiography) Int.MAX_VALUE else 6,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 4.dp),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Normal
-        )
-    }
-}
-
-@Composable
 private fun PersonImages(
     images: List<String>,
     onClick: (String) -> Unit
@@ -253,7 +233,7 @@ private fun PersonImages(
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 8.dp)
     ) {
         items(images) { image ->
             Card(

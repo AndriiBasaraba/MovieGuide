@@ -8,7 +8,7 @@ data class ShowResponse(
     @SerialName("id") val id: Long,
     @SerialName("overview") val overview: String,
     @SerialName("popularity") val popularity: Double,
-    @SerialName("poster_path") val posterPath: String,
+    @SerialName("poster_path") val posterPath: String? = null,
     @SerialName("release_date") val releaseDate: String? = null,
     @SerialName("first_air_date") val firstAirDate: String? = null,
     @SerialName("title") val title: String? = null,
