@@ -13,6 +13,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,12 +27,11 @@ import basaraba.adndrii.movieguide.R
 fun ExpandableText(
     text: String,
     @StringRes headerText: Int,
-    modifier: Modifier,
-    isExpanded: Boolean,
-    updateIsExpanded: (Boolean) -> Unit
+    modifier: Modifier
 ) {
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
     val isExpandable by remember { derivedStateOf { textLayoutResult?.didOverflowHeight ?: false } }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -52,7 +52,7 @@ fun ExpandableText(
         )
         if (isExpanded || isExpandable) {
             TextButton(
-                onClick = { updateIsExpanded.invoke(isExpanded.not()) },
+                onClick = { isExpanded = isExpanded.not() },
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(0.dp)
             ) {

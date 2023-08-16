@@ -55,8 +55,6 @@ fun PersonDetailsScreenUi(
     onEvent: (PersonDetailsUiEvent) -> Unit,
     viewState: PersonDetailsState
 ) {
-    var showMoreBiography by remember { mutableStateOf(false) }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -91,11 +89,8 @@ fun PersonDetailsScreenUi(
                         ExpandableText(
                             text = personDetails.biography,
                             headerText = R.string.biography,
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                            isExpanded = showMoreBiography
-                        ) { isExpanded ->
-                            showMoreBiography = isExpanded
-                        }
+                            modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                        )
                     }
                 }
                 if (personDetails.images.isNotEmpty()) {
