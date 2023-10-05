@@ -8,4 +8,6 @@ abstract class WatchListUiEvent : ViewEvent {
     data class OpenTvShowDetails(val id: Long, val title: String) : WatchListUiEvent()
     data class DeleteBookmark(val id: Long) : WatchListUiEvent()
     data class OnQueryChange(val text: String) : WatchListUiEvent()
+    object OpenMovies : WatchListUiEvent()
+    object OpenTvShows : WatchListUiEvent()
 }

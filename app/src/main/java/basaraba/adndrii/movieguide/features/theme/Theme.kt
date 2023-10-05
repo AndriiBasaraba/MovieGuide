@@ -38,6 +38,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MovieGuideTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+//    darkTheme: Boolean = true,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
 
 @Composable
@@ -39,6 +40,26 @@ fun WatchListScreen(
 
             is WatchListUiEvent.OnQueryChange -> {
                 viewModel.setEvent(event)
+            }
+
+            is WatchListUiEvent.OpenMovies -> {
+                navController.navigate(BottomNavItem.Movies.route) {
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUpTo(route) {
+                            saveState = true
+                        }
+                    }
+                }
+            }
+
+            is WatchListUiEvent.OpenTvShows -> {
+                navController.navigate(BottomNavItem.TvShows.route) {
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUpTo(route) {
+                            saveState = true
+                        }
+                    }
+                }
             }
         }
     }

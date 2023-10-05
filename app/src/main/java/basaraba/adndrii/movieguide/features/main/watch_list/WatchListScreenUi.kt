@@ -1,5 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.watch_list
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,17 +16,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,21 +42,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import basaraba.adndrii.movieguide.R
 import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
+import basaraba.adndrii.movieguide.features.ui_components.LottieAnimationView
 import basaraba.adndrii.movieguide.features.ui_components.ProgressBar
 import basaraba.adndrii.movieguide.features.ui_components.RatingCircle
 import basaraba.adndrii.movieguide.features.ui_components.SearchShowBar
 import coil.compose.AsyncImage
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WatchListScreenUi(
     onEvent: (WatchListUiEvent) -> Unit,
@@ -75,7 +79,7 @@ fun WatchListScreenUi(
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            TabRow(
+            PrimaryTabRow(
                 selectedTabIndex = tabIndex,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
@@ -85,7 +89,6 @@ fun WatchListScreenUi(
                     )
                 },
                 modifier = Modifier.height(56.dp),
-                backgroundColor = MaterialTheme.colorScheme.background,
                 contentColor = MaterialTheme.colorScheme.background
             ) {
                 pages.forEachIndexed { index, page ->
@@ -102,7 +105,9 @@ fun WatchListScreenUi(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Medium
                             )
-                        }
+                        },
+                        selectedContentColor = MaterialTheme.colorScheme.inverseSurface,
+                        unselectedContentColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 }
             }
@@ -135,21 +140,27 @@ private fun WatchListShow(
     if (viewState.isLoading) {
         ProgressBar()
     } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
-        ) {
-            items(viewState.movies) { movie ->
-                WatchListMovieCard(
-                    show = movie,
-                    onCardClick = { movieId, title ->
-                        onEvent(WatchListUiEvent.OpenMovieDetails(movieId, title))
-                    },
-                    onBookmarkClick = { movieId ->
-                        onEvent(WatchListUiEvent.DeleteBookmark(movieId))
-                    }
-                )
+        if (viewState.movies.isEmpty()) {
+            EmptyState(viewState.searchQuery, R.string.movies){
+                onEvent(WatchListUiEvent.OpenMovies)
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+            ) {
+                items(viewState.movies) { movie ->
+                    WatchListMovieCard(
+                        show = movie,
+                        onCardClick = { movieId, title ->
+                            onEvent(WatchListUiEvent.OpenMovieDetails(movieId, title))
+                        },
+                        onBookmarkClick = { movieId ->
+                            onEvent(WatchListUiEvent.DeleteBookmark(movieId))
+                        }
+                    )
+                }
             }
         }
     }
@@ -245,23 +256,90 @@ private fun WatchListTvShows(
     if (viewState.isLoading) {
         ProgressBar()
     } else {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
-        ) {
-            items(viewState.tvShows) { tvShow ->
-                WatchListMovieCard(
-                    show = tvShow,
-                    onCardClick = { tvShowId, title ->
-                        onEvent(WatchListUiEvent.OpenTvShowDetails(tvShowId, title))
-                    },
-                    onBookmarkClick = { tvShowId ->
-                        onEvent(WatchListUiEvent.DeleteBookmark(tvShowId))
-                    }
-                )
+        if (viewState.tvShows.isEmpty()) {
+            EmptyState(viewState.searchQuery, R.string.tv_shows) {
+                onEvent(WatchListUiEvent.OpenTvShows)
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+            ) {
+                items(viewState.tvShows) { tvShow ->
+                    WatchListMovieCard(
+                        show = tvShow,
+                        onCardClick = { tvShowId, title ->
+                            onEvent(WatchListUiEvent.OpenTvShowDetails(tvShowId, title))
+                        },
+                        onBookmarkClick = { tvShowId ->
+                            onEvent(WatchListUiEvent.DeleteBookmark(tvShowId))
+                        }
+                    )
+                }
             }
         }
     }
+}
 
+@Composable
+private fun EmptyState(
+    searchQuery: String,
+    @StringRes btnName: Int,
+    onBtnClick: () -> Unit
+) {
+    val text = if (searchQuery.isEmpty()) {
+        R.string.empty_state
+    } else {
+        R.string.empty_state_search
+    }
+    val lottieName = if (searchQuery.isEmpty()) {
+        "lottie_empty_state.lottie"
+    } else {
+        "lottie_no_results.lottie"
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center)
+        ) {
+            Text(
+                text = stringResource(id = text),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center
+            )
+
+            LottieAnimationView(
+                assetName = lottieName,
+                modifier = Modifier
+                    .size(300.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            if (searchQuery.isEmpty()) {
+                Button(
+                    onClick = { onBtnClick.invoke() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(64.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface),
+                    elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 4.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = btnName),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                }
+            }
+        }
+    }
 }
