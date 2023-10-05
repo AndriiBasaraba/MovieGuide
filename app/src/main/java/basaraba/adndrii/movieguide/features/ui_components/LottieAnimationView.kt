@@ -21,7 +21,6 @@ fun LottieAnimationView(
         composition = preloaderLottieComposition,
         modifier = modifier,
         iterations = LottieConstants.IterateForever,
-        isPlaying = true,
-        speed = 1.5f
+        isPlaying = true
     )
 }
