@@ -26,7 +26,7 @@ import basaraba.adndrii.movieguide.R
 @Composable
 fun ExpandableText(
     text: String,
-    @StringRes headerText: Int,
+    @StringRes headerText: Int? = null,
     modifier: Modifier
 ) {
     var textLayoutResult by remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -36,11 +36,13 @@ fun ExpandableText(
     Column(
         modifier = modifier
     ) {
-        Text(
-            text = stringResource(id = headerText),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium
-        )
+        headerText?.let {
+            Text(
+                text = stringResource(id = it),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Medium
+            )
+        }
         Text(
             text = text,
             maxLines = if (isExpanded) Int.MAX_VALUE else 6,

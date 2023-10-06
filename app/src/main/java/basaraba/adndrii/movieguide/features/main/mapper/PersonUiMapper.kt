@@ -1,5 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.mapper
 
+import basaraba.adndrii.movieguide.features.formatDate
 import basaraba.adndrii.movieguide.features.isLoadingMoreEnabled
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonDetailsUiData
 import basaraba.adndrii.movieguide.features.main.person_details.model.PersonCreditsUi
@@ -46,8 +47,8 @@ class PersonUiMapperImpl @Inject constructor() : PersonUiMapper {
                 name = name,
                 avatar = avatar,
                 biography = biography,
-                birthday = birthday,
-                deathday = deathday,
+                birthday = birthday.formatDate(),
+                deathday = deathday.formatDate(),
                 placeOfBirth = placeOfBirth,
                 popularity = popularity,
                 images = images,

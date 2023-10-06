@@ -1,5 +1,6 @@
 package basaraba.adndrii.movieguide.features.main.mapper
 
+import basaraba.adndrii.movieguide.features.formatDate
 import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieCollection
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsUiData
@@ -31,7 +32,7 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                     id = id,
                     title = title,
                     overview = overview,
-                    releaseDate = releaseDate,
+                    releaseDate = releaseDate.formatDate(),
                     poster = poster,
                     voteAverage = voteAverage,
                     isBookmarked = isBookmarked,
@@ -54,7 +55,7 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                 budget = budget,
                 revenue = revenue,
                 poster = poster,
-                releaseDate = releaseDate,
+                releaseDate = releaseDate.formatDate(),
                 runTime = runTime,
                 tagLine = tagLine,
                 voteAverage = voteAverage,
@@ -85,8 +86,8 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                 imdbId = imdbId,
                 overview = overview,
                 poster = poster,
-                firstAirDate = firstAirDate,
-                lastAirDate = lastAirDate,
+                firstAirDate = firstAirDate.formatDate(),
+                lastAirDate = lastAirDate.formatDate(),
                 tagLine = tagLine,
                 voteAverage = voteAverage,
                 voteCount = voteCount,
@@ -101,7 +102,7 @@ class ShowUiMapperImpl @Inject constructor() : ShowUiMapper {
                 numberOfSeasons = numberOfSeasons,
                 seasons = seasons.map { season ->
                     SeasonUi(
-                        airDate = season.airDate,
+                        airDate = season.airDate.formatDate(),
                         episodeCount = season.episodeCount,
                         name = season.name,
                         posterPath = season.posterPath,
