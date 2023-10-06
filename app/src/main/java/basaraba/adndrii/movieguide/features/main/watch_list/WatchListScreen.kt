@@ -7,6 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
 import basaraba.adndrii.movieguide.features.navigation.NavigationRoute
+import basaraba.adndrii.movieguide.features.navigation.setDefaultBackNavigation
 
 @Composable
 fun WatchListScreen(
@@ -54,11 +55,7 @@ fun WatchListScreen(
 
             is WatchListUiEvent.OpenTvShows -> {
                 navController.navigate(BottomNavItem.TvShows.route) {
-                    navController.graph.startDestinationRoute?.let { route ->
-                        popUpTo(route) {
-                            saveState = true
-                        }
-                    }
+                    this.setDefaultBackNavigation(navController)
                 }
             }
         }

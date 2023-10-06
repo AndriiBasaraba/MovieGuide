@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -16,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import basaraba.adndrii.movieguide.features.getCurrentRoute
 import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
+import basaraba.adndrii.movieguide.features.navigation.setDefaultBackNavigation
 
 
 @Composable
@@ -51,11 +51,7 @@ fun MainBottomView(navController: NavController) {
                 selected = getCurrentRoute(navController = navController) == item.route,
                 onClick = {
                     navController.navigate(item.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
-                            }
-                        }
+                        this.setDefaultBackNavigation(navController)
                         launchSingleTop = true
                         restoreState = true
                     }
