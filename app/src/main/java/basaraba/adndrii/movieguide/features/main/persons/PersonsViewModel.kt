@@ -83,7 +83,7 @@ class PersonsViewModel @Inject constructor(
                 persons.update {
                     it.copy(
                         isRefreshing = false,
-                        data = updatedList
+                        data = updatedList.toSet().toList()
                     )
                 }
             }
