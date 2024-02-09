@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import basaraba.adndrii.movieguide.common.BaseViewModel
 import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
+import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.movie_details.model.MovieDetailsState
 import basaraba.adndrii.movieguide.use_case.movies.DeleteShowBookmarkUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedShowsUseCase
 import basaraba.adndrii.movieguide.use_case.movies.GetMovieDetailsUseCase
 import basaraba.adndrii.movieguide.use_case.movies.SaveShowBookmarkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +27,11 @@ class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val deleteShowBookmarkUseCase: DeleteShowBookmarkUseCase,
     private val saveShowBookmarkUseCase: SaveShowBookmarkUseCase,
-    private val mapper: ShowUiMapper
+    private val mapper: ShowUiMapper,
+    private val getBookmarkedShowsUseCase: GetBookmarkedShowsUseCase,
 ) : BaseViewModel<MovieDetailsUiEvent, MovieDetailsState>() {
+
+    private val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID]).toString()
 
     private var movieDetailsJob: Job? = null
 
@@ -71,13 +76,34 @@ class MovieDetailsViewModel @Inject constructor(
         movieDetailsJob?.cancel()
         movieDetailsJob = viewModelScope.launch {
             movieDetails.update { it.copy(isLoading = true) }
-            val movieId: String = checkNotNull(savedStateHandle[MOVIE_ID]).toString()
             getMovieDetailsUseCase.invoke(movieId = movieId.toLong()).onSuccess { result ->
                 movieDetails.update {
                     it.copy(
                         isLoading = false,
                         data = mapper.mapMovieDetails(result)
                     )
+                }
+            }
+        }
+        getBookmarkedStatus()
+    }
+
+    //todo is this best way for bookmark listening?
+    private fun getBookmarkedStatus() {
+        viewModelScope.launch {
+            getBookmarkedShowsUseCase.invoke().onSuccess { bookmarksFlow ->
+                bookmarksFlow.collect { list ->
+                    mapper.map(list)
+                        .firstOrNull { it.type == ShowUiData.Type.MOVIE && it.id == movieId.toLong() }
+                        ?.let { movie ->
+                            movieDetails.update { state ->
+                                state.copy(
+                                    data = movieDetails.value.data.copy(
+                                        isBookmarked = movie.isBookmarked
+                                    )
+                                )
+                            }
+                        }
                 }
             }
         }

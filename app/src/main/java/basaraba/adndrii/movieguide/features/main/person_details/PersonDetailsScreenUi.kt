@@ -278,7 +278,6 @@ private fun PersonRoles(
                     modifier = Modifier
                         .width(160.dp)
                         .wrapContentHeight()
-                        .wrapContentHeight()
                         .clickable {
                             if (type == RoleType.MOVIE) {
                                 onMovieClick?.invoke(credit.id, credit.title)

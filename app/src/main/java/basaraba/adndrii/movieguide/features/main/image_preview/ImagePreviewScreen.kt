@@ -15,7 +15,7 @@ fun ImagePreviewScreen(viewModel: ImagePreviewViewModel = hiltViewModel()) {
         model = viewModel.url,
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillWidth,
         placeholder = painterResource(id = R.drawable.ic_avatar_placeholder),
         error = painterResource(id = R.drawable.ic_avatar_placeholder)
     )

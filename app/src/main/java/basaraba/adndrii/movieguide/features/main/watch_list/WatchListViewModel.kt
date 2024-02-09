@@ -6,7 +6,7 @@ import basaraba.adndrii.movieguide.features.main.mapper.ShowUiMapper
 import basaraba.adndrii.movieguide.features.main.model.ShowUiData
 import basaraba.adndrii.movieguide.features.main.watch_list.model.WatchListState
 import basaraba.adndrii.movieguide.use_case.movies.DeleteShowBookmarkUseCase
-import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedMoviesUseCase
+import basaraba.adndrii.movieguide.use_case.movies.GetBookmarkedShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WatchListViewModel @Inject constructor(
-    private val getBookmarkedMoviesUseCase: GetBookmarkedMoviesUseCase,
+    private val getBookmarkedShowsUseCase: GetBookmarkedShowsUseCase,
     private val deleteShowBookmarkUseCase: DeleteShowBookmarkUseCase,
     private val mapper: ShowUiMapper
 ) : BaseViewModel<WatchListUiEvent, WatchListState>() {
@@ -58,7 +58,7 @@ class WatchListViewModel @Inject constructor(
         watchListJob?.cancel()
         watchListJob = viewModelScope.launch {
             watchList.update { it.copy(isLoading = true) }
-            getBookmarkedMoviesUseCase.invoke().onSuccess { bookmarksFlow ->
+            getBookmarkedShowsUseCase.invoke().onSuccess { bookmarksFlow ->
                 bookmarksFlow.collect { list ->
                     val mappedList = mapper.map(list)
                     watchList.update {

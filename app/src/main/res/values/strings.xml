@@ -25,4 +25,7 @@
     <string name="show_more">Show more</string>
     <string name="show_less">Show less</string>
 
+    <string name="empty_state_search">Oopps.. There is no results,\nplease try different keywords</string>
+    <string name="empty_state">There nothing here, please add something to watchlist</string>
+
 </resources>

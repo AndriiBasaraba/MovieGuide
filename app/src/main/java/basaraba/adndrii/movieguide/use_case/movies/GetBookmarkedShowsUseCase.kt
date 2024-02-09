@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetBookmarkedMoviesUseCase @Inject constructor(
+class GetBookmarkedShowsUseCase @Inject constructor(
     private val repository: WatchListRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {

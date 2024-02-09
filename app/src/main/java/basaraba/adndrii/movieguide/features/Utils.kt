@@ -5,6 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import basaraba.adndrii.movieguide.features.navigation.BottomNavItem
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun getCurrentRoute(navController: NavController): String? {
@@ -28,3 +31,15 @@ fun String.orDash(): String =
     this.ifEmpty { "--" }
 
 fun String.isActor(): Boolean = this == "Acting"
+
+fun String.formatDate(): String {
+    if (this.isEmpty()) return ""
+    val remoteFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+    val uiFormat = SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
+    return try {
+        val date = remoteFormat.parse(this)
+        date?.let { uiFormat.format(it) }.orEmpty()
+    } catch (e: ParseException) {
+        this
+    }
+}
